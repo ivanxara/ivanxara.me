@@ -1,83 +1,81 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Calendar } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 
-const experiences = [
+const journey = [
   {
-    company: "Freelance",
-    role: "Full Stack Developer",
-    period: "2024 - Present",
-    description: "Building custom web solutions and Zoho integrations for clients worldwide.",
+    organization: "Loba",
+    website: "https://loba.com/",
+    role: "Zoho Developer",
+    period: "2023 - Present",
+    description:
+      "Building and evolving end-to-end Zoho solutions, from system architecture and data structures to automation, scripting, and integrations.",
   },
   {
-    company: "Tech Agency",
-    role: "Senior Developer",
-    period: "2022 - 2024",
-    description: "Led development of enterprise web applications and mentored junior developers.",
-  },
-  {
-    company: "Startup Inc.",
-    role: "Frontend Developer",
-    period: "2020 - 2022",
-    description: "Built and maintained React applications for a growing B2B SaaS platform.",
+    organization: "University of Aveiro",
+    website: "https://www.ua.pt/pt/esan",
+    role: "Student - Software Development",
+    period: "2021 - 2023",
+    description:
+      "Focused on software development fundamentals, databases, and hands-on technical projects.",
   },
 ];
 
 export function Experience() {
   return (
-    <section id="experience" className="py-24">
-      <motion.p
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
+    <section id="experience" className="py-32">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        className="text-sm text-muted-foreground mb-10"
+        className="mb-16"
       >
-        experience
-      </motion.p>
+        <h2 className="text-sm font-medium tracking-widest uppercase text-muted-foreground mb-4">
+          Experience
+        </h2>
+        <div className="h-px w-full bg-border" />
+      </motion.div>
 
-      <div className="relative">
-        {/* Timeline line */}
-        <div className="absolute left-[5px] top-2 bottom-2 w-px bg-border" />
-
-        <div className="space-y-10">
-          {experiences.map((exp, i) => (
-            <motion.div
-              key={exp.company}
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{
-                duration: 0.6,
-                delay: i * 0.1,
-                ease: [0.23, 1, 0.32, 1],
-              }}
-              className="relative pl-10"
-            >
-              {/* Timeline dot */}
-              <div className="absolute left-0 top-1.5 w-[11px] h-[11px] rounded-full border-2 border-muted-foreground bg-background" />
-
-              <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-1 md:gap-8">
-                <div className="flex-1">
-                  <h3 className="text-base font-medium tracking-tight">
-                    {exp.company}
-                  </h3>
-                  <p className="text-sm text-muted-foreground mt-0.5">
-                    {exp.role}
-                  </p>
-                  <p className="text-sm text-muted-foreground/70 mt-3 max-w-md">
-                    {exp.description}
-                  </p>
-                </div>
-
-                <div className="flex items-center gap-1.5 text-sm text-muted-foreground md:mt-0.5">
-                  <Calendar className="w-3.5 h-3.5" />
-                  <span>{exp.period}</span>
-                </div>
+      <div className="space-y-16">
+        {journey.map((j, i) => (
+          <motion.div
+            key={j.organization}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-50px" }}
+            transition={{
+              duration: 0.6,
+              delay: i * 0.1,
+              ease: [0.16, 1, 0.3, 1],
+            }}
+            className="grid md:grid-cols-[1fr_2fr] gap-8 md:gap-16 group"
+          >
+            <div className="text-muted-foreground font-mono text-sm pt-2">
+              {j.period}
+            </div>
+            
+            <div className="space-y-4">
+              <a
+                href={j.website}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block"
+              >
+                <h3 className="text-3xl md:text-4xl font-bold tracking-tight group-hover:text-primary transition-colors inline-flex items-center gap-2">
+                  {j.organization}
+                  <ArrowUpRight className="w-6 h-6 opacity-0 -translate-y-1 translate-x-1 group-hover:opacity-100 group-hover:translate-y-0 group-hover:translate-x-0 transition-all" />
+                </h3>
+              </a>
+              <div className="text-xl font-medium text-foreground/80">
+                {j.role}
               </div>
-            </motion.div>
-          ))}
-        </div>
+              <p className="text-lg text-muted-foreground leading-relaxed max-w-2xl">
+                {j.description}
+              </p>
+            </div>
+          </motion.div>
+        ))}
       </div>
     </section>
   );
