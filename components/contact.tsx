@@ -1,56 +1,53 @@
+// components/contact.tsx
 "use client";
 
 import { motion } from "framer-motion";
-import { Github, Linkedin, Mail } from "lucide-react";
+import { Github, Linkedin, Mail, ArrowRight } from "lucide-react";
 
 export function Contact() {
   return (
-    <section id="contact" className="py-32 pb-12 px-6 md:px-12 bg-foreground text-background">
-      <div className="max-w-[90rem] mx-auto flex flex-col justify-between min-h-[60vh]">
-        
-        <div className="grid md:grid-cols-2 gap-12">
-          <div>
-            <h2 className="text-6xl md:text-9xl font-black tracking-tighter leading-[0.85] mb-8">
-              Let's <br /> Talk.
+    <section id="contact" className="pt-40 pb-20 bg-foreground text-background overflow-hidden">
+      <div className="max-w-7xl mx-auto px-6 md:px-12">
+        <div className="grid lg:grid-cols-2 gap-20 items-end mb-40">
+          <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+          >
+            <h2 className="text-[15vw] lg:text-[10vw] font-black leading-[0.8] tracking-tighter uppercase">
+              Let&apos;s <br /> <span className="text-primary italic">Talk.</span>
             </h2>
-          </div>
-          <div className="flex flex-col justify-between">
-            <p className="text-2xl md:text-3xl font-medium leading-relaxed opacity-90 mb-12">
-              Have a project in mind? <br />
-              I'm always open to discussing new opportunities.
+          </motion.div>
+
+          <motion.div 
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.2 }}
+            className="space-y-10"
+          >
+            <p className="text-2xl md:text-3xl font-medium leading-tight opacity-80">
+              Have a project in mind or just want to say hello? I&apos;m always open to new opportunities.
             </p>
             
             <a
               href="mailto:hello@ivanxara.dev"
-              className="inline-flex items-center gap-3 text-2xl md:text-4xl font-bold hover:opacity-70 transition-opacity underline decoration-2 underline-offset-8"
+              className="group relative inline-flex items-center gap-4 text-3xl md:text-5xl font-bold tracking-tighter hover:text-primary transition-colors"
             >
               hello@ivanxara.dev
+              <ArrowRight className="w-8 h-8 md:w-12 md:h-12 group-hover:translate-x-4 transition-transform" />
             </a>
-          </div>
+          </motion.div>
         </div>
 
-        <div className="flex flex-col md:flex-row items-end justify-between gap-8 pt-24 border-t border-background/20 mt-auto">
-          <div className="flex gap-4">
-             <a
-              href="https://github.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="p-3 bg-background text-foreground rounded-full hover:scale-110 transition-transform"
-            >
-              <Github className="w-6 h-6" />
-            </a>
-            <a
-              href="https://linkedin.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="p-3 bg-background text-foreground rounded-full hover:scale-110 transition-transform"
-            >
-              <Linkedin className="w-6 h-6" />
-            </a>
+        <div className="flex flex-col md:flex-row justify-between items-center pt-12 border-t border-background/10 gap-8">
+          <div className="flex gap-8">
+            <a href="https://github.com" className="hover:text-primary transition-colors font-bold uppercase text-xs tracking-widest">Github</a>
+            <a href="https://linkedin.com" className="hover:text-primary transition-colors font-bold uppercase text-xs tracking-widest">Linkedin</a>
           </div>
           
-          <p className="text-sm font-medium uppercase tracking-widest opacity-60">
-            © 2026 Ivan Xara. All rights reserved.
+          <p className="text-[10px] font-mono uppercase tracking-[0.4em] opacity-40">
+            © 2026 Ivan Xara. Architecting with intent.
           </p>
         </div>
       </div>

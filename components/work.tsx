@@ -1,3 +1,4 @@
+// components/work.tsx
 "use client";
 
 import { cn } from "@/lib/utils";
@@ -44,7 +45,7 @@ export function Work() {
   const springX = useSpring(mouseX, { stiffness: 220, damping: 28, mass: 0.8 });
   const springY = useSpring(mouseY, { stiffness: 220, damping: 28, mass: 0.8 });
 
-  const itemHeight = 140; // Increased for more space
+  const itemHeight = 140;
   const previewWidth = 400;
   const previewHeight = 240;
 
@@ -85,11 +86,7 @@ export function Work() {
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-50px" }}
-              transition={{
-                duration: 0.6,
-                delay: i * 0.1,
-                ease: [0.16, 1, 0.3, 1],
-              }}
+              transition={{ duration: 0.6, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] }}
               onMouseEnter={() => setHoveredIndex(i)}
               onMouseLeave={() => setHoveredIndex(null)}
               className="group relative flex items-center justify-between border-b border-border/40 hover:border-foreground transition-colors cursor-pointer"
@@ -122,7 +119,7 @@ export function Work() {
           ))}
         </div>
 
-        {/* Floating Preview */}
+        {/* Floating Preview: Restored logic from original work.tsx */}
         <div className="pointer-events-none absolute inset-0 hidden md:block">
           <motion.div
             className="absolute z-20 overflow-hidden rounded-xl shadow-2xl"

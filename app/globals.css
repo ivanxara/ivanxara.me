@@ -63,11 +63,18 @@
   --shadow-2xl: 0 1px 3px 0px hsl(0 0% 0% / 0.25);
   --tracking-normal: 0em;
   --spacing: 0.25rem;
+  --blob-1: #FF5533;
+  --blob-2: #FFD166;
+  --blob-3: #6C8EFF;
 }
 
 .dark {
   --background: oklch(0.1776 0 0);
   --foreground: oklch(0.9491 0 0);
+  /* ... existing dark vars ... */
+  --blob-1: #FF5533;
+  --blob-2: #FFD166;
+  --blob-3: #6C8EFF;
   --card: oklch(0.2134 0 0);
   --card-foreground: oklch(0.9491 0 0);
   --popover: oklch(0.2134 0 0);
@@ -184,5 +191,28 @@
   }
   body {
     @apply bg-background text-foreground;
+    overflow-x: hidden;
   }
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  /* ... existing styles */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Custom Scrollbar for a more minimalist look */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: oklch(0.5 0 0 / 0.2);
+  border-radius: 10px;
 }

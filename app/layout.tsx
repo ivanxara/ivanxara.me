@@ -19,7 +19,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={dmSans.variable}>
       <body className="font-sans dark antialiased bg-background text-foreground selection:bg-primary selection:text-primary-foreground">
-        <Header />
+        {/* <Header /> */}
         <SmoothScroll>{children}</SmoothScroll>
       </body>
     </html>
