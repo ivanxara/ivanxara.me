@@ -1,14 +1,22 @@
 import "./globals.css";
-import { DM_Sans } from "next/font/google";
+import { Archivo, Manrope } from "next/font/google";
 import { SmoothScroll } from "@/components/smooth-scroll";
-import { Header } from "@/components/header";
 import type { Metadata } from "next";
 
-const dmSans = DM_Sans({ subsets: ["latin"], variable: "--font-sans" });
+const manrope = Manrope({
+  subsets: ["latin"],
+  variable: "--font-sans",
+});
+
+const archivo = Archivo({
+  subsets: ["latin"],
+  variable: "--font-display",
+});
 
 export const metadata: Metadata = {
-  title: "Ivan Xara | Full-Stack Developer",
-  description: "Full-Stack Developer with a keen eye for design and user experience.",
+  title: "Ivan Xara | Minimal Portfolio",
+  description:
+    "A minimal, art-directed portfolio for Ivan Xara focused on thoughtful digital products and full-stack craft.",
 };
 
 export default function RootLayout({
@@ -17,9 +25,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={dmSans.variable}>
-      <body className="font-sans dark antialiased bg-background text-foreground selection:bg-primary selection:text-primary-foreground">
-        {/* <Header /> */}
+    <html lang="en" className={`${manrope.variable} ${archivo.variable}`}>
+      <body className="font-sans antialiased selection:bg-[#f1d0ad] selection:text-black">
         <SmoothScroll>{children}</SmoothScroll>
       </body>
     </html>
