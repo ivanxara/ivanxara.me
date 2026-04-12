@@ -9,7 +9,7 @@ const starterPrompts = [
 
 export function PortfolioChat() {
   return (
-    <section className="flex h-full w-full min-w-0 flex-col overflow-hidden bg-[var(--chat-panel)] text-[var(--chat-paper)] lg:w-[42%]">
+    <section className="flex h-full w-full min-w-0 flex-col overflow-hidden bg-[var(--chat-panel)] text-[var(--chat-paper)]">
       <div className="border-b border-white/8 px-5 py-5 sm:px-7 sm:py-6 lg:px-8">
         <div className="flex items-start justify-between gap-4">
           <div>
@@ -17,11 +17,6 @@ export function PortfolioChat() {
             <h2 className="mt-2 text-[clamp(1.9rem,4vw,3.7rem)] font-extrabold tracking-[-0.08em] text-white">
               Ask directly.
             </h2>
-          </div>
-
-          <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/4 px-3 py-1.5 text-[11px] uppercase tracking-[0.18em] text-white/58">
-            <Sparkles className="h-3.5 w-3.5" />
-            Curated AI
           </div>
         </div>
 

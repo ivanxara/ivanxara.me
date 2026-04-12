@@ -78,6 +78,19 @@ const experience: ExperienceItem[] = [
   },
 ];
 
+const textReveal: Variants = {
+  hidden: { y: "120%", rotate: 2 },
+  visible: (custom: number) => ({
+    y: "0%",
+    rotate: 0,
+    transition: {
+      duration: 1.1,
+      delay: custom * 0.08,
+      ease: [0.16, 1, 0.3, 1],
+    },
+  }),
+};
+
 const fadeUp: Variants = {
   hidden: { opacity: 0, y: 36 },
   visible: {
@@ -86,6 +99,13 @@ const fadeUp: Variants = {
     transition: { duration: 0.9, ease: [0.16, 1, 0.3, 1] },
   },
 };
+
+const navigationItems = [
+  { label: "About", href: "#about" },
+  { label: "Work", href: "#work" },
+  { label: "Journey", href: "#experience" },
+  { label: "Contact", href: "#contact" },
+];
 
 const heroBackdropWords = [
   {
@@ -196,10 +216,42 @@ function HeroBackdropWord({
   );
 }
 
+function HeaderMenu({ progress }: { progress: MotionValue<number> }) {
+  return (
+    <div className="sticky top-0 z-30 px-4 pt-4 sm:px-6 sm:pt-6 lg:px-8">
+      <div className="mx-auto flex w-fit max-w-full flex-col overflow-hidden rounded-full border border-black/8 bg-[#f3f1ec]/84 shadow-[0_10px_30px_rgba(20,20,20,0.06)] backdrop-blur-xl">
+        <div className="flex items-center justify-between gap-4 px-4 py-3 sm:px-6">
+          <a
+            href="#top"
+            className="text-[12px] font-black tracking-[-0.04em] text-[var(--ink)] sm:text-[13px]"
+          >
+            Hi, I&apos;m Ivan <span aria-hidden="true">👋</span>
+          </a>
+
+          <nav
+            aria-label="Section navigation"
+            className="flex flex-wrap items-center justify-end gap-2 sm:gap-3"
+          >
+            {navigationItems.map((item) => (
+              <a
+                key={item.href}
+                href={item.href}
+                className="rounded-full px-3 py-1.5 text-[10px] font-black uppercase tracking-[0.18em] text-[var(--muted)] transition-all hover:bg-black/[0.04] hover:text-[var(--ink)] sm:text-[11px]"
+              >
+                {item.label}
+              </a>
+            ))}
+          </nav>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function HeroSection({ progress }: { progress: MotionValue<number> }) {
-  const introX = useTransform(progress, [0, 1], [0, 110]);
-  const introY = useTransform(progress, [0, 1], [0, -170]);
-  const introOpacity = useTransform(progress, [0, 0.26, 0.5], [1, 0.8, 0]);
+  const titleY = useTransform(progress, [0, 1], [0, -76]);
+  const bodyY = useTransform(progress, [0, 1], [0, -28]);
+  const orbY = useTransform(progress, [0, 1], [0, -92]);
 
   return (
     <section
@@ -216,16 +268,36 @@ function HeroSection({ progress }: { progress: MotionValue<number> }) {
           progress={progress}
         />
       ))}
+    
 
-      <motion.p
-        initial={{ opacity: 0, y: 24 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.22, duration: 0.95, ease: [0.16, 1, 0.3, 1] }}
-        className="relative z-10 text-center text-[clamp(2.8rem,7vw,5.4rem)] font-black lowercase leading-[0.92] tracking-[-0.08em] text-[var(--ink)]"
-        style={{ x: introX, y: introY, opacity: introOpacity }}
-      >
-        Hi im Ivan ✌️
-      </motion.p>
+      <div className="relative z-10 flex max-w-5xl flex-col items-center text-center">
+        <motion.div className="relative overflow-visible pb-4" style={{ y: titleY }}>
+        
+
+          <motion.h1
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.22, duration: 0.95, ease: [0.16, 1, 0.3, 1] }}
+            className="relative lowercase z-10 text-[clamp(4.2rem,12vw,8.4rem)] font-black leading-[0.9] tracking-[-0.1em] text-[var(--ink)]"
+          >
+            Hi im Ivan ✌️
+          </motion.h1>
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.9, duration: 0.8 }}
+          className="mt-6 max-w-xl"
+          style={{ y: bodyY }}
+        >
+          <p className="text-[15px] leading-relaxed text-[var(--muted)] sm:text-[17px]">
+            Designer and developer creating clean, memorable digital
+            experiences with a sharp eye for detail.
+          </p>
+        </motion.div>
+
+      </div>
     </section>
   );
 }

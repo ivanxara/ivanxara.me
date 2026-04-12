@@ -1,8 +1,7 @@
-// components/smooth-scroll.tsx
 "use client";
 
 import { motion, AnimatePresence } from "framer-motion";
-import { ReactNode } from "react";
+import type { ReactNode } from "react";
 
 export function SmoothScroll({ children }: { children: ReactNode }) {
   return (

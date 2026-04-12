@@ -1,16 +1,11 @@
 import "./globals.css";
-import { Archivo, Manrope } from "next/font/google";
+import { Manrope } from "next/font/google";
 import { SmoothScroll } from "@/components/smooth-scroll";
 import type { Metadata } from "next";
 
 const manrope = Manrope({
   subsets: ["latin"],
   variable: "--font-sans",
-});
-
-const archivo = Archivo({
-  subsets: ["latin"],
-  variable: "--font-display",
 });
 
 export const metadata: Metadata = {
@@ -25,7 +20,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${manrope.variable} ${archivo.variable}`}>
+    <html lang="en" className={manrope.variable}>
       <body className="font-sans antialiased selection:bg-[#f1d0ad] selection:text-black">
         <SmoothScroll>{children}</SmoothScroll>
       </body>
