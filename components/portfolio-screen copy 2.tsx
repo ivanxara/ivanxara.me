@@ -12,7 +12,6 @@ import {
 } from "framer-motion";
 import { Github, Linkedin, Mail } from "lucide-react";
 import { EditorCursor } from "@/components/editor-cursor";
-import { FigmaSelectionFrame } from "./figma-selection-frame";
 
 interface Project {
   title: string;
@@ -79,19 +78,6 @@ const experience: ExperienceItem[] = [
   },
 ];
 
-const textReveal: Variants = {
-  hidden: { y: "120%", rotate: 2 },
-  visible: (custom: number) => ({
-    y: "0%",
-    rotate: 0,
-    transition: {
-      duration: 1.1,
-      delay: custom * 0.08,
-      ease: [0.16, 1, 0.3, 1],
-    },
-  }),
-};
-
 const fadeUp: Variants = {
   hidden: { opacity: 0, y: 36 },
   visible: {
@@ -101,12 +87,93 @@ const fadeUp: Variants = {
   },
 };
 
-const navigationItems = [
-  { label: "About", href: "#about" },
-  { label: "Work", href: "#work" },
-  { label: "Journey", href: "#experience" },
-  { label: "Contact", href: "#contact" },
-];
+interface HeroBackdropLineSegment {
+  label: string;
+  solid: boolean;
+  size: "sm" | "md" | "lg";
+}
+
+interface HeroBackdropWordRow {
+  words: HeroBackdropLineSegment[];
+  top: string;
+  direction: "left" | "right";
+  offset: string;
+}
+
+const heroBackdropWords = [
+  {
+    words: [
+      { label: "Developer", solid: false, size: "md" },
+      { label: "Frontend", solid: false, size: "lg" },
+      { label: "TypeScript", solid: false, size: "sm" },
+      { label: "Systems", solid: false, size: "md" },
+      { label: "React", solid: false, size: "sm" },
+    ],
+    top: "-12%",
+    direction: "left" as const,
+    offset: "-26%",
+  },
+  {
+    words: [
+      { label: "APIs", solid: false, size: "md" },
+      { label: "Backend", solid: false, size: "lg" },
+      { label: "Cloud", solid: false, size: "sm" },
+      { label: "Product", solid: false, size: "md" },
+      { label: "Scaling", solid: false, size: "sm" },
+    ],
+    top: "10%",
+    direction: "right" as const,
+    offset: "24%",
+  },
+  {
+    words: [
+      { label: "Design", solid: false, size: "sm" },
+      { label: "Interfaces", solid: false, size: "lg" },
+      { label: "Hi", solid: true, size: "md" },
+      { label: "Experience", solid: false, size: "md" },
+      { label: "UI", solid: false, size: "sm" },
+    ],
+    top: "30%",
+    direction: "left" as const,
+    offset: "-6%",
+  },
+  {
+    words: [
+      { label: "Database", solid: false, size: "lg" },
+      { label: "I'm", solid: true, size: "sm" },
+      { label: "Ivan", solid: true, size: "md" },
+      { label: "Direction", solid: false, size: "sm" },
+      { label: "DevOps", solid: false, size: "md" },
+    ],
+    top: "50%",
+    direction: "right" as const,
+    offset: "10%",
+  },
+  {
+    words: [
+      { label: "Node", solid: false, size: "sm" },
+      { label: "Product", solid: false, size: "lg" },
+      { label: "✌️", solid: true, size: "md" },
+      { label: "Systems", solid: false, size: "md" },
+      { label: "Server", solid: false, size: "sm" },
+    ],
+    top: "72%",
+    direction: "left" as const,
+    offset: "-18%",
+  },
+  {
+    words: [
+      { label: "Craft", solid: false, size: "sm" },
+      { label: "Testing", solid: false, size: "md" },
+      { label: "Frontend", solid: false, size: "lg" },
+      { label: "Deploy", solid: false, size: "sm" },
+      { label: "Performance", solid: false, size: "md" },
+    ],
+    top: "92%",
+    direction: "right" as const,
+    offset: "14%",
+  },
+] satisfies HeroBackdropWordRow[];
 
 function SectionHeader({ children }: { children: ReactNode }) {
   return (
@@ -150,84 +217,67 @@ function LayeredBackdrop({ progress }: { progress: MotionValue<number> }) {
   );
 }
 
-function HeaderMenu({ progress }: { progress: MotionValue<number> }) {
-  return (
-    <div className="sticky top-0 z-30 px-4 pt-4 sm:px-6 sm:pt-6 lg:px-8">
-      <div className="mx-auto flex w-fit max-w-full flex-col overflow-hidden rounded-full border border-black/8 bg-[#f3f1ec]/84 shadow-[0_10px_30px_rgba(20,20,20,0.06)] backdrop-blur-xl">
-        <div className="flex items-center justify-between gap-4 px-4 py-3 sm:px-6">
-          <a
-            href="#top"
-            className="text-[12px] font-black tracking-[-0.04em] text-[var(--ink)] sm:text-[13px]"
-          >
-            Hi, I&apos;m Ivan <span aria-hidden="true">👋</span>
-          </a>
+function HeroBackdropWord({
+  words,
+  top,
+  direction,
+  offset,
+  progress,
+}: {
+  words: HeroBackdropLineSegment[];
+  top: string;
+  direction: "left" | "right";
+  offset: string;
+  progress: MotionValue<number>;
+}) {
+  const x = useTransform(
+    progress,
+    [0, 1],
+    direction === "left" ? [0, -420] : [0, 420],
+  );
+  const y = useTransform(progress, [0, 1], [0, -420]);
+  const opacity = useTransform(progress, [0, 0.16, 0.42], [0.28, 0.2, 0]);
+  const sizeClasses = {
+    sm: "text-[clamp(2.4rem,5.8vw,4.8rem)]",
+    md: "text-[clamp(3.1rem,7.6vw,6.3rem)]",
+    lg: "text-[clamp(3.9rem,9.2vw,7.6rem)]",
+  } as const;
 
-          <nav
-            aria-label="Section navigation"
-            className="flex flex-wrap items-center justify-end gap-2 sm:gap-3"
-          >
-            {navigationItems.map((item) => (
-              <a
-                key={item.href}
-                href={item.href}
-                className="rounded-full px-3 py-1.5 text-[10px] font-black uppercase tracking-[0.18em] text-[var(--muted)] transition-all hover:bg-black/[0.04] hover:text-[var(--ink)] sm:text-[11px]"
-              >
-                {item.label}
-              </a>
-            ))}
-          </nav>
-        </div>
-      </div>
-    </div>
+  return (
+    <motion.div
+      aria-hidden="true"
+      className="pointer-events-none absolute left-1/2 hidden -translate-x-1/2 font-black lowercase leading-[0.88] tracking-[-0.09em] lg:flex lg:items-end lg:gap-[0.22em]"
+      style={{ top, marginLeft: offset, x, y }}
+    >
+      {words.map((word, index) => (
+        <motion.span
+          key={`${word.label}-${index}`}
+          className={`${sizeClasses[word.size]} ${word.solid ? "text-black" : "text-black/[0.24]"}`}
+          style={{ opacity: word.solid ? 1 : opacity }}
+        >
+          {word.label}
+        </motion.span>
+      ))}
+    </motion.div>
   );
 }
 
 function HeroSection({ progress }: { progress: MotionValue<number> }) {
-  const titleY = useTransform(progress, [0, 1], [0, -76]);
-  const bodyY = useTransform(progress, [0, 1], [0, -28]);
-  const orbY = useTransform(progress, [0, 1], [0, -92]);
-  const heroConstraintsRef = useRef<HTMLElement | null>(null);
-
   return (
     <section
       id="top"
-      ref={heroConstraintsRef}
       className="relative flex min-h-[calc(100dvh-8rem)] scroll-mt-28 flex-col items-center justify-center overflow-visible py-16"
     >
-      <div className="relative z-10 flex max-w-5xl flex-col items-center text-center">
-        <motion.div
-          className="relative overflow-visible pb-4"
-          style={{ y: titleY }}
-        >
-          <motion.h1
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{
-              delay: 0.22,
-              duration: 0.95,
-              ease: [0.16, 1, 0.3, 1],
-            }}
-            className="relative lowercase z-10 text-[clamp(4.2rem,12vw,8.4rem)] font-black leading-[0.9] tracking-[-0.1em] text-[var(--ink)]"
-          >
-            <FigmaSelectionFrame constraintsRef={heroConstraintsRef}>
-              Hi im Ivan ✌️
-            </FigmaSelectionFrame>
-          </motion.h1>
-        </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.9, duration: 0.8 }}
-          className="mt-6 max-w-xl"
-          style={{ y: bodyY }}
-        >
-          <p className="text-[15px] leading-relaxed text-[var(--muted)] sm:text-[17px]">
-            Designer and developer creating clean, memorable digital experiences
-            with a sharp eye for detail.
-          </p>
-        </motion.div>
-      </div>
+      {heroBackdropWords.map((word) => (
+        <HeroBackdropWord
+          key={`${word.top}-${word.offset}`}
+          words={word.words}
+          top={word.top}
+          direction={word.direction}
+          offset={word.offset}
+          progress={progress}
+        />
+      ))}
     </section>
   );
 }
@@ -309,7 +359,7 @@ function ProjectsSection({ progress }: { progress: MotionValue<number> }) {
               onMouseEnter={() => setHoveredIndex(index)}
               onMouseLeave={() => setHoveredIndex(null)}
               whileHover={{ x: 8 }}
-              className={`group relative flex flex-col justify-between gap-5 overflow-hidden py-12 transition-all sm:py-16 lg:flex-row lg:items-center ${
+              className={`group relative flex cursor-none flex-col justify-between gap-5 overflow-hidden py-12 transition-all sm:py-16 lg:flex-row lg:items-center ${
                 index !== projects.length - 1
                   ? "border-b border-[var(--line)]"
                   : ""
@@ -590,7 +640,7 @@ export function PortfolioScreen() {
     <aside className="flex h-full w-full bg-[var(--frame)] p-3 sm:p-4 lg:pr-0">
       <div
         ref={frameRef}
-        className="relative flex h-full w-full flex-col overflow-hidden rounded-[2.5rem] bg-[#f3f1ec]"
+        className="relative flex h-full w-full cursor-none flex-col overflow-hidden rounded-[2.5rem] bg-[#f3f1ec]"
         onMouseMove={handleCursorMove}
         onMouseEnter={() => setCursorVisible(true)}
         onMouseLeave={() => setCursorVisible(false)}
