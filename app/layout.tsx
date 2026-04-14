@@ -1,7 +1,8 @@
 import "./globals.css";
 import { Manrope } from "next/font/google";
-import { SmoothScroll } from "@/components/smooth-scroll";
 import type { Metadata } from "next";
+import { AppQueryProvider } from "@/components/providers/query-provider";
+import { SmoothScroll } from "@/components/smooth-scroll";
 
 const manrope = Manrope({
   subsets: ["latin"],
@@ -21,8 +22,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={manrope.variable}>
-      <body className="font-sans antialiased selection:bg-[#f1d0ad] selection:text-black">
-        <SmoothScroll>{children}</SmoothScroll>
+      <body className="font-sans antialiased selection:bg-accent/28 selection:text-ink">
+        <AppQueryProvider>
+          <SmoothScroll>{children}</SmoothScroll>
+        </AppQueryProvider>
       </body>
     </html>
   );

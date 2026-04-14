@@ -12,7 +12,7 @@ import {
 } from "framer-motion";
 import { Github, Linkedin, Mail } from "lucide-react";
 import { EditorCursor } from "@/components/editor-cursor";
-import { FigmaSelectionFrame } from "./figma-selection-frame";
+import { FigmaSelectionFrame } from "../components/figma-selection-frame";
 
 interface Project {
   title: string;
@@ -57,25 +57,18 @@ const projects: Project[] = [
 
 const experience: ExperienceItem[] = [
   {
-    organization: "Demo Studio",
-    role: "Product Engineer",
-    period: "2024 - Present",
+    organization: "loba",
+    role: "zoho developer",
+    period: "2023 — present",
     description:
-      "Crafting product interfaces, shaping frontend systems, and translating design direction into polished builds.",
+      "architecting end-to-end zoho solutions, scripting, and system integrations.",
   },
   {
-    organization: "Independent Work",
-    role: "Frontend Developer",
-    period: "2022 - 2024",
+    organization: "univ. of aveiro",
+    role: "software dev",
+    period: "2021 — 2023",
     description:
-      "Built websites, product MVPs, and visual systems with a focus on clarity, speed, and art direction.",
-  },
-  {
-    organization: "Startup Projects",
-    role: "UI Designer",
-    period: "2021 - 2022",
-    description:
-      "Explored early-stage concepts through interface design, product thinking, and rapid prototyping.",
+      "deep dive into software development fundamentals, databases, and hands-on projects.",
   },
 ];
 
@@ -414,83 +407,96 @@ function ProjectsSection({ progress }: { progress: MotionValue<number> }) {
 }
 
 function ExperienceSection({ progress }: { progress: MotionValue<number> }) {
-  const timelineStart = "1.25rem";
-  const timelineEnd = "3rem";
-  const sectionY = useTransform(progress, [0, 1], [0, -12]);
+  const sectionY = useTransform(progress, [0, 1], [0, -16]);
 
   return (
     <motion.section
       id="experience"
-      className="scroll-mt-28 py-24 sm:py-32"
+      className="scroll-mt-28 py-16 sm:py-20"
       style={{ y: sectionY }}
     >
-      <SectionHeader>Journey</SectionHeader>
-
       <motion.div
         variants={fadeUp}
         initial="hidden"
         whileInView="visible"
-        viewport={{ once: true, amount: 0.25 }}
-        className="mb-14 max-w-3xl"
+        viewport={{ once: true, amount: 0.2 }}
+        className="relative overflow-hidden rounded-[2.5rem] bg-[#060606] px-6 py-8 text-white shadow-[0_40px_120px_rgba(0,0,0,0.28)] sm:px-8 sm:py-10 lg:px-12 lg:py-12"
       >
-        <p className="text-[clamp(1.8rem,4vw,3.2rem)] font-black leading-[0.95] tracking-[-0.07em] text-[var(--ink)]">
-          A simple progression from visual exploration into building refined,
-          production-ready digital products.
-        </p>
-      </motion.div>
-
-      <div className="relative max-w-4xl">
         <div
-          className="pointer-events-none absolute left-[15.5px] w-px bg-[linear-gradient(180deg,rgba(20,20,20,0.04),rgba(20,20,20,0.18),rgba(20,20,20,0.04))]"
-          style={{ top: timelineStart, bottom: timelineEnd }}
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_left_center,rgba(78,80,98,0.32),transparent_28%),radial-gradient(circle_at_right_top,rgba(108,108,132,0.22),transparent_24%),linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0))]"
+        />
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute -left-[8%] top-[8%] h-[88%] w-[34%] rounded-[46%_54%_36%_64%/49%_34%_66%_51%] bg-[linear-gradient(180deg,rgba(77,80,99,0.2),rgba(8,8,10,0))] blur-2xl"
+        />
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute right-[-6%] top-[8%] h-[82%] w-[28%] rounded-[38%_62%_58%_42%/52%_34%_66%_48%] bg-[linear-gradient(180deg,rgba(109,112,139,0.18),rgba(10,10,12,0))] blur-2xl"
+        />
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute bottom-[-12%] left-[22%] h-[28%] w-[56%] rounded-[46%] bg-[linear-gradient(90deg,rgba(255,255,255,0.03),rgba(255,255,255,0))] blur-3xl"
         />
 
-        {experience.map((item, index) => (
-          <motion.div
-            key={`${item.organization}-${item.role}`}
-            variants={fadeUp}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.3 }}
-            transition={{ delay: index * 0.08 }}
-            className="relative grid grid-cols-[32px_minmax(0,1fr)] gap-6 py-10 first:pt-0 last:pb-0 sm:gap-8 sm:py-12"
-          >
-            <div className="relative flex justify-center">
-              <motion.span
-                animate={index === 0 ? { scale: [1, 1.08, 1] } : undefined}
-                transition={
-                  index === 0
-                    ? { duration: 2.4, repeat: Infinity, ease: "easeInOut" }
-                    : undefined
-                }
-                className={`mt-2 h-4 w-4 rounded-full border shadow-[0_0_0_6px_rgba(243,241,236,0.96)] ${
-                  index === 0
-                    ? "border-black/15 bg-[var(--ink)]"
-                    : "border-black/10 bg-[var(--paper)]"
-                }`}
-              />
+        <div className="relative z-10 grid gap-10 lg:grid-cols-[minmax(0,0.4fr)_minmax(0,1fr)] lg:gap-14">
+          <div className="pt-1">
+            <div className="inline-flex items-center gap-3 text-[15px] font-semibold lowercase tracking-[-0.03em] text-white/42">
+              <span className="h-2.5 w-2.5 rounded-full bg-white/22" />
+              about
             </div>
+          </div>
 
-            <div className="max-w-3xl">
-              <div className="flex flex-col gap-3">
-                <p className="text-[11px] font-black uppercase tracking-[0.24em] text-[color:rgba(20,20,20,0.4)]">
-                  {item.period}
-                </p>
-                <h3 className="text-[clamp(2rem,5vw,3.7rem)] font-black leading-[0.92] tracking-[-0.08em] text-[var(--ink)]">
-                  {item.organization}
-                </h3>
-                <p className="text-[12px] font-black uppercase tracking-[0.2em] text-[var(--muted)]">
-                  {item.role}
-                </p>
-              </div>
+          <div>
+            <motion.p
+              variants={fadeUp}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.35 }}
+              className="max-w-5xl text-[clamp(2.2rem,5.4vw,5.2rem)] font-black leading-[0.98] tracking-[-0.08em] text-white"
+            >
+              based in portugal. i build robust digital architectures wrapped in
+              uncompromising, minimalist aesthetics.
+            </motion.p>
 
-              <p className="mt-5 max-w-2xl text-sm leading-relaxed text-[color:rgba(20,20,20,0.7)] sm:text-base">
-                {item.description}
-              </p>
+            <div className="mt-10 border-t border-white/8">
+              {experience.map((item, index) => (
+                <motion.div
+                  key={`${item.organization}-${item.role}`}
+                  variants={fadeUp}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true, amount: 0.25 }}
+                  transition={{ delay: index * 0.08 }}
+                  className={`grid gap-6 py-8 sm:py-10 lg:grid-cols-[minmax(0,1fr)_minmax(16rem,0.9fr)] lg:gap-12 ${
+                    index !== experience.length - 1
+                      ? "border-b border-white/8"
+                      : ""
+                  }`}
+                >
+                  <div>
+                    <h3 className="text-[clamp(2rem,3vw,3.2rem)] font-black leading-[0.92] tracking-[-0.07em] text-white">
+                      {item.organization}
+                    </h3>
+                    <p className="mt-2 text-[1.05rem] font-semibold lowercase tracking-[-0.03em] text-white/46">
+                      {item.role}
+                    </p>
+                  </div>
+
+                  <div className="lg:pt-1">
+                    <span className="inline-flex rounded-full bg-white/[0.04] px-4 py-2 text-[0.95rem] font-semibold lowercase tracking-[-0.02em] text-white/48 ring-1 ring-white/[0.03]">
+                      {item.period}
+                    </span>
+                    <p className="mt-5 max-w-xl text-[1.05rem] leading-[1.7] lowercase tracking-[-0.02em] text-white/56 sm:text-[1.1rem]">
+                      {item.description}
+                    </p>
+                  </div>
+                </motion.div>
+              ))}
             </div>
-          </motion.div>
-        ))}
-      </div>
+          </div>
+        </div>
+      </motion.div>
     </motion.section>
   );
 }
@@ -608,9 +614,9 @@ export function PortfolioScreen() {
         >
           <div className="group mx-auto flex w-full max-w-6xl flex-col px-6 pb-10 pt-4 sm:px-8 sm:pb-12 sm:pt-5 lg:px-12">
             <HeroSection progress={progress} />
+            <ExperienceSection progress={progress} />
             <AboutSection progress={progress} />
             <ProjectsSection progress={progress} />
-            <ExperienceSection progress={progress} />
           </div>
 
           <ContactSection progress={progress} />
