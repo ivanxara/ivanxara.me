@@ -9,22 +9,29 @@ import {
   useTransform,
   type MotionValue,
 } from "framer-motion";
-import { ArrowUpRight } from "lucide-react";
 import { useRef, useState, type MouseEvent } from "react";
-import { projects } from "@/components/website/content";
-import { fadeUp } from "@/components/website/motion";
-import { SectionTitle } from "@/components/website/section-title";
+import { SectionTitle } from "@/components/project/section-title";
+import { TechnologyBadge } from "@/components/project/technology-badge";
+import { projects } from "@/config/portfolio-content";
+import { fadeUp } from "@/lib/animations/motion";
 
-const previewWidth = 420;
-const previewHeight = 280;
+const PREVIEW = {
+  width: 400,
+  height: 230,
+  framePadding: 8,
+  frameRadius: "1.4rem",
+  imageRadius: "1rem",
+} as const;
+
+const previewContentHeight = PREVIEW.height - PREVIEW.framePadding * 2;
 
 export function ProjectsSection({ progress }: { progress: MotionValue<number> }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
-  const x = useSpring(mouseX, { stiffness: 150, damping: 20, mass: 0.5 });
-  const y = useSpring(mouseY, { stiffness: 150, damping: 20, mass: 0.5 });
+  const x = useSpring(mouseX, { stiffness: 108, damping: 22, mass: 0.7 });
+  const y = useSpring(mouseY, { stiffness: 108, damping: 22, mass: 0.7 });
   const sectionY = useTransform(progress, [0, 1], [0, -24]);
 
   const handleMouseMove = (event: MouseEvent<HTMLDivElement>) => {
@@ -34,14 +41,14 @@ export function ProjectsSection({ progress }: { progress: MotionValue<number> })
       return;
     }
 
-    mouseX.set(event.clientX - bounds.left - previewWidth / 2);
-    mouseY.set(event.clientY - bounds.top - previewHeight / 2);
+    mouseX.set(event.clientX - bounds.left - PREVIEW.width / 2);
+    mouseY.set(event.clientY - bounds.top - PREVIEW.height / 2);
   };
 
   return (
     <motion.section
       id="work"
-      className="scroll-mt-28 py-24 sm:py-32"
+      className="-scroll-mt-28 py-24 sm:py-32"
       style={{ y: sectionY }}
     >
       <SectionTitle>Selected Works</SectionTitle>
@@ -59,7 +66,7 @@ export function ProjectsSection({ progress }: { progress: MotionValue<number> })
 
             return (
               <motion.div
-                key={project.title}
+                key={project.slug}
                 variants={fadeUp}
                 initial="hidden"
                 whileInView="visible"
@@ -86,10 +93,14 @@ export function ProjectsSection({ progress }: { progress: MotionValue<number> })
                       opacity: isActive ? 1 : 0,
                       scale: isActive ? 1 : 0.96,
                     }}
-                    transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+                    transition={{ duration: 0.48, ease: [0.22, 1, 0.36, 1] }}
                   />
 
-                  <div className="relative z-10 flex items-center gap-4 transition-transform duration-500 group-hover:translate-x-4">
+                  <div
+                    className={`relative z-10 flex items-center gap-4 transition-transform duration-500 ${
+                      isActive ? "translate-x-4" : "translate-x-0"
+                    }`}
+                  >
                     <h3
                       className={`text-[clamp(2.35rem,6vw,5rem)] font-black leading-[0.95] tracking-[-0.08em] transition-colors duration-500 ${
                         isDimmed ? "text-ink/20" : "text-ink"
@@ -101,12 +112,18 @@ export function ProjectsSection({ progress }: { progress: MotionValue<number> })
 
                   <div className="relative z-10 flex flex-col items-start gap-2 lg:flex-row lg:items-center lg:gap-6 lg:text-right">
                     <div className="flex flex-col items-start gap-2 lg:items-end">
-                      <span className="text-[12px] font-black uppercase tracking-[0.18em] text-muted transition-colors duration-500 group-hover:text-ink">
+                      <span className="text-xs font-semibold text-muted uppercase tracking-wider transition-colors duration-500">
                         {project.role}
                       </span>
-                      <span className="text-[11px] font-black uppercase tracking-[0.2em] text-ink/30 transition-colors duration-500 group-hover:text-muted">
-                        {project.technologies.join(" / ")}
-                      </span>
+                      <div className="flex flex-wrap gap-2 lg:justify-end">
+                        {project.technologies.map((technology) => (
+                          <TechnologyBadge
+                            key={`${project.slug}-${technology}`}
+                            technology={technology}
+                            compact
+                          />
+                        ))}
+                      </div>
                     </div>
                   </div>
                 </Link>
@@ -117,45 +134,56 @@ export function ProjectsSection({ progress }: { progress: MotionValue<number> })
 
         <div className="pointer-events-none absolute inset-0 z-50 hidden md:block">
           <motion.div
-            className="absolute overflow-hidden rounded-[1.25rem] shadow-[0_28px_90px_rgba(0,0,0,0.5)]"
+            className="absolute overflow-hidden border border-white/[0.08] bg-[#111214] shadow-[0_28px_90px_rgba(0,0,0,0.42)] backdrop-blur-sm"
             initial={{ opacity: 0, scale: 0.82 }}
             animate={{
               opacity: hoveredIndex === null ? 0 : 1,
               scale: hoveredIndex === null ? 0.82 : 1,
             }}
-            transition={{ duration: 0.24, ease: [0.16, 1, 0.3, 1] }}
-            style={{ width: previewWidth, height: previewHeight, x, y }}
+            transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
+            style={{
+              width: PREVIEW.width,
+              height: PREVIEW.height,
+              borderRadius: PREVIEW.frameRadius,
+              x,
+              y,
+              padding: PREVIEW.framePadding,
+            }}
           >
-            <motion.div
-              animate={{ y: hoveredIndex === null ? 0 : -(previewHeight * hoveredIndex) }}
-              transition={{ duration: 0.56, ease: [0.16, 1, 0.3, 1] }}
-              className="absolute left-0 top-0 w-full"
+            <div
+              className="relative h-full w-full overflow-hidden"
+              style={{ borderRadius: PREVIEW.imageRadius }}
             >
-              {projects.map((project) => (
-                <div
-                  key={project.title}
-                  className="relative w-full overflow-hidden"
-                  style={{ height: previewHeight }}
-                >
-                  <div className="absolute right-4 top-4 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-black/50 text-white backdrop-blur-md">
-                    <ArrowUpRight className="h-4 w-4" />
+              <motion.div
+                animate={{
+                  y: hoveredIndex === null ? 0 : -(previewContentHeight * hoveredIndex),
+                }}
+                transition={{ duration: 0.52, ease: [0.22, 1, 0.36, 1] }}
+                className="absolute left-0 top-0 w-full"
+              >
+                {projects.map((project) => (
+                  <div
+                    key={project.title}
+                    className="relative w-full overflow-hidden bg-[#0d0d0f]"
+                    style={{ height: previewContentHeight }}
+                  >
+                    {project.image ? (
+                      <div className="absolute inset-0">
+                        <Image
+                          src={project.image}
+                          alt={`${project.title} preview`}
+                          fill
+                          className="object-cover object-top"
+                          sizes={`${PREVIEW.width - PREVIEW.framePadding * 2}px`}
+                        />
+                      </div>
+                    ) : (
+                      <div className="absolute inset-0 bg-white/[0.04]" />
+                    )}
                   </div>
-                  {project.image ? (
-                    <div className="absolute inset-0">
-                      <Image
-                        src={project.image}
-                        alt={`${project.title} preview`}
-                        fill
-                        className="object-cover object-center"
-                        sizes={`${previewWidth}px`}
-                      />
-                    </div>
-                  ) : (
-                    <div className="absolute inset-0 bg-white/[0.04]" />
-                  )}
-                </div>
-              ))}
-            </motion.div>
+                ))}
+              </motion.div>
+            </div>
           </motion.div>
         </div>
       </div>

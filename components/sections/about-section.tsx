@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, useTransform, type MotionValue } from "framer-motion";
-import { fadeUp } from "@/components/website/motion";
+import { fadeUp } from "@/lib/animations/motion";
 
 export function AboutSection({ progress }: { progress: MotionValue<number> }) {
   const sectionY = useTransform(progress, [0, 1], [0, -36]);

@@ -62,7 +62,7 @@ export function HeroSection({ progress }: { progress: MotionValue<number> }) {
                 }}
                 className="select-none text-[clamp(5rem,16vw,13rem)] font-black leading-[0.85] tracking-[-0.065em] text-ink"
               >
-                xxxx
+                ivan
               </motion.h1>
             </div>
 
@@ -75,10 +75,10 @@ export function HeroSection({ progress }: { progress: MotionValue<number> }) {
                   duration: 1.3,
                   ease: [0.16, 1, 0.3, 1],
                 }}
-                className="select-none block text-[clamp(5rem,16vw,13rem)] font-black leading-[0.85] tracking-[-0.065em] text-ink"
+                className="select-none block text-[clamp(5rem,16vw,13rem)] font-black leading-[0.85] tracking-tighter text-ink"
                 style={{ marginLeft: "clamp(1.5rem, 10vw, 8rem)" }}
               >
-                yyyy
+                xará
               </motion.span>
             </div>
           </motion.div>

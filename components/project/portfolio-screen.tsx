@@ -2,15 +2,15 @@
 
 import { useRef } from "react";
 import { useScroll, useSpring } from "framer-motion";
-import { PortfolioBackdrop } from "@/components/website/backdrop";
-import { PortfolioHeader } from "@/components/website/header";
-import { AboutSection } from "@/components/website/sections/about-section";
-import { ContactSection } from "@/components/website/sections/contact-section";
-import { ExperienceSection } from "@/components/website/sections/experience-section";
-import { HeroSection } from "@/components/website/sections/hero-section";
-import { ProjectsSection } from "@/components/website/sections/projects-section";
+import { PortfolioBackdrop } from "@/components/layout/portfolio-backdrop";
+import { PortfolioHeader } from "@/components/layout/header";
+import { AboutSection } from "@/components/sections/about-section";
+import { ContactSection } from "@/components/sections/contact-section";
+import { ExperienceSection } from "@/components/sections/experience-section";
+import { HeroSection } from "@/components/sections/hero-section";
+import { ProjectsSection } from "@/components/sections/projects-section";
 
-export function PortfolioScreen() {
+export function PortfolioScreen({ onOpenChat }: { onOpenChat?: () => void }) {
   const scrollRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ container: scrollRef });
   const progress = useSpring(scrollYProgress, {
@@ -20,7 +20,7 @@ export function PortfolioScreen() {
   });
 
   return (
-    <aside className="flex h-full w-full bg-frame p-3 sm:p-4 lg:pr-0">
+    <aside className="flex h-full w-full bg-frame p-3 sm:p-4">
       <div className="noise-overlay relative flex h-full w-full flex-col overflow-hidden rounded-[2.5rem] bg-paper">
         <PortfolioBackdrop progress={progress} />
 
@@ -29,7 +29,7 @@ export function PortfolioScreen() {
           className="portfolio-scroll relative flex-1 overflow-y-auto"
         >
           <div className="group mx-auto flex w-full max-w-6xl flex-col px-6 pb-10 pt-4 sm:px-8 sm:pb-12 sm:pt-5 lg:px-12">
-            <PortfolioHeader progress={progress} />
+            <PortfolioHeader progress={progress} onOpenChat={onOpenChat} />
             <HeroSection progress={progress} />
             <ExperienceSection progress={progress} />
             <AboutSection progress={progress} />

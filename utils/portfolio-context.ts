@@ -1,3 +1,5 @@
+import { MY_EMAIL, URL_GITHUB, URL_LINKEDIN } from "./constants";
+
 export const PORTFOLIO_CONTEXT = `
 # PERFIL PROFISSIONAL
 - **Nome:** Ivan Xará
@@ -50,7 +52,7 @@ Sou um desenvolvedor focado em converter desafios de negócio em soluções digi
 - **reidompipas.com** (2023): Solução para restauração com backoffice que automatiza a criação de assets visuais (stories) para o Instagram com o menu do dia. (Stack: Next.js, Supabase)
 
 # LINKS & CONTACTOS
-- **LinkedIn:** https://www.linkedin.com/in/ivanxara/
-- **GitHub:** https://github.com/ivanxara
-- **Email:** ivanmxara@gmail.com
+- **LinkedIn:** ${URL_LINKEDIN}
+- **GitHub:** ${URL_GITHUB}
+- **Email:** ${MY_EMAIL}
 `;

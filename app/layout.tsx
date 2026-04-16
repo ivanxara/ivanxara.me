@@ -1,13 +1,12 @@
 import "./globals.css";
-import { Manrope } from "next/font/google";
+import { Manrope, Geist } from "next/font/google";
 import type { Metadata } from "next";
-import { AppQueryProvider } from "@/components/providers/query-provider";
-import { SmoothScroll } from "@/components/smooth-scroll";
+import { PortfolioLayout } from "@/components/layout/portfolio-layout";
+import { SmoothScroll } from "@/components/shared/smooth-scroll";
+import { AppQueryProvider } from "@/providers/query-provider";
+import { cn } from "@/lib/utils";
 
-const manrope = Manrope({
-  subsets: ["latin"],
-  variable: "--font-sans",
-});
+const geist = Geist({subsets:['latin'],variable:'--font-sans'});
 
 export const metadata: Metadata = {
   title: "Ivan Xara | Minimal Portfolio",
@@ -21,10 +20,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={manrope.variable}>
+    <html lang="en" className={cn("font-sans", geist.variable)}>
       <body className="font-sans antialiased selection:bg-accent/28 selection:text-ink">
         <AppQueryProvider>
-          <SmoothScroll>{children}</SmoothScroll>
+          <SmoothScroll>
+            <PortfolioLayout>{children}</PortfolioLayout>
+          </SmoothScroll>
         </AppQueryProvider>
       </body>
     </html>

@@ -1,9 +1,9 @@
 "use client";
 
 import { motion, useTransform, type MotionValue } from "framer-motion";
-import { experience } from "@/components/website/content";
-import { fadeUp } from "@/components/website/motion";
-import { SectionTitle } from "@/components/website/section-title";
+import { SectionTitle } from "@/components/project/section-title";
+import { fadeUp } from "@/lib/animations/motion";
+import { MY_EXPERIENCE } from "@/utils/constants";
 
 export function ExperienceSection({
   progress,
@@ -33,7 +33,7 @@ export function ExperienceSection({
       </motion.div>
 
       <div className="mt-14 border-t border-line sm:mt-16">
-        {experience.map((item, index) => (
+        {MY_EXPERIENCE.map((item, index) => (
           <motion.div
             key={`${item.organization}-${item.role}`}
             variants={fadeUp}
@@ -42,7 +42,7 @@ export function ExperienceSection({
             viewport={{ once: true, amount: 0.25 }}
             transition={{ delay: index * 0.1 }}
             className={`grid gap-4 py-10 sm:py-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:gap-16 ${
-              index < experience.length - 1 ? "border-b border-line" : ""
+              index < MY_EXPERIENCE.length - 1 ? "border-b border-line" : ""
             }`}
           >
             <div>

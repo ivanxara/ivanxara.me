@@ -2,9 +2,9 @@
 
 import { motion } from "framer-motion";
 import type { ReactNode } from "react";
-import { fadeUp } from "@/components/website/motion";
+import { fadeUp } from "@/lib/animations/motion";
 
-export function SectionTitle({ children }: { children: ReactNode }) {
+export function SectionTitle({ children,  }: { children: ReactNode }) {
   return (
     <motion.div
       variants={fadeUp}
@@ -17,7 +17,7 @@ export function SectionTitle({ children }: { children: ReactNode }) {
         {number}
       </span>
       <div className="h-px w-8 bg-accent opacity-20" /> */}
-      <h2 className="text-xs font-black lowercase tracking-tight text-muted">
+      <h2 className="text-[10px] font-black uppercase tracking-[0.24em] text-muted/56">
         {children}
       </h2>
     </motion.div>
