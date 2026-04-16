@@ -22,7 +22,7 @@ export function PortfolioScreen({ onOpenChat }: { onOpenChat?: () => void }) {
   return (
     <aside className="flex h-full w-full bg-frame p-3 sm:p-4">
       <div className="noise-overlay relative flex h-full w-full flex-col overflow-hidden rounded-[2.5rem] bg-paper">
-        <PortfolioBackdrop progress={progress} />
+        {/* <PortfolioBackdrop progress={progress} /> */}
 
         <div
           ref={scrollRef}

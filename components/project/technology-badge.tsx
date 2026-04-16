@@ -2,7 +2,7 @@ import type { IconType } from "react-icons";
 import {
   SiGooglegemini,
   SiNextdotjs,
-  SiNuxtdotjs,
+  SiNuxt,
   SiStripe,
   SiSupabase,
   SiTailwindcss,
@@ -47,7 +47,7 @@ const technologies: Record<
   typescript: { label: "TypeScript", icon: SiTypescript },
   gemini: { label: "Google Gemini AI", icon: SiGooglegemini },
   stripe: { label: "Stripe", icon: SiStripe },
-  nuxt: { label: "Nuxt 3", icon: SiNuxtdotjs },
+  nuxt: { label: "Nuxt 3", icon: SiNuxt },
   vue: { label: "Vue 3", icon: SiVuedotjs },
   tailwind: { label: "Tailwind CSS", icon: SiTailwindcss },
 };
