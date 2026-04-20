@@ -2,7 +2,7 @@ import "./globals.css";
 import { Manrope } from "next/font/google";
 import type { Metadata } from "next";
 import { PortfolioLayout } from "@/components/layout/portfolio-layout";
-import { SmoothScroll } from "@/components/shared/smooth-scroll";
+import { SmoothScroll } from "@/components/smooth-scroll";
 import { AppQueryProvider } from "@/providers/query-provider";
 import { cn } from "@/lib/utils";
 

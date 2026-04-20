@@ -15,7 +15,7 @@ import {
   type ImperativePanelHandle,
 } from "@/components/ui/resizable";
 import { PortfolioChatProvider } from "@/components/layout/portfolio-chat-context";
-import { PortfolioChat } from "@/components/shared/portfolio-chat";
+import { PortfolioChat } from "@/components/portfolio-chat";
 
 const CHAT_OPEN_SIZE = 32;
 const CHAT_MIN_SIZE = 8;
@@ -50,7 +50,7 @@ export function PortfolioLayout({ children }: { children: ReactNode }) {
       <main className="h-screen overflow-hidden bg-background text-foreground">
         <div className="frame-glow pointer-events-none fixed inset-0" />
 
-        <section className="relative h-screen w-full overflow-hidden bg-frame">
+        <section className="relative h-screen w-full overflow-hidden bg-frame ">
           <div className="flex h-full w-full flex-col min-[1480px]:hidden">
             {content}
             <div ref={mobileChatRef} className="min-h-[34rem]">

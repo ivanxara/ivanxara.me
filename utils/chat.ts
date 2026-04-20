@@ -1,7 +1,7 @@
 "use server";
 
 import { generateGeminiText } from "@/lib/gemini";
-import { PORTFOLIO_CONTEXT } from "@/utils/portfolio-context";
+import { PORTFOLIO_CONTEXT } from "@/utils/ai-context";
 import type { GeminiMessage } from "@/lib/gemini";
 
 export interface ChatMessage {
