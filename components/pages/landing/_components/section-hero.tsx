@@ -62,7 +62,7 @@ export function SectionHero({ progress }: { progress: MotionValue<number> }) {
                 }}
                 className="select-none text-[clamp(5rem,16vw,13rem)] font-black leading-[0.85] tracking-[-0.065em] text-ink"
               >
-                ssda
+                ivan
               </motion.h1>
             </div>
 
@@ -78,7 +78,7 @@ export function SectionHero({ progress }: { progress: MotionValue<number> }) {
                 className="select-none block text-[clamp(5rem,16vw,13rem)] font-black leading-[0.85] tracking-tighter text-ink"
                 style={{ marginLeft: "clamp(1.5rem, 10vw, 8rem)" }}
               >
-                dsas
+                xará
               </motion.span>
             </div>
           </motion.div>

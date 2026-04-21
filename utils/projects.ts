@@ -114,7 +114,7 @@ export const PROJECTS: Record<string, IProject> = {
     title: "athlt.link",
     role: "Design & Development",
     technologies: ["nuxt", "vue", "typescript", "supabase", "stripe"],
-    image: ath1,
+    image: ath6,
   },
   "rei-dom-pipas": {
     slug: "rei-dom-pipas",

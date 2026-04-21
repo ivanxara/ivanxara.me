@@ -1,0 +1,74 @@
+html,
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at top, rgba(40, 124, 255, 0.18), transparent 35%),
+    linear-gradient(180deg, #06131c 0%, #02070b 100%);
+}
+
+body {
+  color: #f5f7fb;
+  font-family: "Segoe UI", Arial, sans-serif;
+}
+
+.webgl-shell,
+#unityContainer {
+  width: 100%;
+  height: 100%;
+}
+
+#unityContainer {
+  position: relative;
+  background: #000;
+}
+
+#unityContainer canvas {
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
+  outline: none;
+}
+
+.logo,
+.progress {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.logo {
+  width: 154px;
+  height: 130px;
+  background: url("progressLogo.Dark.png") no-repeat center / contain;
+}
+
+.progress {
+  width: min(240px, 44vw);
+  height: 12px;
+  margin-top: 108px;
+  padding: 3px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.12);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.06);
+}
+
+.progress .empty,
+.progress .full {
+  height: 100%;
+  border-radius: inherit;
+}
+
+.progress .empty {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.progress .full {
+  width: 0%;
+  background: linear-gradient(90deg, #66b7ff 0%, #d9f4ff 100%);
+  box-shadow: 0 0 18px rgba(102, 183, 255, 0.35);
+}
