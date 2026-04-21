@@ -1,80 +1,29 @@
 import "server-only";
 
-type GeminiInlineFile = {
-  data: string;
-  mimeType: string;
-};
+import {
+  GoogleGenerativeAI,
+  type Schema as GeminiSchema,
+} from "@google/generative-ai";
 
-type GeminiRole = "user" | "model";
+export type GeminiRole = "user" | "model";
 
-type GeminiMessage = {
+export type GeminiMessage = {
   role: GeminiRole;
   text: string;
 };
 
-type GenerateGeminiContentParams = {
+export type GenerateGeminiContentParams = {
   prompt: string;
   systemInstruction: string;
-  inlineFiles?: GeminiInlineFile[];
   responseMimeType?: string;
-  responseSchema?: Record<string, unknown>;
+  responseSchema?: GeminiSchema;
   messages?: GeminiMessage[];
   model?: string;
   maxOutputTokens?: number;
   temperature?: number;
 };
 
-type GeminiPart = {
-  text?: string;
-  inlineData?: {
-    data: string;
-    mimeType: string;
-  };
-};
-
-type GeminiCandidate = {
-  finishReason?: string;
-  content?: {
-    parts?: GeminiPart[];
-  };
-};
-
-type GeminiResponse = {
-  candidates?: GeminiCandidate[];
-  error?: {
-    message?: string;
-  };
-};
-
-const GEMINI_API_URL = "https://generativelanguage.googleapis.com/v1beta/models";
-const DEFAULT_MODEL = "gemini-3.1-flash-lite-preview";
-const INCOMPLETE_ENDING_PATTERN = /[\(\["'/:,-]\s*$/;
-
-const extractGeminiText = (data: GeminiResponse) =>
-  data.candidates?.[0]?.content?.parts
-    ?.map((part) => part.text || "")
-    .join("")
-    .trim();
-
-const shouldRetryIncompleteResponse = (
-  text: string,
-  finishReason?: string,
-  maxOutputTokens?: number,
-) => {
-  if (!text) {
-    return false;
-  }
-
-  if (finishReason === "MAX_TOKENS") {
-    return true;
-  }
-
-  if ((maxOutputTokens || 0) < 300) {
-    return false;
-  }
-
-  return INCOMPLETE_ENDING_PATTERN.test(text);
-};
+const DEFAULT_MODEL = "gemini-3-flash-preview";
 
 const normalizeJsonText = (text: string) =>
   text
@@ -83,146 +32,75 @@ const normalizeJsonText = (text: string) =>
     .replace(/\s*```$/, "")
     .trim();
 
-export const generateGeminiText = async ({
+const buildContents = ({
+  prompt,
+  messages,
+}: Pick<GenerateGeminiContentParams, "prompt" | "messages">) => {
+  if (messages?.length) {
+    return messages
+      .filter((m) => m.text.trim())
+      .map((m) => ({ role: m.role, parts: [{ text: m.text.trim() }] }));
+  }
+
+  return [
+    {
+      role: "user" as const,
+      parts: [{ text: prompt }],
+    },
+  ];
+};
+
+const runGeneration = async ({
   prompt,
   systemInstruction,
-  inlineFiles = [],
   responseMimeType = "text/plain",
   responseSchema,
   messages = [],
-  model = process.env.GEMINI_MODEL || DEFAULT_MODEL,
-  maxOutputTokens = 220,
+  model = process.env.GEMINI_MODEL ?? DEFAULT_MODEL,
   temperature = 0.5,
 }: GenerateGeminiContentParams) => {
   const apiKey = process.env.GEMINI_API_KEY;
+  if (!apiKey) throw new Error("GEMINI_API_KEY is not set");
 
-  if (!apiKey) {
-    throw new Error("GEMINI_API_KEY is not set");
-  }
-
-  const contents =
-    messages.length > 0
-      ? messages
-          .filter((message) => message.text.trim())
-          .map((message) => ({
-            role: message.role,
-            parts: [{ text: message.text.trim() }],
-          }))
-      : [
-          {
-            role: "user" as const,
-            parts: [
-              { text: prompt },
-              ...inlineFiles.map((file) => ({
-                inlineData: {
-                  data: file.data,
-                  mimeType: file.mimeType,
-                },
-              })),
-            ],
-          },
-        ];
-
-  const response = await fetch(`${GEMINI_API_URL}/${model}:generateContent`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "x-goog-api-key": apiKey,
+  const geminiModel = new GoogleGenerativeAI(apiKey).getGenerativeModel({
+    model,
+    systemInstruction,
+    generationConfig: {
+      temperature,
+      responseMimeType,
+      responseSchema,
     },
-    body: JSON.stringify({
-      system_instruction: {
-        parts: [{ text: systemInstruction }],
-      },
-      contents,
-      generationConfig: {
-        temperature,
-        maxOutputTokens,
-        responseMimeType,
-        responseSchema,
-      },
-    }),
-    cache: "no-store",
   });
 
-  const data = (await response.json()) as GeminiResponse;
-
-  if (!response.ok) {
-    throw new Error(data.error?.message || "Gemini request failed");
-  }
-
-  const text = extractGeminiText(data);
-  const finishReason = data.candidates?.[0]?.finishReason;
-
-  if (!text) {
-    throw new Error("Empty model response");
-  }
-
-  if (shouldRetryIncompleteResponse(text, finishReason, maxOutputTokens)) {
-    const retryResponse = await fetch(
-      `${GEMINI_API_URL}/${model}:generateContent`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "x-goog-api-key": apiKey,
-        },
-        body: JSON.stringify({
-          system_instruction: {
-            parts: [
-              {
-                text: `${systemInstruction}\n\nReturn one complete answer. Do not stop mid-sentence, mid-list, or after an opening parenthesis.`,
-              },
-            ],
-          },
-          contents,
-          generationConfig: {
-            temperature,
-            maxOutputTokens: Math.max(maxOutputTokens * 2, 600),
-            responseMimeType,
-            responseSchema,
-          },
-        }),
-        cache: "no-store",
-      },
-    );
-
-    const retryData = (await retryResponse.json()) as GeminiResponse;
-
-    if (!retryResponse.ok) {
-      throw new Error(retryData.error?.message || "Gemini retry failed");
-    }
-
-    const retryText = extractGeminiText(retryData);
-
-    if (retryText) {
-      return retryText;
-    }
-  }
+  const result = await geminiModel.generateContent({
+    contents: buildContents({ prompt, messages }),
+  });
+  
+  console.log("23");
+  const text = result.response.text().trim();
+  if (!text) throw new Error("Empty model response");
 
   return text;
 };
 
+export const generateGeminiText = (params: GenerateGeminiContentParams) =>
+  runGeneration(params);
+
 export const generateGeminiContent = async (
   params: GenerateGeminiContentParams,
 ) => {
-  const text = await generateGeminiText({
+  const raw = await runGeneration({
     ...params,
-    responseMimeType: params.responseMimeType || "application/json",
+    responseMimeType: params.responseMimeType ?? "application/json",
   });
 
-  const normalizedText = normalizeJsonText(text);
+  const text = normalizeJsonText(raw);
 
   try {
-    return JSON.parse(normalizedText);
+    return JSON.parse(text);
   } catch {
-    const match = normalizedText.match(/\{[\s\S]*\}|\[[\s\S]*\]/);
-
-    if (!match) {
-      throw new Error(`Non-JSON model response: ${text}`);
-    }
-
+    const match = text.match(/\{[\s\S]*\}|\[[\s\S]*\]/);
+    if (!match) throw new Error(`Non-JSON model response: ${raw}`);
     return JSON.parse(match[0]);
   }
 };
-
-export type { GenerateGeminiContentParams, GeminiInlineFile, GeminiMessage };

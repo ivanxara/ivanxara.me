@@ -9,7 +9,17 @@ export interface ChatMessage {
   content: string;
 }
 
-export async function askPortfolioChat(messages: ChatMessage[]) {
+export interface ChatResponse {
+  status: "success" | "error";
+  message: string;
+}
+
+const DEFAULT_CHAT_ERROR =
+  "I can't answer that right now. Please try again in a moment.";
+
+export async function askPortfolioChat(
+  messages: ChatMessage[],
+): Promise<ChatResponse> {
   const sanitizedMessages: GeminiMessage[] = messages
     .filter((message) => message.content.trim())
     .slice(-12)
@@ -18,11 +28,12 @@ export async function askPortfolioChat(messages: ChatMessage[]) {
       text: message.content.trim(),
     }));
 
-  return generateGeminiText({
-    prompt: sanitizedMessages.at(-1)?.text || "",
-    systemInstruction: `You are Ivan Xara's manager speaking on his portfolio.
+  try {
+    const message = await generateGeminiText({
+      prompt: sanitizedMessages.at(-1)?.text || "",
+      systemInstruction: `You are Ivan Assistant speaking on Ivan Xara's portfolio.
 
-Your job is to answer as someone managing or representing Ivan professionally.
+Your job is to answer as Ivan's assistant, representing him professionally.
 Do not speak as if you are Ivan.
 Refer to Ivan in the third person.
 The tone should feel clear, human, confident, and professional, without sounding stiff or corporate.
@@ -35,9 +46,20 @@ Only use the portfolio context below. If something is missing, say so plainly.
 Rules: Keep answers short by default ( 1-3 lines ), if necessary use more.
 
 ${PORTFOLIO_CONTEXT}`,
-    messages: sanitizedMessages,
-    responseMimeType: "text/plain",
-    maxOutputTokens: 320,
-    temperature: 0.55,
-  });
+      messages: sanitizedMessages,
+      responseMimeType: "text/plain",
+      maxOutputTokens: 320,
+      temperature: 0.55,
+    });
+
+    return {
+      status: "success",
+      message,
+    };
+  } catch (error) {
+    return {
+      status: "error",
+      message: DEFAULT_CHAT_ERROR,
+    };
+  }
 }

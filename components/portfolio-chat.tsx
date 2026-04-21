@@ -1,9 +1,21 @@
 "use client";
 
 import { useMutation } from "@tanstack/react-query";
-import { useEffect, useRef, useState, type KeyboardEvent } from "react";
+import {
+  useEffect,
+  useRef,
+  useState,
+  type KeyboardEvent,
+  type ReactNode,
+} from "react";
 import { ArrowUp, RotateCcw, X } from "lucide-react";
-import { askPortfolioChat, type ChatMessage } from "@/utils/chat";
+import {
+  askPortfolioChat,
+  type ChatMessage,
+  type ChatResponse,
+} from "@/utils/chat";
+
+const CHAT_FOCUS_EVENT = "portfolio-chat:focus-input";
 
 type PortfolioChatMessage = ChatMessage & {
   isError?: boolean;
@@ -19,8 +31,113 @@ const STARTER_PROMPTS = [
 const INITIAL_MESSAGE: PortfolioChatMessage = {
   role: "assistant",
   content:
-    "Hi, I'm Ivan's manager. I can give you a quick sense of how he works, what he's doing now, and where he stands out.",
+    "Hi, I'm Ivan Assistant. I can give you a quick sense of how he works, what he's doing now, and where he stands out.",
 };
+
+const MARKDOWN_LINK_REGEX =
+  /\[([^\]]+)\]\(((?:https?:\/\/|mailto:)[^\s)]+)\)/g;
+const URL_OR_EMAIL_REGEX = /((https?:\/\/[^\s<]+)|(www\.[^\s<]+)|([A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}))/gi;
+
+function normalizeHref(value: string) {
+  if (value.includes("@") && !value.startsWith("http")) {
+    return `mailto:${value}`;
+  }
+
+  if (value.startsWith("www.")) {
+    return `https://${value}`;
+  }
+
+  return value;
+}
+
+function renderTextWithLinks(content: string): ReactNode[] {
+  const nodes: ReactNode[] = [];
+  const markdownMatches = Array.from(content.matchAll(MARKDOWN_LINK_REGEX));
+  let lastIndex = 0;
+  let key = 0;
+
+  const pushPlainText = (text: string) => {
+    if (!text) {
+      return;
+    }
+
+    let segmentLastIndex = 0;
+    const matches = Array.from(text.matchAll(URL_OR_EMAIL_REGEX));
+
+    matches.forEach((match) => {
+      const matchIndex = match.index ?? 0;
+
+      if (matchIndex > segmentLastIndex) {
+        nodes.push(text.slice(segmentLastIndex, matchIndex));
+      }
+
+      const value = match[0];
+      nodes.push(
+        <a
+          key={`autolink-${key++}`}
+          href={normalizeHref(value)}
+          target="_blank"
+          rel="noreferrer"
+          className="underline decoration-white/30 underline-offset-4 transition-colors hover:text-white"
+        >
+          {value}
+        </a>,
+      );
+
+      segmentLastIndex = matchIndex + value.length;
+    });
+
+    if (segmentLastIndex < text.length) {
+      nodes.push(text.slice(segmentLastIndex));
+    }
+  };
+
+  markdownMatches.forEach((match) => {
+    const matchIndex = match.index ?? 0;
+
+    if (matchIndex > lastIndex) {
+      pushPlainText(content.slice(lastIndex, matchIndex));
+    }
+
+    nodes.push(
+      <a
+        key={`markdown-link-${key++}`}
+        href={match[2]}
+        target="_blank"
+        rel="noreferrer"
+        className="underline decoration-white/30 underline-offset-4 transition-colors hover:text-white"
+      >
+        {match[1]}
+      </a>,
+    );
+
+    lastIndex = matchIndex + match[0].length;
+  });
+
+  if (lastIndex < content.length) {
+    pushPlainText(content.slice(lastIndex));
+  }
+
+  return nodes.flatMap((node, index) => {
+    if (typeof node !== "string") {
+      return node;
+    }
+
+    return node.split("\n").flatMap((line, lineIndex, array) => {
+      const lineNodes: ReactNode[] = [];
+
+      if (line) {
+        lineNodes.push(line);
+      }
+
+      if (lineIndex < array.length - 1) {
+        lineNodes.push(<br key={`break-${index}-${lineIndex}`} />);
+      }
+
+      return lineNodes;
+    });
+  });
+}
 
 function TypingDots() {
   return (
@@ -59,7 +176,7 @@ function ChatBubble({ message }: { message: PortfolioChatMessage }) {
               : "border border-white/[0.05] bg-white/[0.03] text-chat-paper"
         }`}
       >
-        {message.content}
+        {renderTextWithLinks(message.content)}
       </div>
     </div>
   );
@@ -73,14 +190,19 @@ export function PortfolioChat({ onClose }: { onClose?: () => void }) {
   const scrollRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
-  const chatMutation = useMutation<string, Error, PortfolioChatMessage[]>({
+  const chatMutation = useMutation<
+    ChatResponse,
+    Error,
+    PortfolioChatMessage[]
+  >({
     mutationFn: askPortfolioChat,
     onSuccess: (reply, nextMessages) => {
       setMessages([
         ...nextMessages,
         {
           role: "assistant",
-          content: reply,
+          content: reply.message,
+          isError: reply.status === "error",
         },
       ]);
     },
@@ -115,6 +237,18 @@ export function PortfolioChat({ onClose }: { onClose?: () => void }) {
     element.style.height = `${Math.min(element.scrollHeight, 120)}px`;
   }, [input]);
 
+  useEffect(() => {
+    const focusInput = () => {
+      textareaRef.current?.focus();
+    };
+
+    window.addEventListener(CHAT_FOCUS_EVENT, focusInput);
+
+    return () => {
+      window.removeEventListener(CHAT_FOCUS_EVENT, focusInput);
+    };
+  }, []);
+
   const submitMessage = (value: string) => {
     const content = value.trim();
 
@@ -147,12 +281,15 @@ export function PortfolioChat({ onClose }: { onClose?: () => void }) {
 
   const hasConversation = messages.length > 1;
   return (
-    <section className="flex h-full w-full min-w-[30rem] flex-col overflow-hidden bg-frame text-chat-paper">
+    <section
+      data-portfolio-chat-root="true"
+      className="flex h-full w-full min-w-[30rem] flex-col overflow-hidden bg-frame text-chat-paper"
+    >
       <div className="border-b border-white/[0.06] px-5 py-5">
         <div className="flex items-start justify-between gap-3">
           <div className="max-w-md">
             <p className="text-[10px] font-black uppercase tracking-[0.24em] text-accent/70">
-              Manager Notes
+              Ivan Assistant
             </p>
             <h2 className="mt-2 text-[clamp(1.65rem,3vw,2.3rem)] font-extrabold leading-[0.96] tracking-[-0.06em] text-ink">
               Ask about Ivan.

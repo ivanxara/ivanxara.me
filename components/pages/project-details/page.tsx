@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef } from "react";
 import {
   motion,
   useMotionValue,
@@ -31,6 +31,7 @@ export default function ProjectDetailScreen({
   onOpenChat?: () => void;
   project: IProject;
 }) {
+  const isMobileGallery = project.galleryLayout === "mobile";
   const scrollRef = useRef<HTMLDivElement>(null);
   const scrollYProgress = useMotionValue(0);
   const progress = useSpring(scrollYProgress, {
@@ -46,6 +47,29 @@ export default function ProjectDetailScreen({
   const rawY = useMotionValue(0);
   const driftX = useSpring(rawX, { stiffness: 35, damping: 22, mass: 1 });
   const driftY = useSpring(rawY, { stiffness: 35, damping: 22, mass: 1 });
+  const scrollToSection = useCallback(
+    (hash: string, behavior: ScrollBehavior = "smooth") => {
+      const container = scrollRef.current;
+      const sectionId = hash.replace(/^#/, "");
+
+      if (!container || !sectionId) {
+        return;
+      }
+
+      const section = container.querySelector<HTMLElement>(`#${sectionId}`);
+
+      if (!section) {
+        return;
+      }
+
+      section.scrollIntoView({ behavior, block: "start" });
+
+      if (window.location.hash !== hash) {
+        window.history.replaceState(null, "", hash);
+      }
+    },
+    [],
+  );
 
   useEffect(() => {
     const container = scrollRef.current;
@@ -89,7 +113,11 @@ export default function ProjectDetailScreen({
           className="portfolio-scroll relative flex-1 overflow-y-auto overflow-x-hidden"
         >
           <PageWrapper>
-            <Navbar progress={progress} onOpenChat={onOpenChat} />
+            <Navbar
+              progress={progress}
+              onOpenChat={onOpenChat}
+              onNavigateSection={scrollToSection}
+            />
 
             <section
               id="top"
@@ -141,7 +169,7 @@ export default function ProjectDetailScreen({
                     src={project.image}
                     alt={`${project.title} landing page`}
                     unoptimized={true}
-                    className="h-auto w-full"
+                    className="h-auto w-full max-h-200.5 object-cover"
                     priority
                   />
                 </motion.div>
@@ -287,7 +315,13 @@ export default function ProjectDetailScreen({
             </motion.section>
 
             <SectionBlock title="Gallery" className="scroll-mt-28">
-              <div className="grid gap-5 md:grid-cols-2">
+              <div
+                className={
+                  isMobileGallery
+                    ? "grid justify-center gap-5 sm:grid-cols-2 xl:grid-cols-3"
+                    : "grid gap-5 md:grid-cols-2"
+                }
+              >
                 {project.gallery?.map((image, index) => (
                   <motion.div
                     key={image.src}
@@ -296,11 +330,21 @@ export default function ProjectDetailScreen({
                     whileInView="visible"
                     viewport={{ once: true, amount: 0.22 }}
                     transition={{ delay: index * 0.08 }}
+                    className={isMobileGallery ? "mx-auto w-full max-w-[22rem]" : ""}
                   >
                     <ZoomableImage
                       src={image}
                       alt={`${project.title} gallery image ${index + 1}`}
-                      className="rounded-2xl"
+                      wrapperClassName={
+                        isMobileGallery
+                          ? "mx-auto aspect-[9/19.5] max-w-[22rem] rounded-[1.75rem] bg-[#0b0b0d] p-2 shadow-[0_30px_80px_rgba(0,0,0,0.14)]"
+                          : undefined
+                      }
+                      className={
+                        isMobileGallery
+                          ? "h-full w-full rounded-[1.25rem] object-cover"
+                          : "rounded-2xl"
+                      }
                       unoptimized={true}
                     />
                   </motion.div>
