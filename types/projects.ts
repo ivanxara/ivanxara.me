@@ -19,5 +19,6 @@ export type IProject = {
   repository?: string;
   featureIntro?: string;
   featureCards?: ProjectFeatureItem[];
+  galleryLayout?: "desktop" | "mobile";
   gallery?: StaticImageData[];
 };

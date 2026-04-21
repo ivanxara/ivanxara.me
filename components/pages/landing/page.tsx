@@ -1,7 +1,8 @@
 "use client";
 
-import { useRef } from "react";
+import { useCallback, useEffect, useRef } from "react";
 import { useScroll, useSpring } from "framer-motion";
+import { usePathname } from "next/navigation";
 import { PortfolioBackdrop } from "@/components/layout/portfolio-backdrop";
 import { Navbar } from "@/components/layout/navbar";
 import { PageWrapper } from "@/components/layout/page-wrapper";
@@ -13,12 +14,56 @@ import { SectionProjects } from "@/components/pages/landing/_components/section-
 
 export function PortfolioScreen({ onOpenChat }: { onOpenChat?: () => void }) {
   const scrollRef = useRef<HTMLDivElement>(null);
+  const pathname = usePathname();
   const { scrollYProgress } = useScroll({ container: scrollRef });
   const progress = useSpring(scrollYProgress, {
     stiffness: 110,
     damping: 26,
     mass: 0.35,
   });
+  const scrollToSection = useCallback((hash: string, behavior: ScrollBehavior = "smooth") => {
+    const container = scrollRef.current;
+    const sectionId = hash.replace(/^#/, "");
+
+    if (!container || !sectionId) {
+      return;
+    }
+
+    const section = container.querySelector<HTMLElement>(`#${sectionId}`);
+
+    if (!section) {
+      return;
+    }
+
+    section.scrollIntoView({ behavior, block: "start" });
+
+    if (window.location.hash !== hash) {
+      window.history.replaceState(null, "", hash);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (pathname !== "/") {
+      return;
+    }
+
+    const syncHashScroll = () => {
+      if (!window.location.hash) {
+        return;
+      }
+
+      window.requestAnimationFrame(() => {
+        scrollToSection(window.location.hash, "smooth");
+      });
+    };
+
+    syncHashScroll();
+    window.addEventListener("hashchange", syncHashScroll);
+
+    return () => {
+      window.removeEventListener("hashchange", syncHashScroll);
+    };
+  }, [pathname, scrollToSection]);
 
   return (
     <aside className="flex h-full w-full bg-frame p-3 sm:p-4">
@@ -29,7 +74,11 @@ export function PortfolioScreen({ onOpenChat }: { onOpenChat?: () => void }) {
           ref={scrollRef}
           className="portfolio-scroll relative flex-1 overflow-y-auto"
         >
-          <Navbar progress={progress} onOpenChat={onOpenChat} />
+          <Navbar
+            progress={progress}
+            onOpenChat={onOpenChat}
+            onNavigateSection={scrollToSection}
+          />
 
           <PageWrapper>
             <SectionHero progress={progress} />
