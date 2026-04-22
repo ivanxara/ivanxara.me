@@ -10,6 +10,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
 type ZoomableImageProps = {
@@ -31,29 +32,32 @@ export function ZoomableImage({
 }: ZoomableImageProps) {
   return (
     <Dialog>
-      <DialogTrigger asChild>
-        <button
-          type="button"
-          className={cn(
-            "group relative block w-full cursor-pointer overflow-hidden text-left",
-            wrapperClassName,
-          )}
-          aria-label={`Open ${alt} fullscreen`}
-        >
-          <Image
-            src={src}
-            alt={alt}
-            priority={priority}
-            unoptimized={unoptimized}
-            className={cn("h-auto w-full", className)}
-          />
-          <div className="absolute bottom-4 right-4 opacity-0 transition-opacity group-hover:opacity-100 group-focus-visible:opacity-100">
-            <Expand className="size-4" />
-          </div>
-        </button>
-      </DialogTrigger>
+      <div className={wrapperClassName}>
+        <DialogTrigger asChild>
+          <Button
+            variant="unstyled"
+            size="image-trigger"
+            aria-label={`Open ${alt} fullscreen`}
+          >
+            <div className="group relative block overflow-hidden text-left">
+              <Image
+                src={src}
+                alt={alt}
+                priority={priority}
+                unoptimized={unoptimized}
+                className={cn("h-auto w-full", className)}
+              />
+              <div className="absolute right-5 top-5 z-10 opacity-0 transition-all duration-300 group-hover:opacity-100 group-focus-visible:opacity-100">
+                <div className="inline-flex size-11 cursor-pointer items-center justify-center rounded-full border border-white/10 bg-black/45 text-white backdrop-blur-sm group-hover:border-white/25 group-hover:bg-black/60 group-focus-visible:border-white/25 group-focus-visible:bg-black/60">
+                  <Expand className="size-4" />
+                </div>
+              </div>
+            </div>
+          </Button>
+        </DialogTrigger>
+      </div>
 
-      <DialogContent className="sm:max-w-6xl w-full ring-0">
+      <DialogContent size="wide" chrome="plain">
         <VisuallyHidden.Root>
           <DialogTitle>{alt}</DialogTitle>
         </VisuallyHidden.Root>

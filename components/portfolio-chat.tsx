@@ -9,6 +9,7 @@ import {
   type ReactNode,
 } from "react";
 import { ArrowUp, RotateCcw, X } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import {
   askPortfolioChat,
   type ChatMessage,
@@ -78,7 +79,7 @@ function renderTextWithLinks(content: string): ReactNode[] {
           href={normalizeHref(value)}
           target="_blank"
           rel="noreferrer"
-          className="underline decoration-white/30 underline-offset-4 transition-colors hover:text-white"
+          className="underline decoration-white/30 underline-offset-4 transition-colors hover:text-sidebar-foreground"
         >
           {value}
         </a>,
@@ -105,7 +106,7 @@ function renderTextWithLinks(content: string): ReactNode[] {
         href={match[2]}
         target="_blank"
         rel="noreferrer"
-        className="underline decoration-white/30 underline-offset-4 transition-colors hover:text-white"
+        className="underline decoration-white/30 underline-offset-4 transition-colors hover:text-sidebar-foreground"
       >
         {match[1]}
       </a>,
@@ -145,7 +146,7 @@ function TypingDots() {
       {[0, 1, 2].map((index) => (
         <span
           key={index}
-          className="h-1.5 w-1.5 rounded-full bg-muted opacity-50"
+          className="h-1.5 w-1.5 rounded-full bg-muted-foreground opacity-50"
           style={{
             animation: "typing-bounce 1.2s ease-in-out infinite",
             animationDelay: `${index * 0.18}s`,
@@ -170,10 +171,10 @@ function ChatBubble({ message }: { message: PortfolioChatMessage }) {
       <div
         className={`max-w-[88%] rounded-[1.15rem] px-4 py-3 text-[13px] leading-relaxed sm:text-sm ${
           isUser
-            ? "bg-white/[0.07] text-ink"
+            ? "bg-white/[0.07] text-foreground"
             : message.isError
               ? "border border-red-400/20 bg-red-500/10 text-red-100"
-              : "border border-white/[0.05] bg-white/[0.03] text-chat-paper"
+              : "border border-white/[0.05] bg-white/[0.03] text-sidebar-foreground"
         }`}
       >
         {renderTextWithLinks(message.content)}
@@ -283,45 +284,47 @@ export function PortfolioChat({ onClose }: { onClose?: () => void }) {
   return (
     <section
       data-portfolio-chat-root="true"
-      className="flex h-full w-full min-w-[30rem] flex-col overflow-hidden bg-frame text-chat-paper"
+      className="flex h-full w-full min-w-[30rem] flex-col overflow-hidden bg-sidebar text-sidebar-foreground"
     >
       <div className="border-b border-white/[0.06] px-5 py-5">
         <div className="flex items-start justify-between gap-3">
           <div className="max-w-md">
-            <p className="text-[10px] font-black uppercase tracking-[0.24em] text-accent/70">
+            <p className="text-[10px] font-black uppercase tracking-[0.24em] text-primary/70">
               Ivan Assistant
             </p>
-            <h2 className="mt-2 text-[clamp(1.65rem,3vw,2.3rem)] font-extrabold leading-[0.96] tracking-[-0.06em] text-ink">
+            <h2 className="mt-2 text-[clamp(1.65rem,3vw,2.3rem)] font-extrabold leading-[0.96] tracking-[-0.06em] text-foreground">
               Ask about Ivan.
             </h2>
           </div>
 
           <div className="mt-0.5 flex items-center gap-1.5">
             {hasConversation && (
-              <button
+              <Button
                 type="button"
+                variant="chat-icon"
+                size="icon"
                 onClick={resetConversation}
                 title="Reset conversation"
-                className="flex h-8 w-8 cursor-pointer items-center justify-center rounded-full text-muted transition-colors duration-200 hover:bg-white/[0.05] hover:text-ink"
               >
                 <RotateCcw className="h-3.5 w-3.5" />
-              </button>
+              </Button>
             )}
 
             {onClose && (
-              <button
+              <Button
                 type="button"
+                variant="chat-icon"
+                size="icon"
                 onClick={onClose}
                 title="Close chat"
-                className="flex h-8 w-8 cursor-pointer items-center justify-center rounded-full text-muted transition-colors duration-200 hover:bg-white/[0.05] hover:text-ink"
               >
                 <X className="h-3.5 w-3.5" />
-              </button>
+              </Button>
             )}
           </div>
         </div>
 
-        <p className="mt-3 max-w-md text-[13px] leading-6 text-muted sm:text-sm">
+        <p className="mt-3 max-w-md text-[13px] leading-6 text-muted-foreground sm:text-sm">
           A softer, quicker way to get the gist. Ask about his strengths, what
           he is building, or the kind of work he is best at.
         </p>
@@ -349,14 +352,15 @@ export function PortfolioChat({ onClose }: { onClose?: () => void }) {
           {!hasConversation && (
             <div className="mb-3 flex flex-wrap gap-2">
               {STARTER_PROMPTS.map((prompt) => (
-                <button
+                <Button
                   key={prompt}
                   type="button"
+                  variant="chat-chip"
+                  size="chat-chip"
                   onClick={() => submitMessage(prompt)}
-                  className="cursor-pointer rounded-full border border-white/[0.06] bg-white/[0.03] px-3.5 py-2 text-[12px] font-medium text-white/58 transition-all duration-200 hover:border-white/[0.1] hover:bg-white/[0.05] hover:text-white"
                 >
                   {prompt}
-                </button>
+                </Button>
               ))}
             </div>
           )}
@@ -370,20 +374,21 @@ export function PortfolioChat({ onClose }: { onClose?: () => void }) {
                 onKeyDown={handleKeyDown}
                 placeholder="Ask about Ivan..."
                 rows={1}
-                className="max-h-[160px] min-h-[84px] w-full resize-none bg-transparent px-4 py-3.5 text-[14px] text-ink placeholder:text-muted focus:outline-none sm:text-sm"
+                className="max-h-[160px] min-h-[84px] w-full resize-none bg-transparent px-4 py-3.5 text-[14px] text-foreground placeholder:text-muted-foreground focus:outline-none sm:text-sm"
               />
               <div className="flex items-center justify-between gap-3 px-3 pb-3">
-                <p className="text-[10px] font-medium text-muted opacity-45">
+                <p className="text-[10px] font-medium text-muted-foreground opacity-45">
                   Enter to send · Shift+Enter for a new line
                 </p>
-                <button
+                <Button
                   type="button"
+                  variant="chat-send"
+                  size="icon"
                   onClick={() => submitMessage(input)}
                   disabled={!input.trim() || chatMutation.isPending}
-                  className="flex h-9 w-9 items-center justify-center rounded-full bg-white/[0.72] text-background transition-colors duration-200 hover:bg-white/[0.86] disabled:cursor-not-allowed disabled:opacity-30"
                 >
                   <ArrowUp className="h-4 w-4" />
-                </button>
+                </Button>
               </div>
             </div>
           </div>

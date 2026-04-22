@@ -13,7 +13,7 @@ export function SectionTitle({ children }: { children: ReactNode }) {
       viewport={{ once: true, amount: 0.4 }}
       className="flex items-center gap-4"
     >
-      <h2 className="text-[10px] font-black uppercase tracking-[0.24em] text-muted/56">
+      <h2 className="text-[10px] font-black uppercase tracking-[0.24em] text-muted-foreground/56">
         {children}
       </h2>
     </motion.div>

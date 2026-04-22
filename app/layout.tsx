@@ -24,7 +24,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={cn("font-sans", manrope.variable)}>
-      <body className="font-sans antialiased selection:bg-accent/28 selection:text-ink">
+      <body className="font-sans antialiased selection:bg-primary/28 selection:text-foreground">
         <AppQueryProvider>
           <SmoothScroll>
             <PortfolioLayout>{children}</PortfolioLayout>

@@ -1,12 +1,9 @@
 "use client";
 
 import {
-  cloneElement,
-  isValidElement,
   useEffect,
   useRef,
   useState,
-  type ReactElement,
   type ReactNode,
 } from "react";
 import {
@@ -97,20 +94,14 @@ export function PortfolioLayout({ children }: { children: ReactNode }) {
     };
   }, [isChatCollapsed]);
 
-  const content = isValidElement(children)
-    ? cloneElement(children as ReactElement<{ onOpenChat?: () => void }>, {
-        onOpenChat: toggleChat,
-      })
-    : children;
-
   return (
     <PortfolioChatProvider onOpenChat={toggleChat}>
       <main className="h-screen overflow-hidden bg-background text-foreground">
         <div className="frame-glow pointer-events-none fixed inset-0" />
 
-        <section className="relative h-screen w-full overflow-hidden bg-frame ">
+        <section className="relative h-screen w-full overflow-hidden bg-sidebar">
           <div className="flex h-full w-full flex-col min-[1480px]:hidden">
-            {content}
+            {children}
             <div ref={mobileChatRef} className="min-h-[34rem]">
               <PortfolioChat />
             </div>
@@ -120,26 +111,23 @@ export function PortfolioLayout({ children }: { children: ReactNode }) {
             <ResizablePanelGroup
               autoSaveId="portfolio-layout"
               direction="horizontal"
-              className="h-full w-full"
+              variant="layout"
             >
               <ResizablePanel
                 defaultSize={100 - CHAT_OPEN_SIZE}
                 minSize={0}
-                className="min-w-0 overflow-hidden"
+                variant="content"
               >
-                {content}
+                {children}
               </ResizablePanel>
 
               <ResizableHandle
+                variant="divider"
+                collapsed={isChatCollapsed}
                 disabled={isChatCollapsed}
                 onDoubleClick={() => {
                   chatPanelRef.current?.collapse();
                 }}
-                className={`shrink-0 bg-transparent transition-colors duration-200 ${
-                  isChatCollapsed
-                    ? "pointer-events-none w-0 opacity-0"
-                    : "group relative w-4 cursor-col-resize"
-                }`}
               >
                 <div className="absolute inset-y-0 left-1/2 w-px -translate-x-1/2 bg-white/[0.08] transition-colors duration-200 group-hover:bg-white/[0.16]" />
               </ResizableHandle>
@@ -158,7 +146,7 @@ export function PortfolioLayout({ children }: { children: ReactNode }) {
                     chatPanelRef.current?.collapse();
                   }
                 }}
-                className="min-w-0 overflow-hidden bg-frame transition-[border-color] duration-200"
+                variant="sidebar"
               >
                 <div
                   className={`h-full overflow-hidden transition-opacity duration-200 ${

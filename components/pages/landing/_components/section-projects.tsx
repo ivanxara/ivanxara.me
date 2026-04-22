@@ -73,7 +73,7 @@ export function SectionProjects({ progress }: { progress: MotionValue<number> })
                     onMouseEnter={() => setHoveredIndex(index)}
                     onMouseLeave={() => setHoveredIndex(null)}
                     className={`group relative flex cursor-pointer flex-col justify-between gap-5 overflow-hidden py-12 transition-all duration-500 sm:py-16 lg:flex-row lg:items-center ${
-                      index < PROJECT_LIST.length - 1 ? "border-b border-line" : ""
+                      index < PROJECT_LIST.length - 1 ? "border-b border-border" : ""
                     }`}
                   >
                     <motion.div
@@ -98,7 +98,7 @@ export function SectionProjects({ progress }: { progress: MotionValue<number> })
                     >
                       <h3
                         className={`text-[clamp(2.35rem,6vw,5rem)] font-black leading-[0.95] tracking-[-0.08em] transition-colors duration-500 ${
-                          isDimmed ? "text-ink/20" : "text-ink"
+                          isDimmed ? "text-foreground/20" : "text-foreground"
                         }`}
                       >
                         {project.title}
@@ -107,7 +107,7 @@ export function SectionProjects({ progress }: { progress: MotionValue<number> })
 
                     <div className="relative z-10 flex flex-col items-start gap-2 lg:flex-row lg:items-center lg:gap-6 lg:text-right">
                       <div className="flex flex-col items-start gap-2 lg:items-end">
-                        <span className="text-xs font-semibold text-muted uppercase tracking-wider transition-colors duration-500">
+                        <span className="text-xs font-semibold text-muted-foreground uppercase tracking-wider transition-colors duration-500">
                           {project.role}
                         </span>
                         <div className="flex flex-wrap gap-2 lg:justify-end">
@@ -119,12 +119,11 @@ export function SectionProjects({ progress }: { progress: MotionValue<number> })
                               <span
                                 key={`${project.slug}-${technologyKey}`}
                                 aria-label={technology.label}
-                                title={technology.label}
-                                className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-white/[0.04] text-ink-secondary"
+                                className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-white/[0.04] text-muted-foreground"
                               >
                                 <Icon
                                   aria-hidden="true"
-                                  className="h-4 w-4 text-ink"
+                                  className="h-4 w-4 text-foreground"
                                 />
                               </span>
                             );

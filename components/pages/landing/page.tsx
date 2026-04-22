@@ -66,8 +66,8 @@ export function PortfolioScreen({ onOpenChat }: { onOpenChat?: () => void }) {
   }, [pathname, scrollToSection]);
 
   return (
-    <aside className="flex h-full w-full bg-frame p-3 sm:p-4">
-      <div className="noise-overlay relative flex h-full w-full flex-col overflow-hidden rounded-[2.5rem] bg-paper">
+    <aside className="flex h-full w-full bg-sidebar p-3 sm:p-4">
+      <div className="noise-overlay relative flex h-full w-full flex-col overflow-hidden rounded-[2.5rem] bg-card">
         {/* <PortfolioBackdrop progress={progress} /> */}
 
         <div

@@ -17,12 +17,12 @@ export function SectionAbout({ progress }: { progress: MotionValue<number> }) {
             whileInView="visible"
             viewport={{ once: true, amount: 0.35 }}
           >
-            <h2 className="mb-6 max-w-4xl text-[clamp(1.9rem,5vw,4rem)] font-black leading-[1.03] tracking-[-0.07em] text-ink">
+            <h2 className="mb-6 max-w-4xl text-[clamp(1.9rem,5vw,4rem)] font-black leading-[1.03] tracking-[-0.07em] text-foreground">
               bridging the gap between{" "}
-              <span className="italic text-accent">design intent</span>{" "}
+              <span className="italic text-primary">design intent</span>{" "}
               and functional systems.
             </h2>
-            <p className="max-w-2xl text-sm leading-relaxed text-muted sm:text-base">
+            <p className="max-w-2xl text-sm leading-relaxed text-muted-foreground sm:text-base">
               Focused on making digital experiences feel seamless, useful, and
               visually intentional without overcomplicating the product.
             </p>

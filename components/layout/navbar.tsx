@@ -6,6 +6,7 @@ import { Sparkles } from "lucide-react";
 import { motion, useMotionValueEvent, type MotionValue } from "framer-motion";
 import { useEffect, useState, type MouseEvent } from "react";
 import { usePortfolioChat } from "@/components/layout/portfolio-chat-context";
+import { Button } from "@/components/ui/button";
 import { Kbd, KbdGroup } from "@/components/ui/kbd";
 import { NAVBAR_ITEMS } from "@/utils/constants";
 
@@ -81,7 +82,7 @@ export function Navbar({
           <Link
             href={isHome ? "#top" : "/#top"}
             onClick={(event) => handleSectionClick(event, "#top", isHome)}
-            className="text-[12px] font-black tracking-[-0.04em] text-ink sm:text-[13px]"
+            className="text-[12px] font-black tracking-[-0.04em] text-foreground sm:text-[13px]"
           >
             ivan xara ✌️
           </Link>
@@ -101,32 +102,33 @@ export function Navbar({
                     isHome || (isProjectPage && item.href === "#contact"),
                   )
                 }
-                className="rounded-full px-2.5 py-1.5 text-[10px] font-black uppercase  text-muted transition-all duration-300 hover:bg-white/[0.04] hover:text-ink sm:text-[11px]"
+                className="rounded-full px-2.5 py-1.5 text-[10px] font-black uppercase text-muted-foreground transition-all duration-300 hover:bg-white/[0.04] hover:text-foreground sm:text-[11px]"
               >
                 {item.label}
               </Link>
             ))}
           </nav>
-          <button
+          <Button
             type="button"
+            variant="glass"
+            size="nav-chip"
             onClick={handleOpenChat ?? undefined}
             aria-label="Open chat with suggestion chip"
             aria-expanded={false}
-            className="flex cursor-pointer items-center gap-1.5 rounded-full border border-white/[0.08] bg-white/[0.04] px-2 py-1 text-white/72 transition-colors duration-200 hover:bg-white/[0.06] hover:text-white"
           >
-            <Sparkles className="size-[0.7rem] text-accent/80" />
+            <Sparkles className="size-[0.7rem] text-primary/80" />
             <span className="text-[10px] font-medium tracking-[0.03em]">
               Ask AI
             </span>
-            <KbdGroup className="ml-0.5 hidden items-center gap-0.5 border-l border-white/[0.08] pl-1 md:inline-flex">
-              <Kbd className="h-4.5 min-w-4.5 rounded-[0.5rem] border-white/[0.08] bg-black/15 px-0.5 text-[8px] text-white/50 shadow-none">
+            <KbdGroup variant="navbar">
+              <Kbd variant="navbar">
                 {isMac ? "⌘" : "Ctrl"}
               </Kbd>
-              <Kbd className="h-4.5 min-w-4.5 rounded-[0.5rem] border-white/[0.08] bg-black/15 px-0.5 text-[8px] text-white/50 shadow-none">
+              <Kbd variant="navbar">
                 K
               </Kbd>
             </KbdGroup>
-          </button>
+          </Button>
         </div>
       </motion.div>
     </div>

@@ -41,7 +41,7 @@ export function SectionHero({ progress }: { progress: MotionValue<number> }) {
         className="pointer-events-none absolute right-0 top-1/2 hidden -translate-y-1/2 lg:block"
         style={{ writingMode: "vertical-rl" }}
       >
-        <span className="select-none font-mono text-[9px] uppercase tracking-[0.38em] text-muted opacity-[0.15]">
+        <span className="select-none font-mono text-[9px] uppercase tracking-[0.38em] text-muted-foreground opacity-[0.15]">
           full-stack developer — portugal
         </span>
       </motion.div>
@@ -60,7 +60,7 @@ export function SectionHero({ progress }: { progress: MotionValue<number> }) {
                   duration: 1.3,
                   ease: [0.16, 1, 0.3, 1],
                 }}
-                className="select-none text-[clamp(5rem,16vw,13rem)] font-black leading-[0.85] tracking-[-0.065em] text-ink"
+                className="select-none text-[clamp(5rem,16vw,13rem)] font-black leading-[0.85] tracking-[-0.065em] text-foreground"
               >
                 ivan
               </motion.h1>
@@ -75,7 +75,7 @@ export function SectionHero({ progress }: { progress: MotionValue<number> }) {
                   duration: 1.3,
                   ease: [0.16, 1, 0.3, 1],
                 }}
-                className="select-none block text-[clamp(5rem,16vw,13rem)] font-black leading-[0.85] tracking-tighter text-ink"
+                className="select-none block text-[clamp(5rem,16vw,13rem)] font-black leading-[0.85] tracking-tighter text-foreground"
                 style={{ marginLeft: "clamp(1.5rem, 10vw, 8rem)" }}
               >
                 xará
@@ -89,7 +89,7 @@ export function SectionHero({ progress }: { progress: MotionValue<number> }) {
           initial={{ opacity: 0, y: 6 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1.35, duration: 0.9, ease: "easeOut" }}
-          className="mt-14 max-w-[20rem] text-[12px] leading-[1.8] text-muted opacity-40"
+          className="mt-14 max-w-[20rem] text-[12px] leading-[1.8] text-muted-foreground opacity-40"
         >
           Designer and developer creating clean, memorable digital experiences
           with a sharp eye for detail.

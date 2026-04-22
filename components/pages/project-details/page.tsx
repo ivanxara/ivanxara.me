@@ -13,12 +13,8 @@ import { Navbar } from "@/components/layout/navbar";
 import { PageWrapper } from "@/components/layout/page-wrapper";
 import { SectionBlock } from "@/components/shared/section-block";
 import { ZoomableImage } from "@/components/shared/zoomable-image";
+import { PlayGameDialog } from "@/components/pages/project-details/_components/play-game-dialog";
 import { Footer } from "@/components/layout/footer";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
 import { fadeUp } from "@/lib/animations/motion";
 import { SiGithub } from "react-icons/si";
 import { TECHNOLOGY_META } from "@/utils/technologies";
@@ -104,8 +100,8 @@ export default function ProjectDetailScreen({
   }
 
   return (
-    <aside className="flex h-full w-full bg-frame p-3 sm:p-4">
-      <div className="noise-overlay relative flex h-full w-full flex-col overflow-hidden rounded-[2.5rem] bg-paper">
+    <aside className="flex h-full w-full bg-sidebar p-3 sm:p-4">
+      <div className="noise-overlay relative flex h-full w-full flex-col overflow-hidden rounded-[2.5rem] bg-card">
         <PortfolioBackdrop progress={progress} />
 
         <div
@@ -130,7 +126,7 @@ export default function ProjectDetailScreen({
                 className="pointer-events-none absolute right-0 top-1/2 hidden -translate-y-1/2 lg:block"
                 style={{ writingMode: "vertical-rl" }}
               >
-                <span className="select-none font-mono text-[9px] uppercase tracking-[0.38em] text-muted opacity-[0.15]">
+                <span className="select-none font-mono text-[9px] uppercase tracking-[0.38em] text-muted-foreground opacity-[0.15]">
                   {project.eyebrow}
                 </span>
               </motion.div>
@@ -147,7 +143,7 @@ export default function ProjectDetailScreen({
                           duration: 1.3,
                           ease: [0.16, 1, 0.3, 1],
                         }}
-                        className="select-none text-[clamp(4.8rem,15vw,12rem)] font-black leading-[0.85] tracking-[-0.065em] text-ink"
+                        className="select-none text-[clamp(4.8rem,15vw,8rem)] font-black tracking-[-0.065em] text-foreground"
                       >
                         {project.title}
                       </motion.h1>
@@ -163,7 +159,7 @@ export default function ProjectDetailScreen({
                     duration: 1.4,
                     ease: [0.16, 1, 0.3, 1],
                   }}
-                  className="mt-10 overflow-hidden rounded-[1.85rem] bg-[#0b0b0d] shadow-[0_40px_120px_rgba(0,0,0,0.22)] sm:mt-12 sm:rounded-[2.25rem]"
+                  className="overflow-hidden rounded-[1.85rem] bg-[#0b0b0d] shadow-[0_40px_120px_rgba(0,0,0,0.22)] sm:rounded-[2.25rem]"
                 >
                   <Image
                     src={project.image}
@@ -185,9 +181,9 @@ export default function ProjectDetailScreen({
                     whileInView="visible"
                     viewport={{ once: true, amount: 0.35 }}
                   >
-                    <h2 className="mb-6 max-w-4xl text-[clamp(1.9rem,5vw,4rem)] font-black leading-[1.03] tracking-[-0.07em] text-ink">
+                    <h2 className="mb-6 max-w-4xl text-[clamp(1.9rem,5vw,4rem)] font-black leading-[1.03] tracking-[-0.07em] text-foreground">
                       {project.overviewTitle}{" "}
-                      <span className="italic text-accent">
+                      <span className="italic text-primary">
                         {project.overviewAccent}
                       </span>
                     </h2>
@@ -196,8 +192,8 @@ export default function ProjectDetailScreen({
                         key={paragraph}
                         className={
                           index === 0
-                            ? "max-w-3xl text-sm leading-relaxed text-muted sm:text-base"
-                            : "mt-4 max-w-3xl text-sm leading-relaxed text-muted sm:text-base"
+                            ? "max-w-3xl text-sm leading-relaxed text-muted-foreground sm:text-base"
+                            : "mt-4 max-w-3xl text-sm leading-relaxed text-muted-foreground sm:text-base"
                         }
                       >
                         {paragraph}
@@ -215,7 +211,7 @@ export default function ProjectDetailScreen({
                     >
                       <a
                         href={project.repository}
-                        className="group flex items-center gap-2 text-xs font-semibold text-muted transition-colors duration-300 hover:text-ink"
+                        className="group flex items-center gap-2 text-xs font-semibold text-muted-foreground transition-colors duration-300 hover:text-foreground"
                         target="_blank"
                         rel="noreferrer"
                       >
@@ -237,35 +233,23 @@ export default function ProjectDetailScreen({
                       const Icon = technology.icon;
 
                       return (
-                        <Tooltip key={technologyKey}>
-                          <TooltipTrigger asChild>
-                            <button
-                              type="button"
-                              className="flex items-center gap-2.5 rounded-full border border-ink/10 px-4 py-2 text-left transition-colors hover:border-ink/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/30"
-                            >
-                              <span
-                                aria-label={technology.label}
-                                title={technology.label}
-                                className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-white/[0.04] text-ink-secondary"
-                              >
-                                <Icon
-                                  aria-hidden="true"
-                                  className="h-4 w-4 text-ink"
-                                />
-                              </span>
-                              <span className="text-[13px] font-semibold tracking-[-0.02em] text-ink-secondary">
-                                {technology.label}
-                              </span>
-                            </button>
-                          </TooltipTrigger>
-                          <TooltipContent
-                            side="bottom"
-                            sideOffset={8}
-                            className="max-w-xs rounded-xl bg-ink px-3 py-2 text-[12px] leading-[1.6] text-paper shadow-[0_12px_30px_rgba(0,0,0,0.16)]"
+                        <div
+                          key={technologyKey}
+                          className="flex items-center gap-2.5 rounded-full border border-foreground/10 px-4 py-2 text-left"
+                        >
+                          <span
+                            aria-label={technology.label}
+                            className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-white/[0.04] text-muted-foreground"
                           >
-                            {technology.detail}
-                          </TooltipContent>
-                        </Tooltip>
+                            <Icon
+                              aria-hidden="true"
+                              className="h-4 w-4 text-foreground"
+                            />
+                          </span>
+                          <span className="text-[13px] font-semibold tracking-[-0.02em] text-muted-foreground">
+                            {technology.label}
+                          </span>
+                        </div>
                       );
                     })}
                   </motion.div>
@@ -282,7 +266,7 @@ export default function ProjectDetailScreen({
                     whileInView="visible"
                     viewport={{ once: true, amount: 0.35 }}
                   >
-                    <p className="max-w-2xl text-[clamp(1.6rem,3vw,2.6rem)] font-black leading-[0.98] tracking-[-0.06em] text-ink">
+                    <p className="max-w-2xl text-[clamp(1.6rem,3vw,2.6rem)] font-black leading-[0.98] tracking-[-0.06em] text-foreground">
                       {project.featureIntro}
                     </p>
                   </motion.div>
@@ -296,15 +280,15 @@ export default function ProjectDetailScreen({
                         whileInView="visible"
                         viewport={{ once: true, amount: 0.28 }}
                         transition={{ delay: index * 0.08 }}
-                        className="border-t border-ink/8 pt-8 first:border-t-0 first:pt-0"
+                        className="border-t border-foreground/8 pt-8 first:border-t-0 first:pt-0"
                       >
-                        <span className="text-[10px] font-black uppercase tracking-[0.24em] text-accent/78">
+                        <span className="text-[10px] font-black uppercase tracking-[0.24em] text-primary/78">
                           {String(index + 1).padStart(2, "0")}
                         </span>
-                        <h3 className="mt-3 max-w-xl text-[clamp(1.3rem,2vw,1.9rem)] font-black leading-[1.03] tracking-[-0.045em] text-ink">
+                        <h3 className="mt-3 max-w-xl text-[clamp(1.3rem,2vw,1.9rem)] font-black leading-[1.03] tracking-[-0.045em] text-foreground">
                           {feature.title}
                         </h3>
-                        <p className="mt-3 max-w-2xl text-sm leading-[1.9] text-muted">
+                        <p className="mt-3 max-w-2xl text-sm leading-[1.9] text-muted-foreground">
                           {feature.copy}
                         </p>
                       </motion.article>
@@ -314,43 +298,51 @@ export default function ProjectDetailScreen({
               </SectionBlock>
             </motion.section>
 
-            <SectionBlock title="Gallery" className="scroll-mt-28">
-              <div
-                className={
-                  isMobileGallery
-                    ? "grid justify-center gap-5 sm:grid-cols-2 xl:grid-cols-3"
-                    : "grid gap-5 md:grid-cols-2"
-                }
-              >
-                {project.gallery?.map((image, index) => (
-                  <motion.div
-                    key={image.src}
-                    variants={fadeUp}
-                    initial="hidden"
-                    whileInView="visible"
-                    viewport={{ once: true, amount: 0.22 }}
-                    transition={{ delay: index * 0.08 }}
-                    className={isMobileGallery ? "mx-auto w-full max-w-[22rem]" : ""}
-                  >
-                    <ZoomableImage
-                      src={image}
-                      alt={`${project.title} gallery image ${index + 1}`}
-                      wrapperClassName={
-                        isMobileGallery
-                          ? "mx-auto aspect-[9/19.5] max-w-[22rem] rounded-[1.75rem] bg-[#0b0b0d] p-2 shadow-[0_30px_80px_rgba(0,0,0,0.14)]"
-                          : undefined
-                      }
-                      className={
-                        isMobileGallery
-                          ? "h-full w-full rounded-[1.25rem] object-cover"
-                          : "rounded-2xl"
-                      }
-                      unoptimized={true}
-                    />
-                  </motion.div>
-                ))}
-              </div>
-            </SectionBlock>
+            {project.playSection && project.slug === "my-game" ? (
+              <SectionBlock title="Play" className="scroll-mt-28">
+                <PlayGameDialog title={project.title} />
+              </SectionBlock>
+            ) : null}
+
+            {project.gallery?.length ? (
+              <SectionBlock title="Gallery" className="scroll-mt-28">
+                <div
+                  className={
+                    isMobileGallery
+                      ? "grid justify-center gap-5 sm:grid-cols-2 xl:grid-cols-3"
+                      : "grid gap-5 md:grid-cols-2"
+                  }
+                >
+                  {project.gallery.map((image, index) => (
+                    <motion.div
+                      key={image.src}
+                      variants={fadeUp}
+                      initial="hidden"
+                      whileInView="visible"
+                      viewport={{ once: true, amount: 0.22 }}
+                      transition={{ delay: index * 0.08 }}
+                      className={isMobileGallery ? "mx-auto w-full max-w-[22rem]" : ""}
+                    >
+                      <ZoomableImage
+                        src={image}
+                        alt={`${project.title} gallery image ${index + 1}`}
+                        wrapperClassName={
+                          isMobileGallery
+                            ? "mx-auto aspect-[9/19.5] max-w-[22rem] rounded-[1.75rem] bg-[#0b0b0d] p-2 shadow-[0_30px_80px_rgba(0,0,0,0.14)]"
+                            : undefined
+                        }
+                        className={
+                          isMobileGallery
+                            ? "h-full w-full rounded-[1.25rem] object-cover"
+                            : "rounded-2xl"
+                        }
+                        unoptimized={true}
+                      />
+                    </motion.div>
+                  ))}
+                </div>
+              </SectionBlock>
+            ) : null}
           </PageWrapper>
 
           <Footer progress={progress} />

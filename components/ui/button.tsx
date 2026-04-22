@@ -19,6 +19,18 @@ const buttonVariants = cva(
         destructive:
           "bg-destructive/10 text-destructive hover:bg-destructive/20 focus-visible:border-destructive/40 focus-visible:ring-destructive/20 dark:bg-destructive/20 dark:hover:bg-destructive/30 dark:focus-visible:ring-destructive/40",
         link: "text-primary underline-offset-4 hover:underline",
+        unstyled:
+          "border-transparent bg-transparent shadow-none hover:bg-transparent focus-visible:ring-0 focus-visible:border-transparent active:translate-y-0",
+        glass:
+          "rounded-full border border-white/[0.08] bg-white/[0.04] text-white/72 hover:bg-white/[0.06] hover:text-white",
+        "chat-chip":
+          "rounded-full border border-white/[0.06] bg-white/[0.03] text-white/58 hover:border-white/[0.1] hover:bg-white/[0.05] hover:text-white",
+        "chat-send":
+          "rounded-full border-transparent bg-white/[0.72] text-background hover:bg-white/[0.86]",
+        "floating-overlay":
+          "rounded-full border border-white/10 bg-black/45 text-white backdrop-blur-sm hover:border-white/25 hover:bg-black/60",
+        "chat-icon":
+          "rounded-full text-muted-foreground hover:bg-white/[0.05] hover:text-foreground",
       },
       size: {
         default:
@@ -32,6 +44,10 @@ const buttonVariants = cva(
         "icon-sm":
           "size-7 rounded-[min(var(--radius-md),12px)] in-data-[slot=button-group]:rounded-lg",
         "icon-lg": "size-9",
+        "icon-xl": "size-11",
+        "chat-chip": "h-auto px-3.5 py-2 text-[12px] font-medium",
+        "nav-chip": "h-auto gap-1.5 px-2 py-1",
+        "image-trigger": "h-auto w-full p-0",
       },
     },
     defaultVariants: {

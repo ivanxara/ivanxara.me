@@ -3,12 +3,15 @@ import {
   SiGooglegemini,
   SiNextdotjs,
   SiNuxt,
+  SiSharp,
   SiStripe,
   SiSupabase,
   SiTailwindcss,
   SiTypescript,
+  SiUnity,
   SiVuedotjs,
 } from "react-icons/si";
+import { LuBrush } from "react-icons/lu";
 import type { TechnologyIconKey } from "@/types/technologies";
 
 export const TECHNOLOGY_META: Record<
@@ -61,5 +64,23 @@ export const TECHNOLOGY_META: Record<
     detail:
       "Used to ship a premium landing-to-dashboard experience without losing iteration speed.",
     icon: SiTailwindcss,
+  },
+  unity: {
+    label: "Unity",
+    detail:
+      "Used to build and export the playable WebGL experience embedded directly into the case study.",
+    icon: SiUnity,
+  },
+  csharp: {
+    label: "C#",
+    detail:
+      "Used for gameplay systems, interactions, progression logic, and core behavior scripting inside Unity.",
+    icon: SiSharp,
+  },
+  photoshop: {
+    label: "Photoshop",
+    detail:
+      "Used to shape the visual direction and create supporting game art and presentation assets.",
+    icon: LuBrush,
   },
 };

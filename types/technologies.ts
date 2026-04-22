@@ -6,4 +6,7 @@ export type TechnologyIconKey =
   | "stripe"
   | "nuxt"
   | "vue"
-  | "tailwind";
+  | "tailwind"
+  | "unity"
+  | "csharp"
+  | "photoshop";

@@ -16,7 +16,7 @@ export function Footer({
   return (
     <motion.section
       id="contact"
-      className="scroll-mt-28 border-t border-line pb-12 pt-4"
+      className="scroll-mt-28 border-t border-border pb-12 pt-4"
       style={{ y: sectionY }}
     >
       <PageWrapper>
@@ -28,7 +28,7 @@ export function Footer({
             viewport={{ once: true, amount: 0.3 }}
           >
             <a href={`mailto:${MY_EMAIL}`} className="group block">
-              <h2 className="text-[clamp(2rem,5.5vw,5.2rem)] font-black leading-[0.9] tracking-[-0.06em] text-ink transition-colors duration-500 group-hover:text-accent">
+              <h2 className="text-[clamp(2rem,5.5vw,5.2rem)] font-black leading-[0.9] tracking-[-0.06em] text-foreground transition-colors duration-500 group-hover:text-primary">
                 {MY_EMAIL}
               </h2>
             </a>
@@ -45,7 +45,7 @@ export function Footer({
               <a
                 key={link.label}
                 href={link.href}
-                className="group flex items-center gap-2 text-xs font-semibold text-muted transition-colors duration-300 hover:text-ink"
+                className="group flex items-center gap-2 text-xs font-semibold text-muted-foreground transition-colors duration-300 hover:text-foreground"
                 target="_blank"
               >
                 <link.icon className="size-3" />
@@ -54,11 +54,11 @@ export function Footer({
             ))}
           </motion.div>
 
-          <div className="mt-28 flex flex-col justify-between gap-4 border-t border-line pt-8 md:flex-row md:items-center">
-            <p className="text-[11px] font-black uppercase tracking-[0.22em] text-muted opacity-40">
+          <div className="mt-28 flex flex-col justify-between gap-4 border-t border-border pt-8 md:flex-row md:items-center">
+            <p className="text-[11px] font-black uppercase tracking-[0.22em] text-muted-foreground opacity-40">
               © 2026 ivan xara
             </p>
-            <p className="text-[11px] font-black uppercase tracking-[0.22em] text-muted opacity-40">
+            <p className="text-[11px] font-black uppercase tracking-[0.22em] text-muted-foreground opacity-40">
               Portugal — Worldwide
             </p>
           </div>

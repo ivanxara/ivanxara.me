@@ -36,6 +36,13 @@ import ath8 from "@/assets/img/athPremium Block.png";
 import ath9 from "@/assets/img/athSave.png";
 import ath10 from "@/assets/img/athContact.png";
 import ath11 from "@/assets/img/athTeam Page + Unlock.png";
+import mygame1 from "@/assets/img/mygame_1.png";
+import mygameChar from "@/assets/img/mygame_char.png";
+import mygameCheats from "@/assets/img/mygame_cheats.png";
+import mygameHelp from "@/assets/img/mygame_help.png";
+import mygameNave from "@/assets/img/mygame_nave.png";
+import mygameRelva from "@/assets/img/mygame_relva.png";
+import mygameShop from "@/assets/img/mygame_shop.png";
 
 export const PROJECTS: Record<string, IProject> = {
   zoho2git: {
@@ -48,32 +55,28 @@ export const PROJECTS: Record<string, IProject> = {
     overviewTitle: "Internal platform for",
     overviewAccent: "Zoho-to-Git workflows",
     overview: [
-      "Internal platform to sync, version, inspect, and push Zoho code into Git.",
-      "It connects Zoho CRM, Creator, and Recruit with Bitbucket automation, sync controls, and operational visibility for technical teams.",
+      "Internal platform built to bring Zoho development into a reliable Git-based workflow, making it easier for technical teams to sync, inspect, version, and push code with confidence.",
+      "It connects Zoho CRM, Creator, and Recruit in one place, combining selective sync controls, Bitbucket automation, and clear operational visibility across projects and resources.",
     ],
     repository: "https://github.com/ivanxaraloba/zoho-functions-to-git",
     featureIntro:
-      "Selective sync, versioning, Git automation, and observability in one internal platform.",
+      "A DevOps layer for moving Zoho code into a safer, more manageable Git workflow.",
     featureCards: [
       {
-        title: "Selective refresh and sync control",
-        copy: "Refresh logic compares remote metadata against stored state so only changed resources are updated.",
+        title: "Multi-product Zoho workspace",
+        copy: "CRM, Creator, and Recruit are managed from a single interface, covering functions, scripts, widgets, and app structure without splitting the workflow across tools.",
       },
       {
-        title: "Automatic version snapshots",
-        copy: "Previous versions are stored before overwrite, making rollback and history inspection part of the workflow.",
+        title: "Selective sync and safe versioning",
+        copy: "Refresh logic compares remote metadata against stored state so only changed resources are updated, while previous versions are saved before overwrite for rollback and history inspection.",
       },
       {
         title: "Bitbucket repository automation",
-        copy: "Bitbucket integration creates repositories on demand and pushes Zoho resources using structured paths.",
+        copy: "Bitbucket integration creates repositories on demand and pushes Zoho resources into structured paths, reducing manual setup and keeping delivery consistent.",
       },
       {
-        title: "Realtime logs and project observability",
-        copy: "Realtime logs, searchable history, and status surfaces make sync activity and failures easy to inspect.",
-      },
-      {
-        title: "Multi-product Zoho integration",
-        copy: "CRM, Creator, and Recruit are managed from one interface, including functions, scripts, widgets, and app structure.",
+        title: "Operational visibility and debugging",
+        copy: "Realtime logs, searchable history, and status tracking make sync activity, failures, and project state easier to inspect and troubleshoot.",
       },
     ],
     gallery: [zoho2git5, zoho2git7, zoho2git2, zoho2git3, zoho2git6, zoho2git4],
@@ -88,28 +91,28 @@ export const PROJECTS: Record<string, IProject> = {
     overviewTitle: "AI SaaS for",
     overviewAccent: "trader decision support",
     overview: [
-      "AI SaaS for trader decision support, from landing page to authenticated product.",
-      "It combines chart ingestion, structured AI analysis, subscriptions, and conversion-focused product design.",
+      "AI SaaS built to support trader decision-making, taking the product from conversion-focused landing page through onboarding into an authenticated premium experience.",
+      "It combines chart ingestion, structured AI analysis, subscription billing, and product UX designed to turn analysis into a usable paid workflow.",
     ],
     repository: "https://github.com/ivanxara/trading-ai",
     featureIntro:
-      "AI analysis, subscriptions, and premium product UX in one SaaS flow.",
+      "A premium trading product that connects analysis generation, access control, and monetization.",
     featureCards: [
       {
-        title: "AI analysis pipeline",
-        copy: "Users select an asset, capture TradingView charts across timeframes, and generate structured trade plans from real market context.",
+        title: "Chart-to-analysis workflow",
+        copy: "Users select an asset, capture TradingView charts across multiple timeframes, and turn real market context into structured trade plans inside the product flow.",
       },
       {
-        title: "Structured Gemini output",
-        copy: "Gemini is constrained with a strict JSON schema for consistent signals, levels, confidence, and setup tags.",
+        title: "Structured AI output",
+        copy: "Gemini is constrained with a strict JSON schema so every response returns consistent signals, levels, confidence scoring, and setup tags the product can reliably use.",
       },
       {
-        title: "Authentication and subscriptions",
-        copy: "Supabase auth, protected dashboard access, Stripe checkout, and webhook-driven subscription state.",
+        title: "Authenticated premium access",
+        copy: "Supabase auth, protected dashboards, Stripe checkout, and webhook-driven subscription state work together to control paid access cleanly.",
       },
       {
-        title: "End-to-end product execution",
-        copy: "End-to-end product execution across landing, onboarding, dashboard, analysis history, and monetized access.",
+        title: "End-to-end SaaS product execution",
+        copy: "The product experience was designed across landing, onboarding, dashboard usage, analysis history, and monetized access to feel like one connected system.",
       },
     ],
     gallery: [relevo4, relevo5, relevo6, relevo1, relevo2, relevo3],
@@ -125,41 +128,33 @@ export const PROJECTS: Record<string, IProject> = {
     overviewTitle: "Platform for",
     overviewAccent: "athlete identity, sharing, and team connection",
     overview: [
-      "Profile platform for athletes, teams, and clubs, built around identity, recruiting, and profile sharing.",
-      "It includes public profiles, athlete dashboard flows, premium subscriptions, verification, team connection, and affiliate mechanics.",
-      "The product was also packaged through a WebView approach for Play Store and App Store distribution.",
+      "Profile platform for athletes, teams, and clubs, built to strengthen identity, recruiting, and profile sharing in a single sports-focused product.",
+      "It includes public profiles, athlete dashboard flows, premium subscriptions, verification, team connection, discovery, and affiliate mechanics that support both growth and monetization.",
+      "The product was also packaged through a WebView approach for Play Store and App Store distribution, extending the same experience to mobile without a full native rebuild.",
     ],
     repository: "https://github.com/ivanxara/athlt.link",
     featureIntro:
-      "Profiles, subscriptions, verification, and team workflows in one sports product.",
+      "A sports platform that combines athlete presentation, team workflows, and monetized product features.",
     featureCards: [
       {
-        title: "Structured athlete profile builder",
-        copy: "Multi-step onboarding and dashboard flows for managing athlete data, media, recruiting links, achievements, and profile content.",
+        title: "Athlete profile creation and management",
+        copy: "Multi-step onboarding and dashboard flows help athletes manage media, recruiting links, achievements, and profile content with a structure designed for sharing and discovery.",
       },
       {
-        title: "Public athlete, team, and club pages",
-        copy: "Dynamic public pages resolve usernames into athlete, team, or club profiles with roster, verification, and premium-aware data.",
+        title: "Public profiles for athletes, teams, and clubs",
+        copy: "Dynamic public pages resolve usernames into athlete, team, or club profiles with roster data, verification signals, and premium-aware content presentation.",
       },
       {
-        title: "Premium subscriptions and monetization",
-        copy: "Stripe subscriptions support monthly and yearly plans, trials, webhooks, and affiliate-aware revenue routing.",
+        title: "Subscriptions, verification, and trust signals",
+        copy: "Stripe subscriptions support premium plans and trials, while verification flows handle identity checks, webhook updates, expiry tracking, and verified badges.",
       },
       {
-        title: "Identity verification workflow",
-        copy: "Stripe Identity verification flow with session handling, webhook updates, duplicate checks, expiry tracking, and verified badges.",
+        title: "Team connection and recruiting flows",
+        copy: "Athletes can connect with teams through invite codes, role-based team data, and paid join flows when required, supporting recruiting and membership workflows.",
       },
       {
-        title: "TeamLink and paid team-join flows",
-        copy: "Athletes can join teams through invite codes, manage role data, and complete paid team-join flows when required.",
-      },
-      {
-        title: "Discovery, location, and affiliate growth features",
-        copy: "Includes nearby discovery, club and athlete search, QR-ready profile sharing, and affiliate flows with Stripe Connect payouts.",
-      },
-      {
-        title: "WebView-based mobile app delivery",
-        copy: "The web product was wrapped in WebView for Play Store and App Store delivery without a full native rebuild.",
+        title: "Growth and distribution layers",
+        copy: "Discovery features, athlete and club search, QR-ready sharing, affiliate flows with Stripe Connect payouts, and WebView-based mobile delivery expand reach beyond the core profile experience.",
       },
     ],
     gallery: [
@@ -184,43 +179,79 @@ export const PROJECTS: Record<string, IProject> = {
     overviewTitle: "Restaurant platform built for",
     overviewAccent: "operations and discoverability",
     overview: [
-      "Restaurant platform combining the public website with an internal admin panel.",
-      "It covers menus, reservations, campaign pages, local SEO, and operational publishing workflows.",
+      "Restaurant platform built to support both customer-facing discovery and day-to-day restaurant operations through one connected system.",
+      "It combines the public website with an internal admin panel for menus, reservations, campaign pages, local SEO, and publishing workflows used by the team.",
     ],
     repository: "",
     featureIntro:
-      "Public website delivery and internal restaurant operations in one connected system.",
+      "A hospitality product that handles customer conversion and internal publishing from the same platform.",
     featureCards: [
       {
-        title: "Dynamic menu and product delivery",
-        copy: "Menu pages fetch live content from Supabase, preserve ordering, and present categories, prices, and tags clearly.",
+        title: "Dynamic menus and content operations",
+        copy: "Menu pages fetch live content from Supabase and preserve ordering, while the internal dashboard manages products, categories, tags, menu entries, and daily offers.",
       },
       {
-        title: "Restaurant admin and content management",
-        copy: "Internal dashboard for managing products, categories, tags, menu entries, and daily offers.",
+        title: "Fast reservation and campaign flows",
+        copy: "Guests can move quickly from browsing to action through WhatsApp booking flows, event pages, and PDF-based menu or group-offer experiences.",
       },
       {
-        title: "Reservation flow through WhatsApp",
-        copy: "Guided reservation flow generates a ready-to-send WhatsApp booking message without a heavy booking backend.",
-      },
-      {
-        title: "Event and PDF-based campaign pages",
-        copy: "Dedicated event pages and PDF-based menu experiences support seasonal campaigns and group offers.",
-      },
-      {
-        title: "SEO architecture for local reach",
-        copy: "SEO work included sitemap generation, structured data, FAQ schema, breadcrumbs, and location-targeted landing pages.",
-      },
-      {
-        title: "AI-assisted daily publishing workflows",
-        copy: "Admin tools generate Instagram story assets, draft daily promo copy, and process menu photos with OCR.",
+        title: "Local SEO and discoverability",
+        copy: "SEO work included sitemap generation, structured data, FAQ schema, breadcrumbs, and location-targeted landing pages to strengthen local reach.",
       },
       {
         title: "Hospitality-focused product UX",
-        copy: "UX is built around the core actions: checking the menu, viewing daily offers, booking, and finding event options fast.",
+        copy: "The UX is designed around the actions that matter most for a restaurant: checking the menu, viewing daily offers, booking fast, and finding event options without friction.",
+      },
+      {
+        title: "AI-assisted publishing tools",
+        copy: "Admin workflows generate Instagram story assets, draft daily promo copy, and process menu photos with OCR to speed up daily content production.",
       },
     ],
     gallery: [rei1, rei2, rei3, rei4, rei5, rei6, rei7],
+  },
+  "my-game": {
+    slug: "my-game",
+    title: "my game",
+    role: "Game Design & Development",
+    technologies: ["unity", "csharp", "photoshop"],
+    image: mygame1,
+    eyebrow: "project case study - final high school project",
+    overviewTitle: "Game created as my",
+    overviewAccent: "final 12th grade project",
+    overview: [
+      "This game was created in 2021 as my final 12th grade project, with the goal of taking a complete playable experience from idea through implementation.",
+      "It was developed in Unity with C#, while Photoshop was used to define the visual direction and produce supporting design assets.",
+      "For the portfolio, I adapted the project into a WebGL build and embedded it directly into the case study so visitors can play it before reaching the gallery.",
+    ],
+    featureIntro:
+      "A final school project presented as a playable portfolio piece.",
+    featureCards: [
+      {
+        title: "Built as a complete final project",
+        copy: "The project was planned and developed as a full final-year piece, combining gameplay logic, technical implementation, and visual presentation into one complete deliverable.",
+      },
+      {
+        title: "Unity development and game logic",
+        copy: "Unity provided the runtime and project structure, while C# powered the core mechanics, interactions, and progression systems.",
+      },
+      {
+        title: "Visual direction and presentation",
+        copy: "Photoshop was used to shape the look of the game and create supporting visual assets for the interface and overall presentation.",
+      },
+      {
+        title: "Playable directly inside the portfolio",
+        copy: "Instead of relying only on screenshots, the WebGL build lets visitors try the game directly on the project page before the gallery section.",
+      },
+    ],
+    playSection: true,
+    gallery: [
+      mygameChar,
+      mygameCheats,
+      mygameHelp,
+      mygameNave,
+      mygameRelva,
+      mygameShop,
+    ],
   },
 };
 
