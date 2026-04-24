@@ -3,6 +3,7 @@
 import type { KeyboardEvent, ReactNode, RefObject } from "react";
 import { ArrowUp, RotateCcw, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Heading } from "@/components/typography";
 import type { ChatMessage, ChatRequestMetadata } from "@/utils/chat";
 
 export const CHAT_FOCUS_EVENT = "portfolio-chat:focus-input";
@@ -125,7 +126,7 @@ function renderTextWithLinks(content: string): ReactNode[] {
           href={markdownHref}
           target="_blank"
           rel="noreferrer"
-          className="underline decoration-white/30 underline-offset-4 transition-colors hover:text-sidebar-foreground"
+          className="underline decoration-muted-foreground underline-offset-4 transition-colors hover:text-sidebar-foreground"
         >
           {markdownLabel}
         </a>,
@@ -143,7 +144,7 @@ function renderTextWithLinks(content: string): ReactNode[] {
           href={normalizeHref(autolinkValue)}
           target="_blank"
           rel="noreferrer"
-          className="underline decoration-white/30 underline-offset-4 transition-colors hover:text-sidebar-foreground"
+          className="underline decoration-muted-foreground underline-offset-4 transition-colors hover:text-sidebar-foreground"
         >
           {autolinkValue}
         </a>,
@@ -180,7 +181,7 @@ function renderTextWithLinks(content: string): ReactNode[] {
 
 function TypingDots() {
   return (
-    <div className="flex items-center gap-[5px] px-1 py-1">
+    <div className="flex items-center gap-1 px-1 py-1">
       {[0, 1, 2].map((index) => (
         <span
           key={index}
@@ -207,12 +208,12 @@ function ChatBubble({ message }: { message: PortfolioChatMessage }) {
   return (
     <div className={`flex w-full ${isUser ? "justify-end" : "justify-start"}`}>
       <div
-        className={`max-w-[88%] rounded-[1.15rem] px-4 py-3 text-[13px] leading-relaxed sm:text-sm ${
+        className={`max-w-[88%] rounded-3xl px-4 py-3 text-sm leading-relaxed sm:text-sm ${
           isUser
-            ? "bg-white/[0.07] text-foreground"
+            ? "bg-accent text-foreground"
             : message.isError
               ? "border border-red-400/20 bg-red-500/10 text-red-100"
-              : "border border-white/[0.05] bg-white/[0.03] text-sidebar-foreground"
+              : "border border-border bg-muted text-sidebar-foreground"
         }`}
       >
         {renderTextWithLinks(message.content)}
@@ -257,15 +258,15 @@ export function ChatPanel({
       data-portfolio-chat-root="true"
       className="flex h-full w-full flex-col overflow-hidden bg-sidebar text-sidebar-foreground rounded-4xl"
     >
-      <div className="border-b border-white/[0.06] px-4 py-4 xl:px-5 xl:py-5">
+      <div className="border-b border-border px-4 py-4 xl:px-5 xl:py-5">
         <div className="flex items-start justify-between gap-3">
           <div className="max-w-sm xl:max-w-md">
-            <p className="text-[10px] font-black uppercase tracking-[0.24em] text-primary/70">
+            <p className="text-xs font-black uppercase tracking-widest text-primary/70">
               Ivan Assistant
             </p>
-            <h2 className="mt-2 text-[clamp(1.35rem,2.2vw,2.3rem)] font-extrabold leading-[0.96] tracking-[-0.06em] text-foreground">
+            <Heading variant="heading-4" className="mt-2">
               Ask about Ivan.
-            </h2>
+            </Heading>
           </div>
 
           <div className="mt-0.5 flex items-center gap-1.5">
@@ -295,7 +296,7 @@ export function ChatPanel({
           </div>
         </div>
 
-        <p className="mt-3 max-w-sm text-[13px] leading-6 text-muted-foreground sm:text-sm xl:max-w-md">
+        <p className="mt-3 max-w-sm text-sm leading-6 text-muted-foreground sm:text-sm xl:max-w-md">
           A quicker way to get the gist. Ask about experience, current work,
           tech stack, strengths, or a specific project.
         </p>
@@ -312,14 +313,14 @@ export function ChatPanel({
 
           {isPending && (
             <div className="flex justify-start">
-              <div className="rounded-[1.15rem] border border-white/[0.05] bg-white/[0.03] px-4 py-3">
+              <div className="rounded-3xl border border-border bg-muted px-4 py-3">
                 <TypingDots />
               </div>
             </div>
           )}
         </div>
 
-        <div className="shrink-0 border-t border-white/[0.06] px-4 py-4 xl:px-5 xl:py-5">
+        <div className="shrink-0 border-t border-border px-4 py-4 xl:px-5 xl:py-5">
           {!hasConversation && (
             <div className="mb-3 flex flex-wrap gap-2">
               {STARTER_PROMPTS.map((prompt) => (
@@ -337,7 +338,7 @@ export function ChatPanel({
             </div>
           )}
 
-          <div className="rounded-[1.2rem] border border-white/[0.07] bg-white/[0.03] transition-colors duration-200 focus-within:border-white/[0.14]">
+          <div className="rounded-3xl border border-border bg-muted transition-colors duration-200 focus-within:border-ring">
             <div className="flex flex-col gap-3">
               <textarea
                 ref={textareaRef}
@@ -346,10 +347,10 @@ export function ChatPanel({
                 onKeyDown={onKeyDown}
                 placeholder="Ask about Ivan..."
                 rows={1}
-                className="max-h-[160px] min-h-[72px] w-full resize-none bg-transparent px-4 py-3.5 text-[14px] text-foreground placeholder:text-muted-foreground focus:outline-none sm:text-sm"
+                className="max-h-40 min-h-18 w-full resize-none bg-transparent px-4 py-3.5 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none sm:text-sm"
               />
               <div className="flex items-center justify-between gap-3 px-3 pb-3">
-                <p className="text-[10px] font-medium text-muted-foreground opacity-45">
+                <p className="text-xs font-medium text-muted-foreground opacity-45">
                   Enter to send · Shift+Enter for a new line
                 </p>
                 <Button
@@ -362,7 +363,7 @@ export function ChatPanel({
                   className="min-w-10"
                 >
                   {cooldownRemainingSeconds > 0 ? (
-                    <span className="text-[11px] font-semibold">
+                    <span className="text-xs font-semibold">
                       {cooldownRemainingSeconds}s
                     </span>
                   ) : (

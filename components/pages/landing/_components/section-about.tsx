@@ -1,46 +1,30 @@
 "use client";
 
-import { motion, useTransform, type MotionValue } from "framer-motion";
+import { AnimationReveal } from "@/components/animations";
+import { Heading, Paragraph } from "@/components/typography";
 import { SectionBlock } from "@/components/shared/section-block";
-import { fadeUp } from "@/lib/animations/motion";
 
-export function SectionAbout({
-  progress,
-  enableDepthMotion,
-}: {
-  progress: MotionValue<number>;
-  enableDepthMotion?: boolean;
-}) {
-  const sectionY = useTransform(progress, [0, 1], [0, -36]);
-
+export function SectionAbout() {
   return (
-    <motion.section
-      id="about"
-      style={enableDepthMotion ? { y: sectionY } : undefined}
-    >
+    <section id="about">
       <SectionBlock title="About" className="scroll-mt-28">
         <div className="max-w-5xl">
-          <motion.div
-            variants={fadeUp}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.35 }}
-          >
-            <h2 className="mb-6 max-w-4xl text-[clamp(1.9rem,5vw,4rem)] font-black leading-[1.03] tracking-[-0.07em] text-foreground">
+          <AnimationReveal amount={0.35}>
+            <Heading variant="heading-2" className="mb-6 max-w-4xl">
               turning{" "}
               <span className="italic text-primary">complex operations</span>{" "}
               into clear, scalable digital systems.
-            </h2>
-            <p className="max-w-2xl text-sm leading-relaxed text-muted-foreground sm:text-base">
+            </Heading>
+            <Paragraph className="max-w-2xl">
               Core work centered on Zoho CRM and Zoho Creator, with a focus on
               automations, custom modules, and internal tools. When a product
               needs more than low-code alone, the stack extends into Next.js,
               TypeScript, and Supabase to deliver stronger workflows,
               visibility, and user experience.
-            </p>
-          </motion.div>
+            </Paragraph>
+          </AnimationReveal>
         </div>
       </SectionBlock>
-    </motion.section>
+    </section>
   );
 }

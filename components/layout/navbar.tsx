@@ -3,41 +3,19 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Menu, Sparkles } from "lucide-react";
-import { motion, useMotionValueEvent, type MotionValue } from "framer-motion";
-import { useEffect, useRef, useState, type MouseEvent } from "react";
+import { useEffect, useRef, useState } from "react";
 import { usePortfolioChat } from "@/components/chat/portfolio-chat-context";
 import { Button } from "@/components/ui/button";
 import { NAVBAR_ITEMS } from "@/utils/constants";
 
-export function Navbar({
-  progress,
-  onOpenChat,
-  onNavigateSection,
-}: {
-  progress: MotionValue<number>;
-  onOpenChat?: () => void;
-  onNavigateSection?: (target: string) => void;
-}) {
-  const [scrolled, setScrolled] = useState(false);
+export function Navbar({ onOpenChat }: { onOpenChat?: () => void }) {
+  const navbarRef = useRef<HTMLDivElement>(null);
   const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
-  const mobileNavRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
   const isHome = pathname === "/";
   const isProjectPage = pathname.startsWith("/projects/");
   const openChatFromContext = usePortfolioChat();
   const handleOpenChat = onOpenChat ?? openChatFromContext;
-  const handleSectionClick = (
-    event: MouseEvent<HTMLAnchorElement>,
-    target: string,
-    shouldNavigateLocally: boolean,
-  ) => {
-    if (!shouldNavigateLocally || !onNavigateSection) {
-      return;
-    }
-
-    event.preventDefault();
-    onNavigateSection(target);
-  };
   const getNavHref = (target: string) => {
     if (isHome) {
       return target;
@@ -50,10 +28,6 @@ export function Navbar({
     return `/${target}`;
   };
 
-  useMotionValueEvent(progress, "change", (value) => {
-    setScrolled(value > 0.02);
-  });
-
   useEffect(() => {
     if (!isMobileNavOpen) {
       return;
@@ -62,7 +36,7 @@ export function Navbar({
     const onPointerDown = (event: PointerEvent) => {
       if (
         event.target instanceof Node &&
-        mobileNavRef.current?.contains(event.target)
+        navbarRef.current?.contains(event.target)
       ) {
         return;
       }
@@ -86,127 +60,103 @@ export function Navbar({
   }, [isMobileNavOpen]);
 
   return (
-    <div className="sticky top-0 z-30 px-4 pt-4 sm:px-6 lg:px-8">
-      <motion.div
-        animate={{
-          backgroundColor: scrolled
-            ? "rgba(14, 14, 16, 0.82)"
-            : "rgba(14, 14, 16, 0.4)",
-          borderColor: scrolled
-            ? "rgba(232, 230, 225, 0.08)"
-            : "rgba(232, 230, 225, 0.04)",
-        }}
-        transition={{ duration: 0.4 }}
-        className="mx-auto flex max-w-sm flex-col overflow-visible rounded-full border shadow-[0_8px_32px_rgba(0,0,0,0.3)] backdrop-blur-xl sm:max-w-md"
+    <div className="sticky top-0 z-30 px-3 pt-3">
+      <div
+        ref={navbarRef}
+        className="relative mx-auto flex w-full max-w-52 md:max-w-fit flex-col overflow-visible rounded-full border border-border bg-background/80 px-1.5 py-1 shadow-sm backdrop-blur-md"
       >
-        <div className="flex items-center justify-between gap-6 px-5 py-3 sm:px-6">
+        <div className="flex h-9 items-center justify-between gap-1.5 px-2">
           <Link
             href={isHome ? "#top" : "/#top"}
-            onClick={(event) => handleSectionClick(event, "#top", isHome)}
-            className="text-[12px] font-black tracking-[-0.04em] text-foreground sm:text-[13px]"
+            className="rounded-full px-2.5 py-1 text-xs font-black tracking-[-0.04em] text-foreground transition-colors duration-300 hover:bg-accent hover:text-accent-foreground focus-visible:bg-accent focus-visible:text-accent-foreground"
           >
             ivan xará ✌️
           </Link>
 
+          <div className="hidden h-4 w-px bg-border md:block" />
+
           <nav
             aria-label="Section navigation"
-            className="hidden flex-wrap items-center justify-end gap-0 md:flex"
+            className="hidden items-center md:flex gap-1"
           >
             {NAVBAR_ITEMS.map((item) => (
               <Link
                 key={item.href}
                 href={getNavHref(item.href)}
-                onClick={(event) =>
-                  handleSectionClick(
-                    event,
-                    item.href,
-                    isHome || (isProjectPage && item.href === "#contact"),
-                  )
-                }
-                className="rounded-full px-2.5 py-1.5 text-[10px] font-black uppercase text-muted-foreground transition-all duration-300 hover:bg-white/[0.04] hover:text-foreground sm:text-[11px]"
+                className="rounded-full px-2.5 py-1 text-xs font-medium tracking-wide text-muted-foreground transition-colors duration-300 hover:bg-accent hover:text-accent-foreground focus-visible:bg-accent focus-visible:text-accent-foreground"
               >
                 {item.label}
               </Link>
             ))}
+
+            <>
+              <div className="hidden h-4 w-px bg-border md:block" />
+
+              <Button
+                type="button"
+                variant="unstyled"
+                size="xs"
+                onClick={handleOpenChat ?? undefined}
+                className="rounded-full px-2.5 py-1 text-xs font-medium tracking-wide text-primary transition-colors duration-300 hover:bg-accent hover:text-accent-foreground focus-visible:bg-accent focus-visible:text-accent-foreground"
+              >
+                <Sparkles className="size-3" />
+                Ask AI
+              </Button>
+            </>
           </nav>
+
           <Button
             type="button"
-            variant="glass"
-            size="nav-chip"
-            onClick={handleOpenChat ?? undefined}
-            aria-label="Open chat with suggestion chip"
-            aria-expanded={false}
-            className="hidden md:inline-flex"
+            variant="unstyled"
+            size="icon-xs"
+            aria-label="Open navigation menu"
+            aria-expanded={isMobileNavOpen}
+            aria-controls="mobile-navigation-menu"
+            onClick={() => setIsMobileNavOpen((current) => !current)}
+            className="rounded-full text-muted-foreground transition-colors duration-300 hover:bg-accent hover:text-accent-foreground aria-expanded:bg-accent aria-expanded:text-accent-foreground md:hidden"
           >
-            <Sparkles className="size-3 text-primary" />
-            <span className="text-[11px] font-medium tracking-[0.03em]">
-              Ask AI
-            </span>
+            <Menu className="size-3.5" />
           </Button>
 
-          <div ref={mobileNavRef} className="relative md:hidden">
-            <Button
-              type="button"
-              variant="glass"
-              size="icon-sm"
-              aria-label="Open navigation menu"
-              aria-expanded={isMobileNavOpen}
-              aria-controls="mobile-navigation-menu"
-              onClick={() => setIsMobileNavOpen((current) => !current)}
+          {isMobileNavOpen ? (
+            <div
+              id="mobile-navigation-menu"
+              role="menu"
+              className="absolute left-0 right-0 top-full mt-2 rounded-2xl border border-border bg-background p-1.5 text-foreground shadow-sm backdrop-blur-md md:hidden"
             >
-              <Menu className="size-4" />
-            </Button>
-
-            {isMobileNavOpen ? (
-              <div
-                id="mobile-navigation-menu"
-                role="menu"
-                className="absolute right-0 top-full mt-2 w-56 rounded-[1.25rem] border border-white/[0.08] bg-[#141416]/95 p-2 text-white shadow-[0_18px_48px_rgba(0,0,0,0.42)] backdrop-blur-xl"
+              <nav
+                aria-label="Mobile section navigation"
+                className="flex flex-col"
               >
-                <p className="px-3 py-2 text-[10px] font-black uppercase tracking-[0.12em] text-white/45">
-                  Navigation
-                </p>
-                <nav
-                  aria-label="Mobile section navigation"
-                  className="flex flex-col gap-1"
-                >
-                  {NAVBAR_ITEMS.map((item) => (
-                    <Link
-                      key={item.href}
-                      href={getNavHref(item.href)}
-                      role="menuitem"
-                      onClick={(event) => {
-                        handleSectionClick(
-                          event,
-                          item.href,
-                          isHome || (isProjectPage && item.href === "#contact"),
-                        );
-                        setIsMobileNavOpen(false);
-                      }}
-                      className="block rounded-2xl border border-white/[0.06] bg-white/[0.03] px-4 py-3 text-[11px] font-black uppercase tracking-[0.08em] text-muted-foreground transition-all duration-300 hover:bg-white/[0.05] hover:text-white"
-                    >
-                      {item.label}
-                    </Link>
-                  ))}
-                </nav>
-                <div className="mx-0 my-2 h-px bg-white/[0.08]" />
-                <button
-                  type="button"
-                  role="menuitem"
-                  onClick={() => {
-                    handleOpenChat?.();
-                    setIsMobileNavOpen(false);
-                  }}
-                  className="flex w-full items-center gap-1.5 rounded-2xl border border-white/[0.06] bg-white/[0.03] px-4 py-3 text-left text-[11px] font-black uppercase tracking-[0.08em] text-white/72 transition-colors duration-300 hover:bg-white/[0.05] hover:text-white focus:bg-white/[0.06] focus:text-white"
-                >
-                  <Sparkles className="size-4 text-primary" />
-                  Ask AI
-                </button>
-              </div>
-            ) : null}
-          </div>
+                {NAVBAR_ITEMS.map((item) => (
+                  <Link
+                    key={item.href}
+                    href={getNavHref(item.href)}
+                    role="menuitem"
+                    onClick={() => setIsMobileNavOpen(false)}
+                    className="flex w-full rounded-full px-2.5 py-1.5 text-sm font-medium tracking-wide text-muted-foreground transition-colors duration-300 hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                  >
+                    {item.label}
+                  </Link>
+                ))}
+              </nav>
+              <div className="my-1 h-px bg-border" />
+              <button
+                type="button"
+                role="menuitem"
+                onClick={() => {
+                  handleOpenChat?.();
+                  setIsMobileNavOpen(false);
+                }}
+                className="flex w-full items-center gap-1.5 rounded-full px-2.5 py-1.5 text-sm font-medium tracking-wide text-primary transition-colors duration-300 hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+              >
+                <Sparkles className="size-3.5" />
+                Ask AI
+              </button>
+            </div>
+          ) : null}
         </div>
-      </motion.div>
+      </div>
     </div>
   );
 }

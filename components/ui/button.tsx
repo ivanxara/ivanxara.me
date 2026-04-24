@@ -22,30 +22,30 @@ const buttonVariants = cva(
         unstyled:
           "border-transparent bg-transparent shadow-none hover:bg-transparent focus-visible:ring-0 focus-visible:border-transparent active:translate-y-0",
         glass:
-          "rounded-full border border-white/[0.08] bg-white/[0.04] text-white/72 hover:bg-white/[0.06] hover:text-white",
+          "rounded-full border border-border bg-accent text-muted-foreground hover:bg-accent hover:text-foreground",
         "chat-chip":
-          "rounded-full border border-white/[0.06] bg-white/[0.03] text-white/58 hover:border-white/[0.1] hover:bg-white/[0.05] hover:text-white",
+          "rounded-full border border-border bg-muted text-muted-foreground hover:border-border hover:bg-accent hover:text-foreground",
         "chat-send":
-          "rounded-full border-transparent bg-white/[0.72] text-background hover:bg-white/[0.86]",
+          "rounded-full border-transparent bg-foreground text-background hover:bg-foreground",
         "floating-overlay":
-          "rounded-full border border-white/10 bg-black/45 text-white backdrop-blur-sm hover:border-white/25 hover:bg-black/60",
+          "rounded-full border border-border bg-background/50 text-foreground backdrop-blur-sm hover:border-border hover:bg-background/60",
         "chat-icon":
-          "rounded-full text-muted-foreground hover:bg-white/[0.05] hover:text-foreground",
+          "rounded-full text-muted-foreground hover:bg-accent hover:text-foreground",
       },
       size: {
         default:
           "h-8 gap-1.5 px-2.5 has-data-[icon=inline-end]:pr-2 has-data-[icon=inline-start]:pl-2",
-        xs: "h-6 gap-1 rounded-[min(var(--radius-md),10px)] px-2 text-xs in-data-[slot=button-group]:rounded-lg has-data-[icon=inline-end]:pr-1.5 has-data-[icon=inline-start]:pl-1.5 [&_svg:not([class*='size-'])]:size-3",
-        sm: "h-7 gap-1 rounded-[min(var(--radius-md),12px)] px-2.5 text-[0.8rem] in-data-[slot=button-group]:rounded-lg has-data-[icon=inline-end]:pr-1.5 has-data-[icon=inline-start]:pl-1.5 [&_svg:not([class*='size-'])]:size-3.5",
+        xs: "h-6 gap-1 rounded-md px-2 text-xs in-data-[slot=button-group]:rounded-lg has-data-[icon=inline-end]:pr-1.5 has-data-[icon=inline-start]:pl-1.5 [&_svg:not([class*='size-'])]:size-3",
+        sm: "h-7 gap-1 rounded-md px-2.5 text-sm in-data-[slot=button-group]:rounded-lg has-data-[icon=inline-end]:pr-1.5 has-data-[icon=inline-start]:pl-1.5 [&_svg:not([class*='size-'])]:size-3.5",
         lg: "h-9 gap-1.5 px-2.5 has-data-[icon=inline-end]:pr-2 has-data-[icon=inline-start]:pl-2",
         icon: "size-8",
         "icon-xs":
-          "size-6 rounded-[min(var(--radius-md),10px)] in-data-[slot=button-group]:rounded-lg [&_svg:not([class*='size-'])]:size-3",
+          "size-6 rounded-md in-data-[slot=button-group]:rounded-lg [&_svg:not([class*='size-'])]:size-3",
         "icon-sm":
-          "size-7 rounded-[min(var(--radius-md),12px)] in-data-[slot=button-group]:rounded-lg",
+          "size-7 rounded-md in-data-[slot=button-group]:rounded-lg",
         "icon-lg": "size-9",
         "icon-xl": "size-11",
-        "chat-chip": "h-auto px-3.5 py-2 text-[12px] font-medium",
+        "chat-chip": "h-auto px-3.5 py-2 text-xs font-medium",
         "nav-chip": "h-auto gap-1.5 px-2 py-1",
         "image-trigger": "h-auto w-full p-0",
       },

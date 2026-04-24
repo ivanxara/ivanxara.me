@@ -51,7 +51,7 @@ export function ZoomableImage({
               className={cn("h-auto w-full", className)}
             />
             <div className="absolute right-5 top-5 z-10 opacity-0 transition-all duration-300 group-hover:opacity-100 group-focus-visible:opacity-100">
-              <div className="inline-flex size-11 cursor-pointer items-center justify-center rounded-full border border-white/10 bg-black/45 text-white backdrop-blur-sm group-hover:border-white/25 group-hover:bg-black/60 group-focus-visible:border-white/25 group-focus-visible:bg-black/60">
+              <div className="inline-flex size-11 cursor-pointer items-center justify-center rounded-full border border-border bg-background/50 text-foreground backdrop-blur-sm group-hover:border-border group-hover:bg-background/60 group-focus-visible:border-border group-focus-visible:bg-background/60">
                 <Expand className="size-4" />
               </div>
             </div>

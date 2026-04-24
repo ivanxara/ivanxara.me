@@ -2,16 +2,11 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import {
-  motion,
-  useMotionValue,
-  useSpring,
-  useTransform,
-  type MotionValue,
-} from "framer-motion";
+import { motion, useMotionValue, useSpring } from "framer-motion";
 import { useRef, useState, type MouseEvent } from "react";
+import { AnimationReveal, motionEase } from "@/components/animations";
+import { Heading } from "@/components/typography";
 import { SectionBlock } from "@/components/shared/section-block";
-import { fadeUp } from "@/lib/animations/motion";
 import { PROJECT_LIST } from "@/utils/projects";
 import { TECHNOLOGY_META } from "@/utils/technologies";
 
@@ -25,20 +20,13 @@ const PREVIEW = {
 
 const previewContentHeight = PREVIEW.height - PREVIEW.framePadding * 2;
 
-export function SectionProjects({
-  progress,
-  enableDepthMotion,
-}: {
-  progress: MotionValue<number>;
-  enableDepthMotion?: boolean;
-}) {
+export function SectionProjects() {
   const containerRef = useRef<HTMLDivElement>(null);
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
   const x = useSpring(mouseX, { stiffness: 108, damping: 22, mass: 0.7 });
   const y = useSpring(mouseY, { stiffness: 108, damping: 22, mass: 0.7 });
-  const sectionY = useTransform(progress, [0, 1], [0, -24]);
 
   const handleMouseMove = (event: MouseEvent<HTMLDivElement>) => {
     const bounds = containerRef.current?.getBoundingClientRect();
@@ -52,10 +40,7 @@ export function SectionProjects({
   };
 
   return (
-    <motion.section
-      id="work"
-      style={enableDepthMotion ? { y: sectionY } : undefined}
-    >
+    <section id="work">
       <SectionBlock title="Selected Works" className="-scroll-mt-28">
         <div
           ref={containerRef}
@@ -69,14 +54,7 @@ export function SectionProjects({
               const isDimmed = hoveredIndex !== null && !isActive;
 
               return (
-                <motion.div
-                  key={project.slug}
-                  variants={fadeUp}
-                  initial="hidden"
-                  whileInView="visible"
-                  viewport={{ once: true, amount: 0.3 }}
-                  transition={{ delay: index * 0.08 }}
-                >
+                <AnimationReveal key={project.slug} delay={index * 0.08}>
                   <Link
                     href={`/projects/${project.slug}`}
                     onMouseEnter={() => setHoveredIndex(index)}
@@ -87,7 +65,7 @@ export function SectionProjects({
                   >
                     <motion.div
                       aria-hidden="true"
-                      className="absolute inset-y-2 -left-4 -right-4 hidden rounded-[2rem] md:block"
+                      className="absolute inset-y-2 -left-4 -right-4 hidden rounded-4xl md:block"
                       style={{
                         background:
                           "linear-gradient(90deg, rgba(196,168,130,0.04), rgba(130,150,196,0.03), transparent 70%)",
@@ -97,7 +75,7 @@ export function SectionProjects({
                         opacity: isActive ? 1 : 0,
                         scale: isActive ? 1 : 0.96,
                       }}
-                      transition={{ duration: 0.48, ease: [0.22, 1, 0.36, 1] }}
+                      transition={{ duration: 0.48, ease: motionEase.smooth }}
                     />
 
                     <div
@@ -105,7 +83,7 @@ export function SectionProjects({
                         isActive ? "lg:translate-x-4" : "lg:translate-x-0"
                       }`}
                     >
-                      <div className="relative aspect-[16/10] w-full overflow-hidden rounded-[1.4rem] border border-white/[0.08] bg-[#111214] md:hidden">
+                      <div className="relative aspect-[16/10] w-full overflow-hidden rounded-4xl border border-border bg-card md:hidden">
                         {project.image ? (
                           <Image
                             src={project.image}
@@ -116,17 +94,19 @@ export function SectionProjects({
                             unoptimized
                           />
                         ) : (
-                          <div className="absolute inset-0 bg-white/[0.04]" />
+                          <div className="absolute inset-0 bg-accent" />
                         )}
                       </div>
 
-                      <h3
-                        className={`text-[clamp(2.35rem,6vw,5rem)] font-black leading-[0.95] tracking-[-0.08em] md:transition-colors md:duration-500 ${
+                      <Heading
+                        as="h3"
+                        variant="heading-2"
+                        className={`md:transition-colors md:duration-500 ${
                           isDimmed ? "md:text-foreground/20" : "text-foreground"
                         }`}
                       >
                         {project.title}
-                      </h3>
+                      </Heading>
                     </div>
 
                     <div className="relative z-10 flex flex-col items-start gap-2 lg:flex-row lg:items-center lg:gap-6 lg:text-right">
@@ -143,7 +123,7 @@ export function SectionProjects({
                               <span
                                 key={`${project.slug}-${technologyKey}`}
                                 aria-label={technology.label}
-                                className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-white/[0.04] text-muted-foreground"
+                                className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-accent text-muted-foreground"
                               >
                                 <Icon
                                   aria-hidden="true"
@@ -156,20 +136,20 @@ export function SectionProjects({
                       </div>
                     </div>
                   </Link>
-                </motion.div>
+                </AnimationReveal>
               );
             })}
           </div>
 
           <div className="pointer-events-none absolute inset-0 z-50 hidden md:block">
             <motion.div
-              className="absolute overflow-hidden border border-white/[0.08] bg-[#111214] shadow-[0_28px_90px_rgba(0,0,0,0.42)] backdrop-blur-sm"
+              className="absolute overflow-hidden border border-border bg-card shadow-2xl backdrop-blur-sm"
               initial={{ opacity: 0, scale: 0.82 }}
               animate={{
                 opacity: hoveredIndex === null ? 0 : 1,
                 scale: hoveredIndex === null ? 0.82 : 1,
               }}
-              transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
+              transition={{ duration: 0.28, ease: motionEase.smooth }}
               style={{
                 width: PREVIEW.width,
                 height: PREVIEW.height,
@@ -190,13 +170,13 @@ export function SectionProjects({
                         ? 0
                         : -(previewContentHeight * hoveredIndex),
                   }}
-                  transition={{ duration: 0.52, ease: [0.22, 1, 0.36, 1] }}
+                  transition={{ duration: 0.52, ease: motionEase.smooth }}
                   className="absolute left-0 top-0 w-full"
                 >
                   {PROJECT_LIST.map((project) => (
                     <div
                       key={project.title}
-                      className="relative w-full overflow-hidden bg-[#0d0d0f]"
+                      className="relative w-full overflow-hidden bg-background"
                       style={{ height: previewContentHeight }}
                     >
                       {project.image ? (
@@ -211,7 +191,7 @@ export function SectionProjects({
                           />
                         </div>
                       ) : (
-                        <div className="absolute inset-0 bg-white/[0.04]" />
+                        <div className="absolute inset-0 bg-accent" />
                       )}
                     </div>
                   ))}
@@ -221,6 +201,6 @@ export function SectionProjects({
           </div>
         </div>
       </SectionBlock>
-    </motion.section>
+    </section>
   );
 }

@@ -2,6 +2,7 @@
 
 import { motion, AnimatePresence } from "framer-motion";
 import type { ReactNode } from "react";
+import { fadeTransition } from "@/components/animations";
 
 export function SmoothScroll({ children }: { children: ReactNode }) {
   return (
@@ -10,7 +11,7 @@ export function SmoothScroll({ children }: { children: ReactNode }) {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
-        transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+        transition={fadeTransition}
       >
         {children}
       </motion.div>

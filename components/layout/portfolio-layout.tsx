@@ -21,6 +21,8 @@ const CHAT_MIN_SIZE = 24;
 const CHAT_MAX_SIZE = 52;
 const CHAT_FOCUS_EVENT = "portfolio-chat:focus-input";
 const DESKTOP_CHAT_MEDIA_QUERY = "(min-width: 64rem)";
+const FRAME_GLOW_BACKGROUND =
+  "radial-gradient(circle at 14% 18%, rgba(196, 168, 130, 0.06), transparent 18%), radial-gradient(circle at 84% 22%, rgba(130, 150, 196, 0.04), transparent 15%)";
 
 export function PortfolioLayout({ children }: { children: ReactNode }) {
   const pathname = usePathname();
@@ -133,7 +135,10 @@ export function PortfolioLayout({ children }: { children: ReactNode }) {
   if (isStandaloneRoute) {
     return (
       <main className="min-h-screen bg-background text-foreground">
-        <div className="frame-glow pointer-events-none fixed inset-0" />
+        <div
+          className="pointer-events-none fixed inset-0"
+          style={{ background: FRAME_GLOW_BACKGROUND }}
+        />
         <section className="relative min-h-screen w-full bg-sidebar">
           {children}
         </section>
@@ -148,7 +153,10 @@ export function PortfolioLayout({ children }: { children: ReactNode }) {
           isDesktopLayout ? "lg:h-screen lg:overflow-hidden" : ""
         }`}
       >
-        <div className="frame-glow pointer-events-none fixed inset-0" />
+        <div
+          className="pointer-events-none fixed inset-0"
+          style={{ background: FRAME_GLOW_BACKGROUND }}
+        />
 
         <section
           className={`relative min-h-screen w-full bg-sidebar ${
@@ -177,7 +185,7 @@ export function PortfolioLayout({ children }: { children: ReactNode }) {
                   chatPanelRef.current?.collapse();
                 }}
               >
-                <div className="absolute inset-y-0 left-1/2 w-px -translate-x-1/2 bg-white/[0.08] transition-colors duration-200 group-hover:bg-white/[0.16]" />
+                <div className="absolute inset-y-0 left-1/2 w-px -translate-x-1/2 bg-border transition-colors duration-200 group-hover:bg-border" />
               </ResizableHandle>
 
               <ResizablePanel

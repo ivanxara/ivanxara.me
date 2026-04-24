@@ -12,9 +12,9 @@ const manrope = Manrope({
 });
 
 export const metadata: Metadata = {
-  title: "Ivan Xará | Minimal Portfolio",
+  title: "Ivan Xará",
   description:
-    "A minimal, art-directed portfolio for Ivan Xará focused on thoughtful digital products and full-stack craft.",
+    "Ivan Xará is a software engineer specializing in frontend development, with a passion for creating intuitive and engaging user experiences. With expertise in React, Next.js, and TypeScript, Ivan has a proven track record of delivering high-quality web applications. Explore Ivan's portfolio to see a selection of projects that showcase his skills and creativity in the world of frontend development.",
 };
 
 export default function RootLayout({

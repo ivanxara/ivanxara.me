@@ -10,12 +10,12 @@ const sheetVariants = cva(
   {
     variants: {
       side: {
-        top: "inset-x-0 top-0 border-b border-white/[0.08] data-[state=closed]:-translate-y-6",
+        top: "inset-x-0 top-0 border-b border-border data-[state=closed]:-translate-y-6",
         bottom:
-          "inset-x-0 bottom-0 border-t border-white/[0.08] data-[state=open]:translate-y-0 data-[state=closed]:translate-y-10",
-        left: "inset-y-0 left-0 h-full w-3/4 border-r border-white/[0.08] data-[state=open]:translate-x-0 data-[state=closed]:-translate-x-6 sm:max-w-sm",
+          "inset-x-0 bottom-0 border-t border-border data-[state=open]:translate-y-0 data-[state=closed]:translate-y-10",
+        left: "inset-y-0 left-0 h-full w-3/4 border-r border-border data-[state=open]:translate-x-0 data-[state=closed]:-translate-x-6 sm:max-w-sm",
         right:
-          "inset-y-0 right-0 h-full w-3/4 border-l border-white/[0.08] data-[state=open]:translate-x-0 data-[state=closed]:translate-x-6 sm:max-w-sm",
+          "inset-y-0 right-0 h-full w-3/4 border-l border-border data-[state=open]:translate-x-0 data-[state=closed]:translate-x-6 sm:max-w-sm",
       },
     },
     defaultVariants: {
@@ -36,7 +36,7 @@ function SheetOverlay({
     <DialogPrimitive.Overlay
       data-slot="sheet-overlay"
       className={cn(
-        "fixed inset-0 z-50 bg-black/50 transition-opacity duration-300 supports-backdrop-filter:backdrop-blur-sm data-[state=open]:opacity-100 data-[state=closed]:opacity-0",
+        "fixed inset-0 z-50 bg-background/50 transition-opacity duration-300 supports-backdrop-filter:backdrop-blur-sm data-[state=open]:opacity-100 data-[state=closed]:opacity-0",
         className,
       )}
       {...props}
