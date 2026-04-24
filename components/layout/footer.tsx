@@ -8,8 +8,10 @@ import { MY_SOCIALS, MY_EMAIL } from "@/utils/constants";
 
 export function Footer({
   progress,
+  enableDepthMotion = true,
 }: {
   progress: MotionValue<number>;
+  enableDepthMotion?: boolean;
 }) {
   const sectionY = useTransform(progress, [0, 1], [0, 18]);
 
@@ -17,7 +19,7 @@ export function Footer({
     <motion.section
       id="contact"
       className="scroll-mt-28 border-t border-border pb-28 lg:pb-12 pt-4"
-      style={{ y: sectionY }}
+      style={enableDepthMotion ? { y: sectionY } : undefined}
     >
       <PageWrapper>
         <SectionBlock title="Get in touch" className="max-w-5xl pb-0">

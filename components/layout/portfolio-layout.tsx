@@ -27,6 +27,7 @@ export function PortfolioLayout({ children }: { children: ReactNode }) {
   const chatPanelRef = useRef<ImperativePanelHandle>(null);
   const [isChatCollapsed, setIsChatCollapsed] = useState(true);
   const [isMobileChatOpen, setIsMobileChatOpen] = useState(false);
+  const [isDesktopLayout, setIsDesktopLayout] = useState(false);
   const isStandaloneRoute = pathname.startsWith("/secret/chats/");
   const isDesktopViewport = () =>
     window.matchMedia(DESKTOP_CHAT_MEDIA_QUERY).matches;
@@ -111,6 +112,24 @@ export function PortfolioLayout({ children }: { children: ReactNode }) {
     };
   }, [isChatCollapsed, isStandaloneRoute]);
 
+  useEffect(() => {
+    if (isStandaloneRoute) {
+      return;
+    }
+
+    const mediaQuery = window.matchMedia(DESKTOP_CHAT_MEDIA_QUERY);
+    const syncLayout = () => {
+      setIsDesktopLayout(mediaQuery.matches);
+    };
+
+    syncLayout();
+    mediaQuery.addEventListener("change", syncLayout);
+
+    return () => {
+      mediaQuery.removeEventListener("change", syncLayout);
+    };
+  }, [isStandaloneRoute]);
+
   if (isStandaloneRoute) {
     return (
       <main className="min-h-screen bg-background text-foreground">
@@ -124,20 +143,19 @@ export function PortfolioLayout({ children }: { children: ReactNode }) {
 
   return (
     <PortfolioChatProvider onOpenChat={toggleChat}>
-      <main className="min-h-screen bg-background text-foreground lg:h-screen lg:overflow-hidden">
+      <main
+        className={`min-h-screen bg-background text-foreground ${
+          isDesktopLayout ? "lg:h-screen lg:overflow-hidden" : ""
+        }`}
+      >
         <div className="frame-glow pointer-events-none fixed inset-0" />
 
-        <section className="relative min-h-screen w-full bg-sidebar lg:h-screen lg:overflow-hidden">
-          <div className="flex min-h-screen w-full flex-col lg:hidden">
-            {children}
-            <PortfolioChat
-              variant="mobile"
-              mobileSheetOpen={isMobileChatOpen}
-              onMobileSheetOpenChange={setIsMobileChatOpen}
-            />
-          </div>
-
-          <div className="hidden h-full w-full lg:flex">
+        <section
+          className={`relative min-h-screen w-full bg-sidebar ${
+            isDesktopLayout ? "lg:h-screen lg:overflow-hidden" : ""
+          }`}
+        >
+          {isDesktopLayout ? (
             <ResizablePanelGroup
               autoSaveId="portfolio-layout"
               direction="horizontal"
@@ -187,7 +205,16 @@ export function PortfolioLayout({ children }: { children: ReactNode }) {
                 </div>
               </ResizablePanel>
             </ResizablePanelGroup>
-          </div>
+          ) : (
+            <div className="flex min-h-screen w-full flex-col">
+              {children}
+              <PortfolioChat
+                variant="mobile"
+                mobileSheetOpen={isMobileChatOpen}
+                onMobileSheetOpenChange={setIsMobileChatOpen}
+              />
+            </div>
+          )}
         </section>
       </main>
     </PortfolioChatProvider>

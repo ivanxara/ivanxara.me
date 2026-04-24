@@ -25,7 +25,13 @@ const PREVIEW = {
 
 const previewContentHeight = PREVIEW.height - PREVIEW.framePadding * 2;
 
-export function SectionProjects({ progress }: { progress: MotionValue<number> }) {
+export function SectionProjects({
+  progress,
+  enableDepthMotion,
+}: {
+  progress: MotionValue<number>;
+  enableDepthMotion?: boolean;
+}) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const mouseX = useMotionValue(0);
@@ -46,7 +52,10 @@ export function SectionProjects({ progress }: { progress: MotionValue<number> })
   };
 
   return (
-    <motion.section id="work" style={{ y: sectionY }}>
+    <motion.section
+      id="work"
+      style={enableDepthMotion ? { y: sectionY } : undefined}
+    >
       <SectionBlock title="Selected Works" className="-scroll-mt-28">
         <div
           ref={containerRef}
@@ -104,6 +113,7 @@ export function SectionProjects({ progress }: { progress: MotionValue<number> })
                             fill
                             className="object-cover object-top"
                             sizes="(max-width: 768px) 100vw, 0px"
+                            unoptimized
                           />
                         ) : (
                           <div className="absolute inset-0 bg-white/[0.04]" />
@@ -197,6 +207,7 @@ export function SectionProjects({ progress }: { progress: MotionValue<number> })
                             fill
                             className="object-cover object-top"
                             sizes={`${PREVIEW.width - PREVIEW.framePadding * 2}px`}
+                            unoptimized
                           />
                         </div>
                       ) : (

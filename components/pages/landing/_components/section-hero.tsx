@@ -9,7 +9,13 @@ import {
 } from "framer-motion";
 import { useEffect } from "react";
 
-export function SectionHero({ progress }: { progress: MotionValue<number> }) {
+export function SectionHero({
+  progress,
+  enableDepthMotion,
+}: {
+  progress: MotionValue<number>;
+  enableDepthMotion?: boolean;
+}) {
   const scrollY = useTransform(progress, [0, 1], [0, -60]);
 
   const rawX = useMotionValue(0);
@@ -18,6 +24,12 @@ export function SectionHero({ progress }: { progress: MotionValue<number> }) {
   const driftY = useSpring(rawY, { stiffness: 35, damping: 22, mass: 1 });
 
   useEffect(() => {
+    if (!enableDepthMotion) {
+      rawX.set(0);
+      rawY.set(0);
+      return;
+    }
+
     const onMove = (e: MouseEvent) => {
       const cx = window.innerWidth / 2;
       const cy = window.innerHeight / 2;
@@ -26,12 +38,12 @@ export function SectionHero({ progress }: { progress: MotionValue<number> }) {
     };
     window.addEventListener("mousemove", onMove);
     return () => window.removeEventListener("mousemove", onMove);
-  }, [rawX, rawY]);
+  }, [enableDepthMotion, rawX, rawY]);
 
   return (
     <section
       id="top"
-      className="relative flex  lg:min-h-[calc(100dvh-6rem)] scroll-mt-28 flex-col justify-end overflow-hidden pb-16 pt-32 sm:pb-20"
+      className="relative flex min-h-[calc(100dvh-10rem)] lg:min-h-[calc(100dvh-6rem)] scroll-mt-28 flex-col justify-end overflow-hidden pb-16 pt-32 sm:pb-20"
     >
       {/* Vertical tag — right edge, barely visible */}
       <motion.div
@@ -48,9 +60,11 @@ export function SectionHero({ progress }: { progress: MotionValue<number> }) {
 
       <div className="relative z-10 flex flex-col">
         {/* Scroll parallax wrapper */}
-        <motion.div style={{ y: scrollY }}>
+        <motion.div style={enableDepthMotion ? { y: scrollY } : undefined}>
           {/* Mouse parallax wrapper */}
-          <motion.div style={{ x: driftX, y: driftY }}>
+          <motion.div
+            style={enableDepthMotion ? { x: driftX, y: driftY } : undefined}
+          >
             <div className="overflow-hidden">
               <motion.h1
                 initial={{ y: "108%" }}

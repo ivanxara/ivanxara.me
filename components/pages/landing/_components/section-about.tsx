@@ -4,11 +4,20 @@ import { motion, useTransform, type MotionValue } from "framer-motion";
 import { SectionBlock } from "@/components/shared/section-block";
 import { fadeUp } from "@/lib/animations/motion";
 
-export function SectionAbout({ progress }: { progress: MotionValue<number> }) {
+export function SectionAbout({
+  progress,
+  enableDepthMotion,
+}: {
+  progress: MotionValue<number>;
+  enableDepthMotion?: boolean;
+}) {
   const sectionY = useTransform(progress, [0, 1], [0, -36]);
 
   return (
-    <motion.section id="about" style={{ y: sectionY }}>
+    <motion.section
+      id="about"
+      style={enableDepthMotion ? { y: sectionY } : undefined}
+    >
       <SectionBlock title="About" className="scroll-mt-28">
         <div className="max-w-5xl">
           <motion.div

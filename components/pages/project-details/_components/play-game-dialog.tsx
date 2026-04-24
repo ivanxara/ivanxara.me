@@ -10,7 +10,6 @@ import {
   DialogClose,
   DialogContent,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { fadeUp } from "@/lib/animations/motion";
@@ -53,16 +52,15 @@ export function PlayGameDialog({ title }: { title: string }) {
       >
         <Dialog open={isOpen} onOpenChange={setIsOpen}>
           <div className="absolute right-5 top-5 z-10 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 focus-visible:opacity-100">
-            <DialogTrigger asChild>
-              <Button
-                type="button"
-                variant="floating-overlay"
-                size="icon-xl"
-                aria-label={`Open ${title} playable build fullscreen`}
-              >
-                <Expand className="size-4" />
-              </Button>
-            </DialogTrigger>
+            <Button
+              type="button"
+              variant="floating-overlay"
+              size="icon-xl"
+              aria-label={`Open ${title} playable build fullscreen`}
+              onClick={() => setIsOpen(true)}
+            >
+              <Expand className="size-4" />
+            </Button>
           </div>
           <DialogContent size="wide" chrome="plain">
             <VisuallyHidden.Root>

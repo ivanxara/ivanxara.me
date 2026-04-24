@@ -7,13 +7,18 @@ import { MY_EXPERIENCE } from "@/utils/constants";
 
 export function SectionExperience({
   progress,
+  enableDepthMotion,
 }: {
   progress: MotionValue<number>;
+  enableDepthMotion?: boolean;
 }) {
   const sectionY = useTransform(progress, [0, 1], [0, -16]);
 
   return (
-    <motion.section id="experience" style={{ y: sectionY }}>
+    <motion.section
+      id="experience"
+      style={enableDepthMotion ? { y: sectionY } : undefined}
+    >
       <SectionBlock title="Journey" className="scroll-mt-28">
         <motion.div
           variants={fadeUp}

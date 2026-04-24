@@ -2,7 +2,13 @@
 
 import Image from "next/image";
 import { useCallback, useEffect, useRef } from "react";
-import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
+import {
+  motion,
+  useMotionValue,
+  useReducedMotion,
+  useSpring,
+  useTransform,
+} from "framer-motion";
 import { PortfolioBackdrop } from "@/components/layout/portfolio-backdrop";
 import { Navbar } from "@/components/layout/navbar";
 import { PageWrapper } from "@/components/layout/page-wrapper";
@@ -17,6 +23,7 @@ import type { IProject } from "@/types/projects";
 import { Badge } from "@/components/ui/badge";
 import { LockIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useResponsiveScrollProgress } from "@/lib/hooks/use-responsive-scroll-progress";
 
 export default function ProjectDetailScreen({
   onOpenChat,
@@ -27,12 +34,9 @@ export default function ProjectDetailScreen({
 }) {
   const isMobileGallery = project.galleryLayout === "mobile";
   const scrollRef = useRef<HTMLDivElement>(null);
-  const scrollYProgress = useMotionValue(0);
-  const progress = useSpring(scrollYProgress, {
-    stiffness: 110,
-    damping: 26,
-    mass: 0.35,
-  });
+  const prefersReducedMotion = useReducedMotion();
+  const { progress, usesPanelScroll } = useResponsiveScrollProgress(scrollRef);
+  const enableDepthMotion = usesPanelScroll && !prefersReducedMotion;
   const heroY = useTransform(progress, [0, 1], [0, -60]);
   const overviewY = useTransform(progress, [0, 1], [0, -36]);
   const featuresY = useTransform(progress, [0, 1], [0, -24]);
@@ -66,16 +70,11 @@ export default function ProjectDetailScreen({
   );
 
   useEffect(() => {
-    const container = scrollRef.current;
-    if (!container) return;
-
-    const updateScrollProgress = () => {
-      const scrollableHeight = container.scrollHeight - container.clientHeight;
-      const nextProgress =
-        scrollableHeight <= 0 ? 0 : container.scrollTop / scrollableHeight;
-
-      scrollYProgress.set(nextProgress);
-    };
+    if (!enableDepthMotion) {
+      rawX.set(0);
+      rawY.set(0);
+      return;
+    }
 
     const onMove = (e: MouseEvent) => {
       const cx = window.innerWidth / 2;
@@ -84,14 +83,11 @@ export default function ProjectDetailScreen({
       rawY.set(((e.clientY - cy) / cy) * 9);
     };
 
-    updateScrollProgress();
-    container.addEventListener("scroll", updateScrollProgress);
     window.addEventListener("mousemove", onMove);
     return () => {
-      container.removeEventListener("scroll", updateScrollProgress);
       window.removeEventListener("mousemove", onMove);
     };
-  }, [rawX, rawY, scrollYProgress]);
+  }, [enableDepthMotion, rawX, rawY]);
 
   if (!project.image) {
     return null;
@@ -99,12 +95,15 @@ export default function ProjectDetailScreen({
 
   return (
     <aside className="w-full bg-card lg:flex lg:h-full lg:bg-sidebar lg:p-4">
-      <div className="relative flex min-h-screen w-full flex-col overflow-hidden bg-card lg:h-full lg:rounded-[2.5rem] lg:noise-overlay">
-        <PortfolioBackdrop progress={progress} />
+      <div className="relative flex min-h-screen w-full flex-col overflow-x-clip bg-card lg:h-full lg:overflow-hidden lg:rounded-[2.5rem] lg:noise-overlay">
+        <PortfolioBackdrop
+          progress={progress}
+          enableMotion={enableDepthMotion}
+        />
 
         <div
           ref={scrollRef}
-          className="portfolio-scroll relative flex-1 overflow-y-auto overflow-x-hidden"
+          className="portfolio-scroll relative overflow-x-clip lg:min-h-0 lg:flex-1 lg:overflow-x-hidden lg:overflow-y-auto"
         >
           <PageWrapper>
             <Navbar
@@ -118,8 +117,15 @@ export default function ProjectDetailScreen({
               className="relative flex lg:min-h-[calc(100dvh-6rem)] scroll-mt-28 flex-col justify-end pt-24 lg:pt-32 pb-20"
             >
               <div className="relative z-10 flex flex-col">
-                <motion.div style={{ y: heroY }}>
-                  <motion.div style={{ x: driftX, y: driftY }}>
+                <motion.div
+                  className="z-10"
+                  style={enableDepthMotion ? { y: heroY } : undefined}
+                >
+                  <motion.div
+                    style={
+                      enableDepthMotion ? { x: driftX, y: driftY } : undefined
+                    }
+                  >
                     <div className="overflow-hidden">
                       <motion.h1
                         initial={{ y: "108%" }}
@@ -129,7 +135,7 @@ export default function ProjectDetailScreen({
                           duration: 1.3,
                           ease: [0.16, 1, 0.3, 1],
                         }}
-                        className="select-none text-4xl sm:text-7xl md:text-[5rem] lg:text-[8rem] font-black tracking-[-0.065em] text-foreground"
+                        className="select-none text-[clamp(1.9rem,7vw,8rem)] leading-normal font-black tracking-[-0.065em] text-foreground"
                       >
                         {project.title}
                       </motion.h1>
@@ -145,7 +151,7 @@ export default function ProjectDetailScreen({
                     duration: 1.4,
                     ease: [0.16, 1, 0.3, 1],
                   }}
-                  className="overflow-hidden rounded-[1.85rem] bg-[#0b0b0d] shadow-xl sm:rounded-[2.25rem] mt-4"
+                  className="overflow-hidden rounded-[1.85rem] bg-[#0b0b0d] shadow-xl sm:rounded-[2.25rem]"
                 >
                   <Image
                     src={project.image}
@@ -158,7 +164,10 @@ export default function ProjectDetailScreen({
               </div>
             </section>
 
-            <motion.section id="overview" style={{ y: overviewY }}>
+            <motion.section
+              id="overview"
+              style={enableDepthMotion ? { y: overviewY } : undefined}
+            >
               <SectionBlock title="Project Overview" className="scroll-mt-28">
                 <div className="max-w-5xl">
                   <motion.div
@@ -249,7 +258,10 @@ export default function ProjectDetailScreen({
               </SectionBlock>
             </motion.section>
 
-            <motion.section id="features" style={{ y: featuresY }}>
+            <motion.section
+              id="features"
+              style={enableDepthMotion ? { y: featuresY } : undefined}
+            >
               <SectionBlock title="Key Features" className="scroll-mt-28">
                 <div className="max-w-4xl">
                   <motion.div
@@ -339,7 +351,7 @@ export default function ProjectDetailScreen({
             ) : null}
           </PageWrapper>
 
-          <Footer progress={progress} />
+          <Footer progress={progress} enableDepthMotion={enableDepthMotion} />
         </div>
       </div>
     </aside>

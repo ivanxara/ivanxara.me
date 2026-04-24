@@ -42,7 +42,7 @@ export function PortfolioChatMobile({
 
   return (
     <>
-      <div className="pointer-events-none fixed inset-x-0 bottom-10 z-40 flex justify-center px-4 min-[1080px]:hidden">
+      {/* <div className="pointer-events-none fixed inset-x-0 bottom-10 z-40 flex justify-center px-4 min-[1080px]:hidden">
         <div className="pointer-events-auto w-fit">
           <Button
             type="button"
@@ -61,7 +61,7 @@ export function PortfolioChatMobile({
             )}
           </Button>
         </div>
-      </div>
+      </div> */}
 
       <Sheet open={isOpen} onOpenChange={onOpenChange}>
         <SheetContent side="bottom" className="rounded-4xl h-[80dvh]">
