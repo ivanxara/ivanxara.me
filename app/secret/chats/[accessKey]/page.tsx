@@ -30,7 +30,7 @@ async function getInitialRows() {
     .limit(500);
 
   if (error) {
-    console.error("Failed to load monitor rows:", error.message);
+    console.log("Failed to load monitor rows:", error.message);
     return [];
   }
 
