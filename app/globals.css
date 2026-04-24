@@ -4,7 +4,7 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  --radius: 1rem;
+  --radius: 0.5rem;
   --background: #0e0e10;
   --foreground: #e8e6e1;
   --card: #141416;
@@ -73,7 +73,6 @@
 }
 
 @layer base {
-
   button:not([disabled]),
   [role="button"]:not([disabled]) {
     cursor: pointer;
@@ -126,7 +125,9 @@
     font-size: 0.74rem;
     line-height: 1;
     color: rgba(232, 230, 225, 0.58);
-    transition: background-color 200ms ease, color 200ms ease,
+    transition:
+      background-color 200ms ease,
+      color 200ms ease,
       border-color 200ms ease;
   }
 
@@ -137,9 +138,8 @@
   }
 
   .frame-glow {
-    background: radial-gradient(circle at 14% 18%,
-        var(--glow-warm),
-        transparent 18%),
+    background:
+      radial-gradient(circle at 14% 18%, var(--glow-warm), transparent 18%),
       radial-gradient(circle at 84% 22%, var(--glow-cool), transparent 15%);
   }
 

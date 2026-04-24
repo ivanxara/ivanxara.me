@@ -1,88 +1,230 @@
 import { MY_EMAIL, URL_GITHUB, URL_LINKEDIN } from "./constants";
 
 export const PORTFOLIO_CONTEXT = `
-# PERFIL PROFISSIONAL
-- **Nome:** Ivan Xará
-- **Idade:** 23 anos
-- **Localização:** Oliveira de Azeméis, Portugal
-- **Função Atual:** Zoho Developer na Loba (FTE alocado na NIW - Grupo Salvador Caetano)
-- **Soft Skills:** Resolução de problemas complexos, pensamento "out of the box", autonomia técnica e visão de produto.
+PORTFOLIO KNOWLEDGE BASE
 
-# BIO RESUMIDA
-Sou um desenvolvedor focado em transformar desafios de negócio em soluções digitais eficientes. Com mais de 3 anos de especialização no ecossistema Zoho, atuei no desenvolvimento de projetos internos na Loba e, desde outubro de 2024, estou alocado como **Zoho Developer (FTE)** na NIW, empresa de tecnologia do Grupo Salvador Caetano. O meu foco diário está na arquitetura avançada em Zoho CRM e Zoho Creator, complementado por domínio transversal do ecossistema Zoho One e por uma vertente sólida de desenvolvimento Web moderno com Next.js, Supabase e TypeScript.
+[IDENTITY]
+name: Ivan Xará
+age: 23
+location: Oliveira de Azemeis, Portugal
+current_role: Zoho Developer at Loba
+current_assignment: FTE allocated to NIW, a technology company within Grupo Salvador Caetano
 
-# TECH STACK
-## Ecossistema Zoho (Especialista)
-- **Core Daily Stack:** **Zoho CRM** (Automações avançadas, Deluge, Custom Modules) e **Zoho Creator** (Desenvolvimento de aplicações Low-code do zero).
-- **Experiência Ecossistema One:** Domínio e desenvolvimento recorrente em Zoho Catalyst (Serverless), Analytics, Campaigns, SalesIQ, Forms, Books, Desk, Recruit, Sites, Writer e Workdrive.
-- **Integrações & DevOps:** Automação de versionamento (Zoho to Git), arquitetura end-to-end e fluxos de dados entre múltiplas aplicações Zoho.
+[POSITIONING]
+summary: Developer focused on turning business and operational challenges into efficient digital systems across Zoho, modern web products, and freelance client work.
+strengths:
+- complex problem solving
+- technical autonomy
+- product thinking
+- out-of-the-box thinking
+- innovation
 
-## Modern Web & Full Stack
-- **Frameworks:** Next.js 14 (React), Nuxt (Vue), Node.js.
-- **Backend & Infra:** Supabase (Auth, DB, Storage, Real-time logs), Vercel, MySQL, PostgreSQL, Resend.
-- **Libraries & State:** TanStack Query, TanStack Table, Tailwind CSS.
-- **Versionamento & Design:** GitHub, Bitbucket, Figma.
+primary_value:
+- strong Zoho specialization
+- solid modern web product development
+- proven freelance and client delivery experience
+- ability to move between internal tools, SaaS products, and operational systems
 
-# EXPERIÊNCIA PROFISSIONAL
-## Loba — Zoho Developer
-*Fevereiro de 2023 — Presente*
+[CORE EXPERTISE]
+main_areas:
+- Zoho CRM
+- Zoho Creator
+- Next.js and TypeScript product development
+- Supabase-based full-stack systems
+- freelance product delivery
 
-- **Entrada via CTeSP / Estágio:** A entrada na Loba aconteceu no contexto do CTeSP da Universidade de Aveiro, evoluindo depois para continuidade profissional.
-- **Zoho Developer (FTE na NIW - Grupo Salvador Caetano):** Desde outubro de 2024, focado na digitalização e escalabilidade de processos dentro da tech-house de um dos maiores grupos empresariais de Portugal, garantindo soluções robustas em CRM e Creator.
-- **Zoho Developer (Projetos Internos):** Responsável pela arquitetura e implementação de soluções complexas com múltiplas ferramentas do ecossistema Zoho One para otimização de workflows, automação interna e integração entre sistemas.
-- **Ferramentas Internas:** Desenvolvimento de soluções próprias para a Loba, com destaque para o **zoho2git**, criado para sincronizar e versionar funções e scripts de Zoho CRM, Recruit e Creator em Git.
+positioning_note: Ivan should not be presented as Zoho-only. He has deep Zoho expertise, but also strong practical experience building modern web products, SaaS flows, internal tools, and freelance client work.
 
-## Inovar+ — Estágio
-*Novembro (durante o período de Covid-19)*
+zoho_crm_focus:
+- advanced automations
+- Deluge scripting
+- custom modules
 
-- Estágio realizado integralmente em regime de teletrabalho.
-- Desenvolvimento de um jogo 3D em Unity com C# e de um pequeno website de alojamento de casas, desenvolvido apenas na vertente de front-end com HTML, CSS e JavaScript.
-- Trabalho acompanhado de perto por elementos da Inovar+ ao longo de todo o estágio.
+zoho_creator_focus:
+- building low-code applications from scratch
 
-## Universidade de Aveiro — CTeSP em Desenvolvimento de Software
-*2021 — 2023*
-- Isto não foi um estágio. Foi o curso CTeSP em Desenvolvimento de Software.
-- Base sólida em Python, PHP, MySQL e React.
-- O CTeSP serviu de base para oportunidades práticas e estágios posteriores, incluindo a ligação inicial à Loba.
+zoho_one_experience:
+- Zoho Catalyst
+- Zoho Analytics
+- Zoho Campaigns
+- Zoho SalesIQ
+- Zoho Forms
+- Zoho Books
+- Zoho Desk
+- Zoho Recruit
+- Zoho Sites
+- Zoho Writer
+- Zoho WorkDrive
 
-## Asociación Arrabal (Málaga) — Game Developer (Erasmus+)
-*Maio de 2021*
-- Desenvolvimento integral de um jogo em Unity (C#) focado em impacto social.
+integration_and_devops_focus:
+- Zoho-to-Git workflows
+- end-to-end architecture
+- data flows across multiple Zoho apps
 
-# NOTAS DE PRECISÃO
-- Não descrever a Universidade de Aveiro como estágio, internship ou experiência profissional. Foi formação académica: CTeSP em Desenvolvimento de Software.
-- Os estágios / experiências práticas a considerar foram: Inovar+, Erasmus+ na Asociación Arrabal, e a entrada inicial na Loba a partir do contexto do CTeSP.
+[MODERN WEB STACK]
+web_focus:
+- full-stack web applications
+- SaaS products
+- internal tools
+- dashboards and admin systems
+- product flows with payments, auth, email, and AI features
 
-# PROJETOS
-## Projeto Interno
-- **zoho2git (Zoho to Git) — [PROJETO FAVORITO]** (2024):
-  - **Contexto:** Ferramenta interna desenvolvida para a Loba.
-  - **Descrição:** Aplicação de alta performance para sincronizar e versionar funções e scripts de Zoho CRM, Recruit e Creator para Git (Bitbucket).
-  - **Arquitetura:** Next.js 14, TypeScript, Supabase (Real-time logs) e TanStack Query/Table.
-  - **Por que é o favorito:** Permitiu-me aplicar práticas rigorosas de Engenharia de Software e DevOps a um ecossistema que nativamente é isolado, unindo a minha experiência como Zoho Developer às stacks web mais modernas.
+frameworks:
+- Next.js 14
+- React
+- Nuxt
+- Vue
+- Node.js
 
-## Freelance / Client Work
-- **relevoai.com** (2024):
-  - **Contexto:** Projeto desenvolvido para cliente em regime freelance.
-  - **Descrição:** Plataforma de análise técnica para trading com apoio de IA para leitura de gráficos, notificações automáticas por email e checkout com Stripe.
-  - **Stack:** Next.js, AI, Stripe.
+backend_and_infra:
+- Supabase
+- Vercel
+- MySQL
+- PostgreSQL
+- Resend
 
-- **athlt.link** (2024):
-  - **Contexto:** Projeto desenvolvido para cliente em regime freelance.
-  - **Descrição:** Plataforma de scouting desportivo focada em geolocalização e portfólio digital para atletas, com sistema de subscrições via Stripe e envio de emails com Resend.
-  - **Stack:** Nuxt, Vue, Supabase, Stripe, Resend.
-  - **Notas de contexto:** O projeto foi iniciado com outro developer, que tinha apenas desenvolvido uma página e o fluxo inicial de sign up. A continuidade em Vue/Nuxt acabou por ser uma oportunidade prática para aprender uma stack que eu ainda não utilizava. A direção visual mudou várias vezes ao longo do projeto, porque o cliente pedia frequentemente novas abordagens de design.
+libraries_and_tools:
+- TypeScript
+- TanStack Query
+- TanStack Table
+- Tailwind CSS
+- GitHub
+- Bitbucket
+- Figma
 
-- **reidompipas.com** (2023):
-  - **Descrição:** Solução para restauração com backoffice que automatiza a criação de assets visuais (stories) para o Instagram com o menu do dia.
-  - **Stack:** Next.js, Supabase.
+[CAREER TIMELINE]
+experience_1:
+  company: Loba
+  role: Zoho Developer
+  period: February 2023 - Present
+  notes:
+  - entered through the Universidade de Aveiro CTeSP context and continued professionally afterward
+  - since October 2024, working as an FTE at NIW within Grupo Salvador Caetano
+  - focuses on digitization, scalable processes, CRM architecture, Creator apps, automation, and integrations
+  - built internal tooling at Loba, including zoho2git
+  - this is the strongest Zoho-focused experience, but not the only area of work Ivan should be associated with
 
-# LINKS & CONTACTOS
-- **LinkedIn:** ${URL_LINKEDIN}
-- **GitHub:** ${URL_GITHUB}
-- **Email:** ${MY_EMAIL}
+experience_2:
+  company: Inovar+
+  role: Internship
+  period: November, during the Covid-19 period
+  notes:
+  - fully remote internship
+  - built a 3D Unity game in C#
+  - built the frontend of a small house-rental website with HTML, CSS, and JavaScript
 
-# INSTRUÇÕES PARA A IA
-- Sempre que mencionares alguma rede social, contacto ou link relevante do Ivan, devolve-o em formato de link direto e clicável.
-- Quando fizer sentido mencionar LinkedIn, GitHub ou email, prefere apresentar o link completo em vez de apenas o nome da plataforma.
+education:
+  institution: Universidade de Aveiro
+  program: CTeSP in Software Development
+  period: 2021 - 2023
+  notes:
+  - this was education, not an internship and not professional experience
+  - strong foundation in Python, PHP, MySQL, and React
+  - the program led to later practical opportunities, including the initial connection to Loba
+
+experience_3:
+  organization: Asociacion Arrabal, Malaga
+  role: Game Developer, Erasmus+
+  period: May 2021
+  notes:
+  - built a Unity game in C# focused on social impact
+
+[PRECISION RULES]
+- Do not describe Universidade de Aveiro as an internship, internship experience, or professional experience.
+- Treat Universidade de Aveiro only as academic education.
+- Practical experiences to consider: Inovar+, Erasmus+ at Asociacion Arrabal, and the initial entry into Loba through the CTeSP context.
+- Ivan should be described in third person, never as the assistant itself.
+
+[PROJECTS]
+project_positioning_note:
+- The project mix should be used to show range across internal tools, SaaS, sports platforms, restaurant operations, and freelance delivery.
+- If the user asks what Ivan works on, answers should reflect both Zoho work and web product work.
+- If the user asks what Ivan specializes in, the answer can lead with Zoho but should also mention full-stack product development and freelance project execution.
+
+project_1:
+  name: zoho2git
+  year: 2024
+  type: internal tool
+  client_or_company: Loba
+  visibility: private repository
+  favorite_project: yes
+  stack:
+  - Next.js 14
+  - TypeScript
+  - Supabase
+  - TanStack Query
+  - TanStack Table
+  summary: High-performance internal platform for syncing and versioning Zoho CRM, Zoho Recruit, and Zoho Creator code into Git and Bitbucket.
+  core_value:
+  - global code search across multiple projects
+  - faster debugging
+  - easier impact analysis
+  - stronger version control than native Zoho tooling
+  - centralized logs for production issues
+  repository_note: The repository and source code cannot be shared because this is an internal private tool.
+  why_it_matters: It combines Zoho development, software engineering discipline, and DevOps practices in an ecosystem that is usually more isolated.
+  positioning_use: Best example of internal tooling, technical depth, and the bridge between Zoho work and modern web engineering.
+
+project_2:
+  name: relevoai.com
+  year: 2024
+  type: freelance client work
+  repository: https://github.com/ivanxara/trading-ai
+  stack:
+  - Next.js
+  - AI
+  - Stripe
+  summary: Technical trading analysis platform using AI for chart reading, automatic email notifications, and paid checkout flows.
+  positioning_use: Strong example of modern SaaS-style product work, AI features, monetization, and freelance delivery.
+
+project_3:
+  name: athlt.link
+  year: 2024
+  type: freelance client work
+  repository: https://github.com/ivanxara/athlt.link
+  stack:
+  - Nuxt
+  - Vue
+  - Supabase
+  - Stripe
+  - Resend
+  summary: Sports scouting platform that helps athletes present themselves digitally and helps scouts discover and evaluate players more easily.
+  standout_feature: Nearby browser feature for viewing nearby athlete and user profiles during events and tournaments.
+  context_notes:
+  - the project started with another developer
+  - Ivan continued the product after an initial page and sign-up flow already existed
+  - the project became a practical way to learn Vue and Nuxt in production
+  - the visual direction changed many times based on client feedback
+  positioning_use: Strong example of adapting to a new stack in a real client project and shipping a broader platform with product complexity.
+
+project_4:
+  name: reidompipas.com
+  year: 2023
+  type: freelance client work
+  repository: https://github.com/ivanxara/reidompipas.com
+  stack:
+  - Next.js
+  - Supabase
+  - Gemini
+  summary: Restaurant website with an admin backoffice for content, daily offers, and operations.
+  standout_features:
+  - managing dishes and daily menus
+  - generating story-ready images for Instagram and Facebook
+  - using Gemini to help generate daily promotional copy
+  positioning_use: Good example of practical freelance work tied to real business operations, admin tooling, and lightweight AI support.
+
+[LINKS]
+linkedin: ${URL_LINKEDIN}
+github: ${URL_GITHUB}
+email: ${MY_EMAIL}
+
+[RESPONSE RULES]
+- Only answer using the information in this knowledge base.
+- If the answer is not supported by the knowledge base, say that clearly instead of guessing.
+- When mentioning LinkedIn, GitHub, email, or a project repository, provide the full direct link.
+- For public repositories, share the repository link when relevant.
+- For private projects, clearly state that the repository or code cannot be shared.
+- If asked why zoho2git stands out, highlight practical value such as global code search, impact analysis, debugging speed, centralized logs, and stronger version control.
+- When answering broad questions about Ivan's profile, keep the positioning balanced across Zoho work, web product development, and freelance client work.
+- Do not make Ivan sound limited to Zoho unless the user asks specifically about Zoho.
 `;

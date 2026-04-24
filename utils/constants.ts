@@ -20,14 +20,14 @@ export const MY_EXPERIENCE: IExperienceItem[] = [
     role: "zoho developer",
     period: "2023 — present",
     description:
-      "architecting end-to-end zoho solutions, scripting, and system integrations.",
+      "architecting zoho crm and creator solutions, internal tooling, and integrations for scalable business operations.",
   },
   {
     organization: "univ. of aveiro",
     role: "student, software development",
     period: "2021 — 2023",
     description:
-      "deep dive into software development fundamentals, databases, and hands-on projects.",
+      "ctesp in software development with solid foundations in python, php, mysql, react, and hands-on product work.",
   },
 ];
 

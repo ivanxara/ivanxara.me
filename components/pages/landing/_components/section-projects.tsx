@@ -72,7 +72,7 @@ export function SectionProjects({ progress }: { progress: MotionValue<number> })
                     href={`/projects/${project.slug}`}
                     onMouseEnter={() => setHoveredIndex(index)}
                     onMouseLeave={() => setHoveredIndex(null)}
-                    className={`group relative flex cursor-pointer flex-col justify-between gap-5 overflow-hidden py-12 transition-all duration-500 sm:py-16 lg:flex-row lg:items-center ${
+                    className={`relative flex cursor-pointer flex-col justify-between gap-5 overflow-hidden py-12 sm:py-16 lg:flex-row lg:items-center ${
                       index < PROJECT_LIST.length - 1 ? "border-b border-border" : ""
                     }`}
                   >
@@ -92,13 +92,27 @@ export function SectionProjects({ progress }: { progress: MotionValue<number> })
                     />
 
                     <div
-                      className={`relative z-10 flex items-center gap-4 transition-transform duration-500 ${
-                        isActive ? "translate-x-4" : "translate-x-0"
+                      className={`relative z-10 flex flex-col gap-5 md:gap-6 lg:flex-row lg:items-center lg:gap-4 lg:transition-transform lg:duration-500 ${
+                        isActive ? "lg:translate-x-4" : "lg:translate-x-0"
                       }`}
                     >
+                      <div className="relative aspect-[16/10] w-full overflow-hidden rounded-[1.4rem] border border-white/[0.08] bg-[#111214] md:hidden">
+                        {project.image ? (
+                          <Image
+                            src={project.image}
+                            alt={`${project.title} preview`}
+                            fill
+                            className="object-cover object-top"
+                            sizes="(max-width: 768px) 100vw, 0px"
+                          />
+                        ) : (
+                          <div className="absolute inset-0 bg-white/[0.04]" />
+                        )}
+                      </div>
+
                       <h3
-                        className={`text-[clamp(2.35rem,6vw,5rem)] font-black leading-[0.95] tracking-[-0.08em] transition-colors duration-500 ${
-                          isDimmed ? "text-foreground/20" : "text-foreground"
+                        className={`text-[clamp(2.35rem,6vw,5rem)] font-black leading-[0.95] tracking-[-0.08em] md:transition-colors md:duration-500 ${
+                          isDimmed ? "md:text-foreground/20" : "text-foreground"
                         }`}
                       >
                         {project.title}

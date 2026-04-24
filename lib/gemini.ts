@@ -57,7 +57,7 @@ const runGeneration = async ({
   responseSchema,
   messages = [],
   model = process.env.GEMINI_MODEL ?? DEFAULT_MODEL,
-  temperature = 0.5,
+  temperature = 0.2,
 }: GenerateGeminiContentParams) => {
   const apiKey = process.env.GEMINI_API_KEY;
   if (!apiKey) throw new Error("GEMINI_API_KEY is not set");
@@ -76,7 +76,6 @@ const runGeneration = async ({
     contents: buildContents({ prompt, messages }),
   });
   
-  console.log("23");
   const text = result.response.text().trim();
   if (!text) throw new Error("Empty model response");
 

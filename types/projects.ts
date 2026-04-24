@@ -16,7 +16,10 @@ export type IProject = {
   overviewTitle?: string;
   overviewAccent?: string;
   overview?: string[];
-  repository?: string;
+  repository?: {
+    url?: string;
+    private?: boolean;
+  };
   featureIntro?: string;
   featureCards?: ProjectFeatureItem[];
   playSection?: boolean;

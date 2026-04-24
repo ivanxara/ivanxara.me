@@ -14,7 +14,7 @@ const dialogContentVariants = cva(
     variants: {
       size: {
         default: "",
-        wide: "sm:max-w-6xl",
+        wide: "sm:max-w-[calc(100%-4rem)] md:max-w-4xl lg:max-w-5xl xl:max-w-7xl",
       },
       chrome: {
         default: "",

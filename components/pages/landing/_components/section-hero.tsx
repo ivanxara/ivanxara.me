@@ -31,7 +31,7 @@ export function SectionHero({ progress }: { progress: MotionValue<number> }) {
   return (
     <section
       id="top"
-      className="relative flex min-h-[calc(100dvh-6rem)] scroll-mt-28 flex-col justify-end overflow-hidden pb-16 pt-32 sm:pb-20"
+      className="relative flex  lg:min-h-[calc(100dvh-6rem)] scroll-mt-28 flex-col justify-end overflow-hidden pb-16 pt-32 sm:pb-20"
     >
       {/* Vertical tag — right edge, barely visible */}
       <motion.div
@@ -42,7 +42,7 @@ export function SectionHero({ progress }: { progress: MotionValue<number> }) {
         style={{ writingMode: "vertical-rl" }}
       >
         <span className="select-none font-mono text-[9px] uppercase tracking-[0.38em] text-muted-foreground opacity-[0.15]">
-          full-stack developer — portugal
+          zoho developer + full-stack builder — portugal
         </span>
       </motion.div>
 
@@ -60,13 +60,14 @@ export function SectionHero({ progress }: { progress: MotionValue<number> }) {
                   duration: 1.3,
                   ease: [0.16, 1, 0.3, 1],
                 }}
-                className="select-none text-[clamp(5rem,16vw,13rem)] font-black leading-[0.85] tracking-[-0.065em] text-foreground"
+                className="select-none text-[clamp(5rem,16vw,13rem)] font-black tracking-[-0.065em] leading-none text-foreground"
               >
                 ivan
               </motion.h1>
             </div>
 
-            <div className="overflow-hidden">
+            {/* Aumenta pt para dar espaço ao acento — mt igual para compensar */}
+            <div className="overflow-hidden -mt-4 md:-mt-14">
               <motion.span
                 initial={{ y: "108%" }}
                 animate={{ y: 0 }}
@@ -75,8 +76,8 @@ export function SectionHero({ progress }: { progress: MotionValue<number> }) {
                   duration: 1.3,
                   ease: [0.16, 1, 0.3, 1],
                 }}
-                className="select-none block text-[clamp(5rem,16vw,13rem)] font-black leading-[0.85] tracking-tighter text-foreground"
-                style={{ marginLeft: "clamp(1.5rem, 10vw, 8rem)" }}
+                className="select-none text-[clamp(5rem,16vw,13rem)] font-black tracking-[-0.065em] leading-none text-foreground"
+                style={{ marginLeft: "clamp(2.6rem, 18vw, 10.5rem)" }}
               >
                 xará
               </motion.span>
@@ -91,8 +92,8 @@ export function SectionHero({ progress }: { progress: MotionValue<number> }) {
           transition={{ delay: 1.35, duration: 0.9, ease: "easeOut" }}
           className="mt-14 max-w-[20rem] text-[12px] leading-[1.8] text-muted-foreground opacity-40"
         >
-          Designer and developer creating clean, memorable digital experiences
-          with a sharp eye for detail.
+          Zoho developer building CRM, Creator, and full-stack systems that turn
+          complex business workflows into software people can actually use.
         </motion.p>
       </div>
     </section>

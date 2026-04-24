@@ -2,12 +2,7 @@
 
 import Image from "next/image";
 import { useCallback, useEffect, useRef } from "react";
-import {
-  motion,
-  useMotionValue,
-  useSpring,
-  useTransform,
-} from "framer-motion";
+import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import { PortfolioBackdrop } from "@/components/layout/portfolio-backdrop";
 import { Navbar } from "@/components/layout/navbar";
 import { PageWrapper } from "@/components/layout/page-wrapper";
@@ -19,6 +14,9 @@ import { fadeUp } from "@/lib/animations/motion";
 import { SiGithub } from "react-icons/si";
 import { TECHNOLOGY_META } from "@/utils/technologies";
 import type { IProject } from "@/types/projects";
+import { Badge } from "@/components/ui/badge";
+import { LockIcon } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 export default function ProjectDetailScreen({
   onOpenChat,
@@ -117,20 +115,8 @@ export default function ProjectDetailScreen({
 
             <section
               id="top"
-              className="relative flex min-h-[calc(100dvh-6rem)] scroll-mt-28 flex-col justify-end overflow-hidden pb-16 pt-32 sm:pb-20"
+              className="relative flex lg:min-h-[calc(100dvh-6rem)] scroll-mt-28 flex-col justify-end pt-24 lg:pt-32 pb-20"
             >
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 1.8, duration: 1.2 }}
-                className="pointer-events-none absolute right-0 top-1/2 hidden -translate-y-1/2 lg:block"
-                style={{ writingMode: "vertical-rl" }}
-              >
-                <span className="select-none font-mono text-[9px] uppercase tracking-[0.38em] text-muted-foreground opacity-[0.15]">
-                  {project.eyebrow}
-                </span>
-              </motion.div>
-
               <div className="relative z-10 flex flex-col">
                 <motion.div style={{ y: heroY }}>
                   <motion.div style={{ x: driftX, y: driftY }}>
@@ -143,7 +129,7 @@ export default function ProjectDetailScreen({
                           duration: 1.3,
                           ease: [0.16, 1, 0.3, 1],
                         }}
-                        className="select-none text-[clamp(4.8rem,15vw,8rem)] font-black tracking-[-0.065em] text-foreground"
+                        className="select-none text-4xl sm:text-7xl md:text-[5rem] lg:text-[8rem] font-black tracking-[-0.065em] text-foreground"
                       >
                         {project.title}
                       </motion.h1>
@@ -159,7 +145,7 @@ export default function ProjectDetailScreen({
                     duration: 1.4,
                     ease: [0.16, 1, 0.3, 1],
                   }}
-                  className="overflow-hidden rounded-[1.85rem] bg-[#0b0b0d] shadow-[0_40px_120px_rgba(0,0,0,0.22)] sm:rounded-[2.25rem]"
+                  className="overflow-hidden rounded-[1.85rem] bg-[#0b0b0d] shadow-xl sm:rounded-[2.25rem] mt-4"
                 >
                   <Image
                     src={project.image}
@@ -207,16 +193,22 @@ export default function ProjectDetailScreen({
                       initial="hidden"
                       whileInView="visible"
                       viewport={{ once: true, amount: 0.3 }}
-                      className="mt-8 flex flex-wrap gap-3"
+                      className={cn(
+                        "mt-8 flex flex-wrap gap-3",
+                        project.repository.private && "cursor-not-allowed",
+                      )}
                     >
                       <a
-                        href={project.repository}
+                        href={project.repository.url}
                         className="group flex items-center gap-2 text-xs font-semibold text-muted-foreground transition-colors duration-300 hover:text-foreground"
                         target="_blank"
                         rel="noreferrer"
                       >
                         <SiGithub className="size-3" />
                         GitHub Repository
+                        {project.repository.private && (
+                          <LockIcon className="size-3" />
+                        )}
                       </a>
                     </motion.div>
                   ) : null}
@@ -321,7 +313,9 @@ export default function ProjectDetailScreen({
                       whileInView="visible"
                       viewport={{ once: true, amount: 0.22 }}
                       transition={{ delay: index * 0.08 }}
-                      className={isMobileGallery ? "mx-auto w-full max-w-[22rem]" : ""}
+                      className={
+                        isMobileGallery ? "mx-auto w-full max-w-[22rem]" : ""
+                      }
                     >
                       <ZoomableImage
                         src={image}

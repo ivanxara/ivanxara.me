@@ -12,9 +12,9 @@ const manrope = Manrope({
 });
 
 export const metadata: Metadata = {
-  title: "Ivan Xara | Minimal Portfolio",
+  title: "Ivan Xará | Minimal Portfolio",
   description:
-    "A minimal, art-directed portfolio for Ivan Xara focused on thoughtful digital products and full-stack craft.",
+    "A minimal, art-directed portfolio for Ivan Xará focused on thoughtful digital products and full-stack craft.",
 };
 
 export default function RootLayout({

@@ -22,8 +22,8 @@ export function SectionExperience({
           viewport={{ once: true, amount: 0.35 }}
         >
           <p className="max-w-4xl text-[clamp(1.8rem,4.5vw,4rem)] font-black leading-[1] tracking-[-0.06em] text-foreground">
-            based in portugal. i build robust digital architectures wrapped in
-            uncompromising, minimalist aesthetics.
+            based in portugal. building digital systems for real business
+            problems.
           </p>
         </motion.div>
 

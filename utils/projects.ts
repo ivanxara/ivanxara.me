@@ -44,7 +44,14 @@ import mygameNave from "@/assets/img/mygame_nave.png";
 import mygameRelva from "@/assets/img/mygame_relva.png";
 import mygameShop from "@/assets/img/mygame_shop.png";
 
-export const PROJECTS: Record<string, IProject> = {
+type ProjectName =
+  | "zoho2git"
+  | "relevoai"
+  | "athlt-link"
+  | "rei-dom-pipas"
+  | "my-game";
+
+export const PROJECTS: Record<ProjectName, IProject> = {
   zoho2git: {
     slug: "zoho2git",
     title: "zoho2git",
@@ -58,7 +65,9 @@ export const PROJECTS: Record<string, IProject> = {
       "Internal platform built to bring Zoho development into a reliable Git-based workflow, making it easier for technical teams to sync, inspect, version, and push code with confidence.",
       "It connects Zoho CRM, Creator, and Recruit in one place, combining selective sync controls, Bitbucket automation, and clear operational visibility across projects and resources.",
     ],
-    repository: "https://github.com/ivanxaraloba/zoho-functions-to-git",
+    repository: {
+      private: true,
+    },
     featureIntro:
       "A DevOps layer for moving Zoho code into a safer, more manageable Git workflow.",
     featureCards: [
@@ -94,7 +103,10 @@ export const PROJECTS: Record<string, IProject> = {
       "AI SaaS built to support trader decision-making, taking the product from conversion-focused landing page through onboarding into an authenticated premium experience.",
       "It combines chart ingestion, structured AI analysis, subscription billing, and product UX designed to turn analysis into a usable paid workflow.",
     ],
-    repository: "https://github.com/ivanxara/trading-ai",
+    repository: {
+      url: "https://github.com/ivanxara/trading-ai",
+      private: false,
+    },
     featureIntro:
       "A premium trading product that connects analysis generation, access control, and monetization.",
     featureCards: [
@@ -132,7 +144,10 @@ export const PROJECTS: Record<string, IProject> = {
       "It includes public profiles, athlete dashboard flows, premium subscriptions, verification, team connection, discovery, and affiliate mechanics that support both growth and monetization.",
       "The product was also packaged through a WebView approach for Play Store and App Store distribution, extending the same experience to mobile without a full native rebuild.",
     ],
-    repository: "https://github.com/ivanxara/athlt.link",
+    repository: {
+      url: "https://github.com/ivanxara/athlt.link",
+      private: false,
+    },
     featureIntro:
       "A sports platform that combines athlete presentation, team workflows, and monetized product features.",
     featureCards: [
@@ -157,17 +172,7 @@ export const PROJECTS: Record<string, IProject> = {
         copy: "Discovery features, athlete and club search, QR-ready sharing, affiliate flows with Stripe Connect payouts, and WebView-based mobile delivery expand reach beyond the core profile experience.",
       },
     ],
-    gallery: [
-      ath6,
-      ath1,
-      ath11,
-      ath5,
-      ath3,
-      ath2,
-      ath7,
-      ath9,
-      ath10,
-    ],
+    gallery: [ath6, ath1, ath11, ath5, ath3, ath2, ath7, ath9, ath10],
   },
   "rei-dom-pipas": {
     slug: "rei-dom-pipas",
@@ -182,7 +187,10 @@ export const PROJECTS: Record<string, IProject> = {
       "Restaurant platform built to support both customer-facing discovery and day-to-day restaurant operations through one connected system.",
       "It combines the public website with an internal admin panel for menus, reservations, campaign pages, local SEO, and publishing workflows used by the team.",
     ],
-    repository: "",
+    repository: {
+      url: "https://github.com/ivanxara/reidompipas.com",
+      private: false,
+    },
     featureIntro:
       "A hospitality product that handles customer conversion and internal publishing from the same platform.",
     featureCards: [

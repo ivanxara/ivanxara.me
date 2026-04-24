@@ -16,7 +16,7 @@ export function Footer({
   return (
     <motion.section
       id="contact"
-      className="scroll-mt-28 border-t border-border pb-12 pt-4"
+      className="scroll-mt-28 border-t border-border pb-28 lg:pb-12 pt-4"
       style={{ y: sectionY }}
     >
       <PageWrapper>
@@ -56,7 +56,7 @@ export function Footer({
 
           <div className="mt-28 flex flex-col justify-between gap-4 border-t border-border pt-8 md:flex-row md:items-center">
             <p className="text-[11px] font-black uppercase tracking-[0.22em] text-muted-foreground opacity-40">
-              © 2026 ivan xara
+              © 2026 ivan xará
             </p>
             <p className="text-[11px] font-black uppercase tracking-[0.22em] text-muted-foreground opacity-40">
               Portugal — Worldwide

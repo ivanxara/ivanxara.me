@@ -2,12 +2,19 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Sparkles } from "lucide-react";
+import { Menu, Sparkles } from "lucide-react";
 import { motion, useMotionValueEvent, type MotionValue } from "framer-motion";
-import { useEffect, useState, type MouseEvent } from "react";
-import { usePortfolioChat } from "@/components/layout/portfolio-chat-context";
+import { useState, type MouseEvent } from "react";
+import { usePortfolioChat } from "@/components/chat/portfolio-chat-context";
 import { Button } from "@/components/ui/button";
-import { Kbd, KbdGroup } from "@/components/ui/kbd";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { NAVBAR_ITEMS } from "@/utils/constants";
 
 export function Navbar({
@@ -20,7 +27,7 @@ export function Navbar({
   onNavigateSection?: (target: string) => void;
 }) {
   const [scrolled, setScrolled] = useState(false);
-  const [isMac, setIsMac] = useState(false);
+  const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
   const pathname = usePathname();
   const isHome = pathname === "/";
   const isProjectPage = pathname.startsWith("/projects/");
@@ -54,16 +61,6 @@ export function Navbar({
     setScrolled(value > 0.02);
   });
 
-  useEffect(() => {
-    const navigatorWithUAData = navigator as Navigator & {
-      userAgentData?: { platform?: string };
-    };
-    const platform =
-      navigatorWithUAData.userAgentData?.platform ?? navigator.platform ?? "";
-
-    setIsMac(/mac/i.test(platform));
-  }, []);
-
   return (
     <div className="sticky top-0 z-30 px-4 pt-4 sm:px-6 lg:px-8">
       <motion.div
@@ -76,7 +73,7 @@ export function Navbar({
             : "rgba(232, 230, 225, 0.04)",
         }}
         transition={{ duration: 0.4 }}
-        className="mx-auto flex w-fit max-w-full flex-col overflow-hidden rounded-full border shadow-[0_8px_32px_rgba(0,0,0,0.3)] backdrop-blur-xl"
+        className="mx-auto flex max-w-sm sm:max-w-md flex-col overflow-hidden rounded-full border shadow-[0_8px_32px_rgba(0,0,0,0.3)] backdrop-blur-xl"
       >
         <div className="flex items-center justify-between gap-6 px-5 py-3 sm:px-6">
           <Link
@@ -84,12 +81,12 @@ export function Navbar({
             onClick={(event) => handleSectionClick(event, "#top", isHome)}
             className="text-[12px] font-black tracking-[-0.04em] text-foreground sm:text-[13px]"
           >
-            ivan xara ✌️
+            ivan xará ✌️
           </Link>
 
           <nav
             aria-label="Section navigation"
-            className="flex flex-wrap items-center justify-end gap-0"
+            className="hidden flex-wrap items-center justify-end gap-0 md:flex"
           >
             {NAVBAR_ITEMS.map((item) => (
               <Link
@@ -115,20 +112,79 @@ export function Navbar({
             onClick={handleOpenChat ?? undefined}
             aria-label="Open chat with suggestion chip"
             aria-expanded={false}
+            className="hidden md:inline-flex"
           >
-            <Sparkles className="size-[0.7rem] text-primary/80" />
-            <span className="text-[10px] font-medium tracking-[0.03em]">
+            <Sparkles className="size-3 text-primary" />
+            <span className="text-[11px] font-medium tracking-[0.03em]">
               Ask AI
             </span>
-            <KbdGroup variant="navbar">
-              <Kbd variant="navbar">
-                {isMac ? "⌘" : "Ctrl"}
-              </Kbd>
-              <Kbd variant="navbar">
-                K
-              </Kbd>
-            </KbdGroup>
           </Button>
+
+          <DropdownMenu
+            open={isMobileNavOpen}
+            onOpenChange={setIsMobileNavOpen}
+          >
+            <DropdownMenuTrigger asChild>
+              <Button
+                type="button"
+                variant="glass"
+                size="icon-sm"
+                aria-label="Open navigation menu"
+                aria-expanded={isMobileNavOpen}
+                className="md:hidden"
+              >
+                <Menu className="size-4" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent
+              align="end"
+              side="bottom"
+              sideOffset={10}
+              className="w-56 rounded-[1.25rem] border border-white/[0.08] bg-[#141416]/95 p-2 text-white shadow-[0_18px_48px_rgba(0,0,0,0.42)] backdrop-blur-xl md:hidden"
+            >
+              <DropdownMenuLabel className="px-3 py-2 text-[10px] font-black uppercase tracking-[0.12em] text-white/45">
+                Navigation
+              </DropdownMenuLabel>
+              <nav
+                aria-label="Mobile section navigation"
+                className="flex flex-col gap-1"
+              >
+                {NAVBAR_ITEMS.map((item) => (
+                  <DropdownMenuItem
+                    key={item.href}
+                    asChild
+                    className="rounded-2xl px-0 py-0 focus:bg-white/[0.06] focus:text-white"
+                  >
+                    <Link
+                      href={getNavHref(item.href)}
+                      onClick={(event) => {
+                        handleSectionClick(
+                          event,
+                          item.href,
+                          isHome || (isProjectPage && item.href === "#contact"),
+                        );
+                        setIsMobileNavOpen(false);
+                      }}
+                      className="block rounded-2xl border border-white/[0.06] bg-white/[0.03] px-4 py-3 text-[11px] font-black uppercase tracking-[0.08em] text-muted-foreground transition-all duration-300 hover:bg-white/[0.05] hover:text-white"
+                    >
+                      {item.label}
+                    </Link>
+                  </DropdownMenuItem>
+                ))}
+              </nav>
+              <DropdownMenuSeparator className="mx-0 my-2 bg-white/[0.08]" />
+              <DropdownMenuItem
+                onSelect={() => {
+                  handleOpenChat?.();
+                  setIsMobileNavOpen(false);
+                }}
+                className="rounded-2xl border border-white/[0.06] bg-white/[0.03] px-4 py-3 text-[11px] font-black uppercase tracking-[0.08em] text-white/72 focus:bg-white/[0.06] focus:text-white"
+              >
+                <Sparkles className="size-4 text-primary" />
+                Ask AI
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
         </div>
       </motion.div>
     </div>

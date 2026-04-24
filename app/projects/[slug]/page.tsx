@@ -17,15 +17,15 @@ export async function generateMetadata({
 
   if (!project) {
     return {
-      title: "Project Not Found | Ivan Xara",
+      title: "Project Not Found | Ivan Xará",
     };
   }
 
   return {
-    title: `${project.title} | Ivan Xara`,
+    title: `${project.title} | Ivan Xará`,
     description:
       project.overview?.[0] ??
-      `${project.title} project case study by Ivan Xara.`,
+      `${project.title} project case study by Ivan Xará.`,
   };
 }
 
