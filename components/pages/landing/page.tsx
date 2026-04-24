@@ -66,13 +66,13 @@ export function PortfolioScreen({ onOpenChat }: { onOpenChat?: () => void }) {
   }, [pathname, scrollToSection]);
 
   return (
-    <aside className="flex h-full w-full bg-sidebar p-3 sm:p-4">
-      <div className="noise-overlay relative flex h-full w-full flex-col overflow-hidden rounded-[2.5rem] bg-card">
+    <aside className="w-full bg-card lg:flex lg:h-full lg:bg-sidebar lg:p-4">
+      <div className="relative flex min-h-screen w-full flex-col overflow-hidden bg-card lg:h-full lg:rounded-[2.5rem] lg:noise-overlay">
         {/* <PortfolioBackdrop progress={progress} /> */}
 
         <div
           ref={scrollRef}
-          className="portfolio-scroll relative flex-1 overflow-y-auto"
+          className="portfolio-scroll relative flex-1 overflow-y-auto overflow-x-hidden"
         >
           <Navbar
             progress={progress}

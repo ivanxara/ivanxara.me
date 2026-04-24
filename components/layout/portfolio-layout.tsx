@@ -124,11 +124,11 @@ export function PortfolioLayout({ children }: { children: ReactNode }) {
 
   return (
     <PortfolioChatProvider onOpenChat={toggleChat}>
-      <main className="h-screen overflow-hidden bg-background text-foreground">
+      <main className="min-h-screen bg-background text-foreground lg:h-screen lg:overflow-hidden">
         <div className="frame-glow pointer-events-none fixed inset-0" />
 
-        <section className="relative h-screen w-full overflow-hidden bg-sidebar">
-          <div className="flex h-full w-full flex-col lg:hidden">
+        <section className="relative min-h-screen w-full bg-sidebar lg:h-screen lg:overflow-hidden">
+          <div className="flex min-h-screen w-full flex-col lg:hidden">
             {children}
             <PortfolioChat
               variant="mobile"

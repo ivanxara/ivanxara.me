@@ -42,10 +42,8 @@ export function PortfolioChat(props: PortfolioChatProps) {
   const [cooldownRemainingSeconds, setCooldownRemainingSeconds] = useState(0);
   const scrollRef = useRef<HTMLDivElement>(null);
   const panelTextareaRef = useRef<HTMLTextAreaElement>(null);
-  const composerTextareaRef = useRef<HTMLTextAreaElement>(null);
   const isMobile = variant === "mobile";
   const mobileSheetOpen = isMobile ? Boolean(props.mobileSheetOpen) : false;
-  const openMobileSheet = () => props.onMobileSheetOpenChange?.(true);
 
   const chatMutation = useMutation<ChatResponse, Error, ChatRequest>({
     mutationFn: ({ messages: nextMessages, metadata }) =>
@@ -86,14 +84,11 @@ export function PortfolioChat(props: PortfolioChatProps) {
 
   useEffect(() => {
     resizeTextarea(panelTextareaRef, 120);
-    resizeTextarea(composerTextareaRef, 96);
   }, [input, mobileSheetOpen]);
 
   useEffect(() => {
     const focusInput = () => {
-      const inputRef =
-        isMobile && !mobileSheetOpen ? composerTextareaRef : panelTextareaRef;
-      inputRef.current?.focus();
+      panelTextareaRef.current?.focus();
     };
 
     window.addEventListener(CHAT_FOCUS_EVENT, focusInput);
@@ -165,23 +160,10 @@ export function PortfolioChat(props: PortfolioChatProps) {
     return true;
   };
 
-  const submitFromComposer = () => {
-    if (submitMessage(input)) {
-      openMobileSheet();
-    }
-  };
-
   const handlePanelKeyDown = (event: KeyboardEvent<HTMLTextAreaElement>) => {
     if (event.key === "Enter" && !event.shiftKey) {
       event.preventDefault();
       submitMessage(input);
-    }
-  };
-
-  const handleComposerKeyDown = (event: KeyboardEvent<HTMLTextAreaElement>) => {
-    if (event.key === "Enter" && !event.shiftKey) {
-      event.preventDefault();
-      submitFromComposer();
     }
   };
 
@@ -221,12 +203,9 @@ export function PortfolioChat(props: PortfolioChatProps) {
     <PortfolioChatMobile
       {...sharedProps}
       isOpen={mobileSheetOpen}
-      composerTextareaRef={composerTextareaRef}
       panelTextareaRef={panelTextareaRef}
       onOpenChange={props.onMobileSheetOpenChange}
       onPanelKeyDown={handlePanelKeyDown}
-      onComposerKeyDown={handleComposerKeyDown}
-      onSubmitFromComposer={submitFromComposer}
     />
   );
 }
