@@ -7,6 +7,7 @@ import { useEffect, useRef, useState } from "react";
 import { usePortfolioChat } from "@/components/chat/portfolio-chat-context";
 import { Button } from "@/components/ui/button";
 import { NAVBAR_ITEMS } from "@/utils/constants";
+import { trackVisitorClick } from "@/utils/visitor-clicks";
 
 export function Navbar({ onOpenChat }: { onOpenChat?: () => void }) {
   const navbarRef = useRef<HTMLDivElement>(null);
@@ -16,6 +17,11 @@ export function Navbar({ onOpenChat }: { onOpenChat?: () => void }) {
   const isProjectPage = pathname.startsWith("/projects/");
   const openChatFromContext = usePortfolioChat();
   const handleOpenChat = onOpenChat ?? openChatFromContext;
+  const trackAskAiClick = () => {
+    trackVisitorClick({
+      clickId: "ask_ai",
+    });
+  };
   const getNavHref = (target: string) => {
     if (isHome) {
       return target;
@@ -96,7 +102,10 @@ export function Navbar({ onOpenChat }: { onOpenChat?: () => void }) {
                 type="button"
                 variant="unstyled"
                 size="xs"
-                onClick={handleOpenChat ?? undefined}
+                onClick={() => {
+                  trackAskAiClick();
+                  handleOpenChat?.();
+                }}
                 className="rounded-full px-2.5 py-1 text-xs font-medium tracking-wide text-primary transition-colors duration-300 hover:bg-accent hover:text-accent-foreground focus-visible:bg-accent focus-visible:text-accent-foreground"
               >
                 <Sparkles className="size-3" />
@@ -145,6 +154,7 @@ export function Navbar({ onOpenChat }: { onOpenChat?: () => void }) {
                 type="button"
                 role="menuitem"
                 onClick={() => {
+                  trackAskAiClick();
                   handleOpenChat?.();
                   setIsMobileNavOpen(false);
                 }}

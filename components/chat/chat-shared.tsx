@@ -5,9 +5,10 @@ import { ArrowUp, RotateCcw, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Heading } from "@/components/typography";
 import type { ChatMessage, ChatRequestMetadata } from "@/utils/chat";
+import { getOrCreateVisitorId } from "@/utils/visitor";
+import { trackVisitorClick } from "@/utils/visitor-clicks";
 
 export const CHAT_FOCUS_EVENT = "portfolio-chat:focus-input";
-const VISITOR_ID_STORAGE_KEY = "portfolio-chat-visitor-id";
 const CHAT_SESSION_ID_STORAGE_KEY = "portfolio-chat-session-id";
 
 const STARTER_PROMPTS = [
@@ -32,7 +33,7 @@ export const INITIAL_MESSAGE: PortfolioChatMessage = {
 
 export function createChatRequestMetadata(): ChatRequestMetadata {
   return {
-    visitorId: getOrCreateStorageId(VISITOR_ID_STORAGE_KEY),
+    visitorId: getOrCreateVisitorId(),
     chatSessionId: getOrCreateSessionId(),
   };
 }
@@ -64,18 +65,6 @@ export function getSubmitTitle(cooldownRemainingSeconds: number) {
 
 function createId() {
   return crypto.randomUUID();
-}
-
-function getOrCreateStorageId(key: string) {
-  const existingValue = window.localStorage.getItem(key);
-
-  if (existingValue) {
-    return existingValue;
-  }
-
-  const nextValue = createId();
-  window.localStorage.setItem(key, nextValue);
-  return nextValue;
 }
 
 function getOrCreateSessionId() {
@@ -126,6 +115,11 @@ function renderTextWithLinks(content: string): ReactNode[] {
           href={markdownHref}
           target="_blank"
           rel="noreferrer"
+          onClick={() =>
+            trackVisitorClick({
+              clickId: `ai_link:${markdownHref}`,
+            })
+          }
           className="underline decoration-muted-foreground underline-offset-4 transition-colors hover:text-sidebar-foreground"
         >
           {markdownLabel}
@@ -144,6 +138,11 @@ function renderTextWithLinks(content: string): ReactNode[] {
           href={normalizeHref(autolinkValue)}
           target="_blank"
           rel="noreferrer"
+          onClick={() =>
+            trackVisitorClick({
+              clickId: `ai_link:${normalizeHref(autolinkValue)}`,
+            })
+          }
           className="underline decoration-muted-foreground underline-offset-4 transition-colors hover:text-sidebar-foreground"
         >
           {autolinkValue}

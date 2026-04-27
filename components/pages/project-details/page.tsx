@@ -14,6 +14,7 @@ import { TECHNOLOGY_META } from "@/utils/technologies";
 import type { IProject } from "@/types/projects";
 import { LockIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { trackVisitorClick } from "@/utils/visitor-clicks";
 
 export default function ProjectDetailScreen({
   onOpenChat,
@@ -105,6 +106,11 @@ export default function ProjectDetailScreen({
                     >
                       <a
                         href={project.repository.url}
+                        onClick={() =>
+                          trackVisitorClick({
+                            clickId: `repository:${project.slug}`,
+                          })
+                        }
                         className="group flex items-center gap-2 text-xs font-semibold text-muted-foreground transition-colors duration-300 hover:text-foreground"
                         target="_blank"
                         rel="noreferrer"

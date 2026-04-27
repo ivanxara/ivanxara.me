@@ -9,6 +9,7 @@ import { Heading } from "@/components/typography";
 import { SectionBlock } from "@/components/shared/section-block";
 import { PROJECT_LIST } from "@/utils/projects";
 import { TECHNOLOGY_META } from "@/utils/technologies";
+import { trackVisitorClick } from "@/utils/visitor-clicks";
 
 const PREVIEW = {
   width: 400,
@@ -57,6 +58,11 @@ export function SectionProjects() {
                 <AnimationReveal key={project.slug} delay={index * 0.08}>
                   <Link
                     href={`/projects/${project.slug}`}
+                    onClick={() =>
+                      trackVisitorClick({
+                        clickId: `project:${project.slug}`,
+                      })
+                    }
                     onMouseEnter={() => setHoveredIndex(index)}
                     onMouseLeave={() => setHoveredIndex(null)}
                     className={`relative flex cursor-pointer flex-col justify-between gap-5 overflow-hidden py-12 sm:py-16 lg:flex-row lg:items-center ${

@@ -42,7 +42,7 @@ export function PortfolioLayout({ children }: { children: ReactNode }) {
   const [chatCollapsedSize, setChatCollapsedSize] = useState(
     CHAT_COLLAPSED_FALLBACK_SIZE,
   );
-  const isStandaloneRoute = pathname.startsWith("/secret/chats/");
+  const isStandaloneRoute = pathname === "/logs";
   const isChatOpen = desktopChatState === "open";
   const isChatPeeking = desktopChatState === "peeking";
   const isChatCollapsed = desktopChatState !== "open";

@@ -5,6 +5,7 @@ import { PageWrapper } from "@/components/layout/page-wrapper";
 import { Heading } from "@/components/typography";
 import { SectionBlock } from "@/components/shared/section-block";
 import { MY_SOCIALS, MY_EMAIL } from "@/utils/constants";
+import { trackVisitorClick } from "@/utils/visitor-clicks";
 
 export function Footer() {
   return (
@@ -15,7 +16,15 @@ export function Footer() {
       <PageWrapper>
         <SectionBlock title="Get in touch" className="max-w-5xl pb-0">
           <AnimationReveal>
-            <a href={`mailto:${MY_EMAIL}`} className="group block">
+            <a
+              href={`mailto:${MY_EMAIL}`}
+              onClick={() =>
+                trackVisitorClick({
+                  clickId: "email",
+                })
+              }
+              className="group block"
+            >
               <Heading
                 variant="heading-2"
                 className="transition-colors duration-500 group-hover:text-primary"
@@ -30,6 +39,11 @@ export function Footer() {
               <a
                 key={link.label}
                 href={link.href}
+                onClick={() =>
+                  trackVisitorClick({
+                    clickId: `social:${link.label.toLowerCase()}`,
+                  })
+                }
                 className="group flex items-center gap-2 text-xs font-semibold text-muted-foreground transition-colors duration-300 hover:text-foreground"
                 target="_blank"
               >
