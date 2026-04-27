@@ -23,8 +23,6 @@ const buttonVariants = cva(
           "border-transparent bg-transparent shadow-none hover:bg-transparent focus-visible:ring-0 focus-visible:border-transparent active:translate-y-0",
         glass:
           "rounded-full border border-border bg-accent text-muted-foreground hover:bg-accent hover:text-foreground",
-        "chat-chip":
-          "rounded-full border border-border bg-muted text-muted-foreground hover:border-border hover:bg-accent hover:text-foreground",
         "chat-send":
           "rounded-full border-transparent bg-foreground text-background hover:bg-foreground",
         "floating-overlay":
@@ -45,7 +43,6 @@ const buttonVariants = cva(
           "size-7 rounded-md in-data-[slot=button-group]:rounded-lg",
         "icon-lg": "size-9",
         "icon-xl": "size-11",
-        "chat-chip": "h-auto px-3.5 py-2 text-xs font-medium",
         "nav-chip": "h-auto gap-1.5 px-2 py-1",
         "image-trigger": "h-auto w-full p-0",
       },

@@ -9,20 +9,6 @@ export function SectionHero() {
       id="top"
       className="relative flex min-h-[calc(100dvh-10rem)] scroll-mt-28 flex-col justify-center sm:justify-end overflow-hidden pb-16 pt-32 sm:pb-20 lg:min-h-[calc(100dvh-6rem)]"
     >
-      {/* Vertical tag — right edge, barely visible */}
-      <AnimationReveal
-        trigger="mount"
-        delay={1.8}
-        duration={1.2}
-        y={0}
-        className="pointer-events-none absolute right-0 top-1/2 hidden -translate-y-1/2 lg:block"
-        style={{ writingMode: "vertical-rl" }}
-      >
-        <span className="select-none font-mono text-xs uppercase tracking-widest text-muted-foreground opacity-20">
-          zoho developer + full-stack builder — portugal
-        </span>
-      </AnimationReveal>
-
       <div className="relative z-10 flex flex-col">
         <div>
           <AnimationReveal trigger="mount" delay={0.08} duration={1.3}>

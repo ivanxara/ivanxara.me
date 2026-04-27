@@ -327,10 +327,10 @@ export function ChatPanel({
                 <Button
                   key={prompt}
                   type="button"
-                  variant="chat-chip"
-                  size="chat-chip"
+                  variant="secondary"
                   disabled={isPending || cooldownRemainingSeconds > 0}
                   onClick={() => onSubmit(prompt)}
+                  className="rounded-full border border-border bg-muted text-muted-foreground hover:border-border hover:bg-accent hover:text-foreground h-auto px-3.5 py-2 text-xs font-medium"
                 >
                   {prompt}
                 </Button>

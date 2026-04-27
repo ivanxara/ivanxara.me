@@ -30,7 +30,8 @@ const panelVariants = cva("", {
     variant: {
       default: "",
       content: "min-w-0 overflow-hidden",
-      sidebar: "min-w-0 overflow-hidden bg-sidebar transition-[border-color] duration-200",
+      sidebar:
+        "min-w-0 overflow-hidden bg-sidebar transition-[border-color,flex-grow,flex-basis] duration-300 ease-out",
     },
   },
   defaultVariants: {
