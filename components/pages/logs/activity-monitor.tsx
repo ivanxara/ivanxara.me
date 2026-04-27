@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useTransition } from "react";
+import type { RealtimePostgresChangesPayload } from "@supabase/supabase-js";
 import {
   ArrowLeft,
   Clock3,
@@ -8,11 +9,21 @@ import {
   MousePointerClick,
   RefreshCcw,
   Search,
+  Trash2,
   Users,
   Wifi,
   WifiOff,
 } from "lucide-react";
+import { deleteChatMessage, deleteChatSession } from "@/app/logs/actions";
 import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import { cn } from "@/lib/utils";
 import { supabase } from "@/lib/supabase/client";
 import Link from "next/link";
@@ -253,6 +264,12 @@ export function ActivityMonitor({
   const [isChatRealtimeConnected, setIsChatRealtimeConnected] = useState(false);
   const [isClickRealtimeConnected, setIsClickRealtimeConnected] =
     useState(false);
+  const [isDeletePending, startDeleteTransition] = useTransition();
+  const [deleteError, setDeleteError] = useState<string | null>(null);
+  const [rowToDelete, setRowToDelete] = useState<ChatLogRow | null>(null);
+  const [sessionToDelete, setSessionToDelete] = useState<SessionGroup | null>(
+    null,
+  );
 
   useEffect(() => {
     const channel = supabase
@@ -263,19 +280,19 @@ export function ActivityMonitor({
           event: "*",
           schema: "public",
           table: "portfolio_chat_user_prompts",
-        },
-        (payload) => {
+        } as const,
+        (payload: RealtimePostgresChangesPayload<ChatLogRow>) => {
           if (payload.eventType === "DELETE") {
-            const deletedRow = payload.old as ChatLogRow;
-            setRows((currentRows) => removeRow(currentRows, deletedRow.id));
+            setRows((currentRows) =>
+              removeRow(currentRows, Number(payload.old.id)),
+            );
             return;
           }
 
-          const nextRow = payload.new as ChatLogRow;
-          setRows((currentRows) => upsertRow(currentRows, nextRow));
+          setRows((currentRows) => upsertRow(currentRows, payload.new));
         },
       )
-      .subscribe((status) => {
+      .subscribe((status: string) => {
         setIsChatRealtimeConnected(status === "SUBSCRIBED");
       });
 
@@ -293,21 +310,19 @@ export function ActivityMonitor({
           event: "*",
           schema: "public",
           table: "portfolio_visitor_clicks",
-        },
-        (payload) => {
+        } as const,
+        (payload: RealtimePostgresChangesPayload<VisitorClickRow>) => {
           if (payload.eventType === "DELETE") {
-            const deletedClick = payload.old as VisitorClickRow;
             setClicks((currentClicks) =>
-              removeClick(currentClicks, deletedClick.id),
+              removeClick(currentClicks, Number(payload.old.id)),
             );
             return;
           }
 
-          const nextClick = payload.new as VisitorClickRow;
-          setClicks((currentClicks) => upsertClick(currentClicks, nextClick));
+          setClicks((currentClicks) => upsertClick(currentClicks, payload.new));
         },
       )
-      .subscribe((status) => {
+      .subscribe((status: string) => {
         setIsClickRealtimeConnected(status === "SUBSCRIBED");
       });
 
@@ -393,6 +408,52 @@ export function ActivityMonitor({
       setSelectedSessionId(selectedSessions[0].chatSessionId);
     }
   }, [selectedSessionId, selectedSessions]);
+
+  const handleDeleteMessage = () => {
+    if (!rowToDelete) {
+      return;
+    }
+
+    const deletingRow = rowToDelete;
+    setDeleteError(null);
+
+    startDeleteTransition(async () => {
+      try {
+        await deleteChatMessage(deletingRow.id);
+        setRows((currentRows) => removeRow(currentRows, deletingRow.id));
+        setRowToDelete(null);
+      } catch (error) {
+        setDeleteError(
+          error instanceof Error ? error.message : "Failed to delete message.",
+        );
+      }
+    });
+  };
+
+  const handleDeleteSession = () => {
+    if (!sessionToDelete) {
+      return;
+    }
+
+    const deletingSession = sessionToDelete;
+    setDeleteError(null);
+
+    startDeleteTransition(async () => {
+      try {
+        await deleteChatSession(deletingSession.chatSessionId);
+        setRows((currentRows) =>
+          currentRows.filter(
+            (row) => getSessionId(row) !== deletingSession.chatSessionId,
+          ),
+        );
+        setSessionToDelete(null);
+      } catch (error) {
+        setDeleteError(
+          error instanceof Error ? error.message : "Failed to delete chat.",
+        );
+      }
+    });
+  };
 
   return (
     <div className="flex h-screen min-h-screen flex-col overflow-hidden bg-[#09090b] text-foreground">
@@ -638,13 +699,30 @@ export function ActivityMonitor({
                   </div>
                   {selectedSession ? (
                     <div className="mt-2 min-w-0 border-t border-white/[0.06] pt-2">
-                      <p className="truncate text-xs font-medium text-foreground">
-                        {selectedSession.chatSessionId}
-                      </p>
-                      <p className="mt-0.5 text-[11px] text-muted-foreground">
-                        {selectedSession.rows.length} messages / Last activity{" "}
-                        {formatTimestamp(selectedSession.latestAt)}
-                      </p>
+                      <div className="flex flex-wrap items-start justify-between gap-2">
+                        <div className="min-w-0">
+                          <p className="truncate text-xs font-medium text-foreground">
+                            {selectedSession.chatSessionId}
+                          </p>
+                          <p className="mt-0.5 text-[11px] text-muted-foreground">
+                            {selectedSession.rows.length} messages / Last
+                            activity {formatTimestamp(selectedSession.latestAt)}
+                          </p>
+                        </div>
+                        <Button
+                          type="button"
+                          variant="destructive"
+                          size="xs"
+                          onClick={() => {
+                            setDeleteError(null);
+                            setSessionToDelete(selectedSession);
+                          }}
+                          className="shrink-0"
+                        >
+                          <Trash2 className="h-3 w-3" />
+                          Delete chat
+                        </Button>
+                      </div>
                     </div>
                   ) : null}
                 </div>
@@ -715,6 +793,19 @@ export function ActivityMonitor({
                             >
                               {row.status ?? "unknown"}
                             </span>
+                            <Button
+                              type="button"
+                              variant="ghost"
+                              size="xs"
+                              onClick={() => {
+                                setDeleteError(null);
+                                setRowToDelete(row);
+                              }}
+                              className="border border-red-400/15 text-red-200 hover:bg-red-500/10 hover:text-red-100"
+                            >
+                              <Trash2 className="h-3 w-3" />
+                              Delete
+                            </Button>
                           </div>
 
                           <div className="grid overflow-hidden border border-white/[0.06] xl:grid-cols-2">
@@ -767,6 +858,100 @@ export function ActivityMonitor({
           </div>
         </section>
       </div>
+
+      <Dialog
+        open={Boolean(rowToDelete)}
+        onOpenChange={(open) => {
+          if (!open && !isDeletePending) {
+            setRowToDelete(null);
+            setDeleteError(null);
+          }
+        }}
+      >
+        <DialogContent showCloseButton={!isDeletePending}>
+          <DialogHeader>
+            <DialogTitle>Delete message?</DialogTitle>
+            <DialogDescription>
+              This removes this single chat log entry from
+              `portfolio_chat_user_prompts`.
+            </DialogDescription>
+          </DialogHeader>
+          {deleteError ? (
+            <p className="text-xs text-red-200">{deleteError}</p>
+          ) : null}
+          <DialogFooter>
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() => {
+                setRowToDelete(null);
+                setDeleteError(null);
+              }}
+              disabled={isDeletePending}
+            >
+              Cancel
+            </Button>
+            <Button
+              type="button"
+              variant="destructive"
+              onClick={handleDeleteMessage}
+              disabled={isDeletePending}
+            >
+              {isDeletePending ? "Deleting..." : "Delete message"}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      <Dialog
+        open={Boolean(sessionToDelete)}
+        onOpenChange={(open) => {
+          if (!open && !isDeletePending) {
+            setSessionToDelete(null);
+            setDeleteError(null);
+          }
+        }}
+      >
+        <DialogContent showCloseButton={!isDeletePending}>
+          <DialogHeader>
+            <DialogTitle>Delete chat session?</DialogTitle>
+            <DialogDescription>
+              This removes all messages in the selected chat session and cannot
+              be undone.
+            </DialogDescription>
+          </DialogHeader>
+          {sessionToDelete ? (
+            <p className="text-xs text-muted-foreground">
+              {sessionToDelete.rows.length} messages will be deleted from{" "}
+              {sessionToDelete.chatSessionId}.
+            </p>
+          ) : null}
+          {deleteError ? (
+            <p className="text-xs text-red-200">{deleteError}</p>
+          ) : null}
+          <DialogFooter>
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() => {
+                setSessionToDelete(null);
+                setDeleteError(null);
+              }}
+              disabled={isDeletePending}
+            >
+              Cancel
+            </Button>
+            <Button
+              type="button"
+              variant="destructive"
+              onClick={handleDeleteSession}
+              disabled={isDeletePending}
+            >
+              {isDeletePending ? "Deleting..." : "Delete chat"}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
