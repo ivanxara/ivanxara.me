@@ -169,7 +169,7 @@ project_2:
   name: relevoai.com
   year: 2024
   type: freelance client work
-  repository: https://github.com/ivanxara/trading-ai
+  repository: https://github.com/ivanxara/relevoai.com
   stack:
   - Next.js
   - AI

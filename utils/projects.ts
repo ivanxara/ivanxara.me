@@ -92,7 +92,7 @@ export const PROJECTS: Record<ProjectName, IProject> = {
   },
   relevoai: {
     slug: "relevoai",
-    title: "relevo.ai",
+    title: "relevoai.com",
     role: "Design & Development",
     technologies: ["nextjs", "typescript", "supabase", "gemini", "stripe"],
     image: relevoAiLanding,
@@ -104,7 +104,7 @@ export const PROJECTS: Record<ProjectName, IProject> = {
       "It combines chart ingestion, structured AI analysis, subscription billing, and product UX designed to turn analysis into a usable paid workflow.",
     ],
     repository: {
-      url: "https://github.com/ivanxara/trading-ai",
+      url: "https://github.com/ivanxara/relevoai.com",
       private: false,
     },
     featureIntro:
@@ -231,6 +231,10 @@ export const PROJECTS: Record<ProjectName, IProject> = {
       "It was developed in Unity with C#, while Photoshop was used to define the visual direction and produce supporting design assets.",
       "For the portfolio, I adapted the project into a WebGL build and embedded it directly into the case study so visitors can play it before reaching the gallery.",
     ],
+    repository: {
+      url: "https://github.com/ivanxara/my-game",
+      private: false,
+    },
     featureIntro:
       "A final school project presented as a playable portfolio piece.",
     featureCards: [
