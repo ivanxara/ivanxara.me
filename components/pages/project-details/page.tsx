@@ -42,11 +42,7 @@ export default function ProjectDetailScreen({
             >
               <div className="relative z-10 flex flex-col">
                 <div className="z-10">
-                  <AnimationReveal
-                    trigger="mount"
-                    delay={0.08}
-                    duration={1.3}
-                  >
+                  <AnimationReveal trigger="mount" delay={0.08} duration={1.3}>
                     <Heading
                       as="h1"
                       variant="heading-1"
@@ -105,7 +101,11 @@ export default function ProjectDetailScreen({
                       )}
                     >
                       <a
-                        href={project.repository.url}
+                        href={
+                          project.repository.private
+                            ? ""
+                            : project.repository.url
+                        }
                         onClick={() =>
                           trackVisitorClick({
                             clickId: `repository:${project.slug}`,
