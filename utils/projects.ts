@@ -146,7 +146,7 @@ export const PROJECTS: Record<ProjectName, IProject> = {
     ],
     repository: {
       url: "https://github.com/ivanxara/athlt.link",
-      private: false,
+      private: true,
     },
     featureIntro:
       "A sports platform that combines athlete presentation, team workflows, and monetized product features.",

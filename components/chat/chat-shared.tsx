@@ -320,7 +320,7 @@ export function ChatPanel({
         </div>
 
         <div className="shrink-0 border-t border-border px-4 py-4 xl:px-5 xl:py-5">
-          {!hasConversation && (
+          {!hasConversation && false && (
             <div className="mb-3 flex flex-wrap gap-2">
               {STARTER_PROMPTS.map((prompt) => (
                 <Button
