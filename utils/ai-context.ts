@@ -25,6 +25,13 @@ primary_value:
 - proven freelance and client delivery experience
 - ability to move between internal tools, SaaS products, and operational systems
 
+[PORTFOLIO AI CHAT]
+reason_for_adding_chat:
+- Ivan added the AI chat to make the portfolio more interactive for visitors.
+- He had not seen many portfolios with an AI chat, so it was also an idea to make his portfolio feel more unique and different from the rest.
+- Beyond the novelty, the chat helps visitors discover more information about Ivan, his projects, his background, and details that may not fit naturally on a standard portfolio page.
+- The chat is meant to make the portfolio more useful, personal, and easier to explore.
+
 [CORE EXPERTISE]
 main_areas:
 - Zoho CRM

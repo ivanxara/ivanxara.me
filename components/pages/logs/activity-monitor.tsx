@@ -69,6 +69,9 @@ type SessionGroup = {
   latestAt: string;
 };
 
+const dangerButtonClassName =
+  "rounded-none border border-red-400/20 bg-red-500/[0.04] text-red-200 hover:border-red-300/30 hover:bg-red-500/10 hover:text-red-100";
+
 function formatTimestamp(value: string) {
   return new Intl.DateTimeFormat("en-GB", {
     dateStyle: "medium",
@@ -261,6 +264,7 @@ export function ActivityMonitor({
     null,
   );
   const [search, setSearch] = useState("");
+  const [onlyWithMessages, setOnlyWithMessages] = useState(false);
   const [isChatRealtimeConnected, setIsChatRealtimeConnected] = useState(false);
   const [isClickRealtimeConnected, setIsClickRealtimeConnected] =
     useState(false);
@@ -333,6 +337,10 @@ export function ActivityMonitor({
 
   const normalizedSearch = search.trim().toLowerCase();
   const visitors = groupVisitors(rows, clicks).filter((visitor) => {
+    if (onlyWithMessages && !visitor.rows.length) {
+      return false;
+    }
+
     if (!normalizedSearch) {
       return true;
     }
@@ -492,6 +500,24 @@ export function ActivityMonitor({
           </label>
 
           <div className="flex items-center gap-1.5">
+            <Button
+              type="button"
+              variant="ghost"
+              size="sm"
+              aria-pressed={onlyWithMessages}
+              onClick={() =>
+                setOnlyWithMessages((currentValue) => !currentValue)
+              }
+              className={cn(
+                "h-8 rounded-none border px-2 text-xs",
+                onlyWithMessages
+                  ? "border-primary/30 bg-primary/10 text-primary hover:bg-primary/15"
+                  : "border-white/[0.08] bg-transparent hover:bg-white/[0.04]",
+              )}
+            >
+              <MessageSquare className="h-3.5 w-3.5" />
+              With messages
+            </Button>
             <div
               className={cn(
                 "inline-flex h-8 items-center gap-1.5 border px-2 text-[11px]",
@@ -604,7 +630,9 @@ export function ActivityMonitor({
 
               {!visitors.length && (
                 <div className="px-3 py-6 text-xs text-muted-foreground">
-                  No visitors match this search.
+                  {onlyWithMessages
+                    ? "No visitors with messages match this search."
+                    : "No visitors match this search."}
                 </div>
               )}
             </div>
@@ -699,7 +727,7 @@ export function ActivityMonitor({
                   </div>
                   {selectedSession ? (
                     <div className="mt-2 min-w-0 border-t border-white/[0.06] pt-2">
-                      <div className="flex flex-wrap items-start justify-between gap-2">
+                      <div className="flex flex-wrap items-center justify-between gap-2">
                         <div className="min-w-0">
                           <p className="truncate text-xs font-medium text-foreground">
                             {selectedSession.chatSessionId}
@@ -711,13 +739,13 @@ export function ActivityMonitor({
                         </div>
                         <Button
                           type="button"
-                          variant="destructive"
+                          variant="ghost"
                           size="xs"
                           onClick={() => {
                             setDeleteError(null);
                             setSessionToDelete(selectedSession);
                           }}
-                          className="shrink-0"
+                          className={cn("shrink-0", dangerButtonClassName)}
                         >
                           <Trash2 className="h-3 w-3" />
                           Delete chat
@@ -801,7 +829,7 @@ export function ActivityMonitor({
                                 setDeleteError(null);
                                 setRowToDelete(row);
                               }}
-                              className="border border-red-400/15 text-red-200 hover:bg-red-500/10 hover:text-red-100"
+                              className={dangerButtonClassName}
                             >
                               <Trash2 className="h-3 w-3" />
                               Delete
@@ -896,6 +924,7 @@ export function ActivityMonitor({
               variant="destructive"
               onClick={handleDeleteMessage}
               disabled={isDeletePending}
+              className={dangerButtonClassName}
             >
               {isDeletePending ? "Deleting..." : "Delete message"}
             </Button>
@@ -946,6 +975,7 @@ export function ActivityMonitor({
               variant="destructive"
               onClick={handleDeleteSession}
               disabled={isDeletePending}
+              className={dangerButtonClassName}
             >
               {isDeletePending ? "Deleting..." : "Delete chat"}
             </Button>
