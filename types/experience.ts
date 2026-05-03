@@ -3,4 +3,5 @@ export interface IExperienceItem {
   role: string;
   period: string;
   description: string;
+  highlights?: string[];
 }

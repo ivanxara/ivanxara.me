@@ -7,7 +7,7 @@ export function SectionHero() {
   return (
     <section
       id="top"
-      className="relative flex min-h-[calc(100dvh-10rem)] scroll-mt-28 flex-col justify-center sm:justify-end overflow-hidden pb-16 pt-32 sm:pb-20 lg:min-h-[calc(100dvh-6rem)]"
+      className="relative flex min-h-[calc(100dvh-10rem)] scroll-mt-28 flex-col justify-center overflow-hidden pb-16 pt-32 sm:justify-end sm:pb-20 lg:min-h-[calc(100dvh-6rem)]"
     >
       <div className="relative z-10 flex flex-col">
         <div>
@@ -17,7 +17,6 @@ export function SectionHero() {
             </Heading>
           </AnimationReveal>
 
-          {/* Aumenta pt para dar espaço ao acento — mt igual para compensar */}
           <AnimationReveal
             trigger="mount"
             delay={0.22}
@@ -31,18 +30,17 @@ export function SectionHero() {
           </AnimationReveal>
         </div>
 
-        {/* Descriptor — só isto, sem bordas, sem meta */}
         <AnimationReveal
           trigger="mount"
           delay={1.35}
           duration={0.9}
           y={6}
-          className="mt-14 max-w-xs opacity-40"
+          className="mt-10 max-w-sm sm:mt-14 sm:max-w-md"
         >
-          <Paragraph variant="compact">
-            Zoho developer building CRM, Creator, and full-stack systems that
-            turn complex business workflows into software people can actually
-            use.
+          <Paragraph className="text-sm leading-7 text-foreground/68 sm:text-base sm:leading-8">
+            Developer working across Zoho systems, web apps, internal tools,
+            and SaaS workflows, with a focus on turning complex business logic
+            into useful software.
           </Paragraph>
         </AnimationReveal>
       </div>

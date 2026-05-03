@@ -12,6 +12,10 @@ export type IProject = {
   role: string;
   technologies: TechnologyIconKey[];
   image?: StaticImageData;
+  summary?: string;
+  impact?: string[];
+  context?: string;
+  wins?: string[];
   eyebrow?: string;
   overviewTitle?: string;
   overviewAccent?: string;

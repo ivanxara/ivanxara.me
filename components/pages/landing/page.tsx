@@ -7,6 +7,7 @@ import { Footer } from "@/components/layout/footer";
 import { SectionExperience } from "@/components/pages/landing/_components/section-experience";
 import { SectionHero } from "@/components/pages/landing/_components/section-hero";
 import { SectionProjects } from "@/components/pages/landing/_components/section-projects";
+import { SectionCapabilities } from "@/components/pages/landing/_components/section-capabilities";
 
 export function PortfolioScreen({ onOpenChat }: { onOpenChat?: () => void }) {
   return (
@@ -17,9 +18,10 @@ export function PortfolioScreen({ onOpenChat }: { onOpenChat?: () => void }) {
 
           <PageWrapper>
             <SectionHero />
+            <SectionCapabilities />
+            <SectionProjects />
             <SectionExperience />
             <SectionAbout />
-            <SectionProjects />
           </PageWrapper>
 
           <Footer />
