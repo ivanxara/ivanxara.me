@@ -6,8 +6,8 @@ import { Navbar } from "@/components/layout/navbar";
 import { PageWrapper } from "@/components/layout/page-wrapper";
 import { Heading, Paragraph } from "@/components/typography";
 import { SectionBlock } from "@/components/shared/section-block";
-import { ZoomableImage } from "@/components/shared/zoomable-image";
 import { PlayGameDialog } from "@/components/pages/project-details/_components/play-game-dialog";
+import { ProjectGallery } from "@/components/pages/project-details/_components/project-gallery";
 import { Footer } from "@/components/layout/footer";
 import { SiGithub } from "react-icons/si";
 import { TECHNOLOGY_META } from "@/utils/technologies";
@@ -46,7 +46,7 @@ export default function ProjectDetailScreen({
                     <Heading
                       as="h1"
                       variant="heading-1"
-                      className="select-none"
+                      className="mb-4 max-w-full select-none text-[clamp(3.5rem,9vw,9rem)] leading-[0.9] sm:mb-6"
                     >
                       {project.title}
                     </Heading>
@@ -57,7 +57,7 @@ export default function ProjectDetailScreen({
                   trigger="mount"
                   delay={0.28}
                   duration={1.4}
-                  y={60}
+                  y={36}
                   scale={0.98}
                   className="overflow-hidden rounded-4xl bg-background shadow-xl sm:rounded-4xl"
                 >
@@ -154,11 +154,58 @@ export default function ProjectDetailScreen({
               </SectionBlock>
             </section>
 
+            {project.context || project.wins?.length ? (
+              <section id="context">
+                <SectionBlock title="What Mattered" className="scroll-mt-28">
+                  <div className="grid max-w-5xl gap-12 border-t border-border pt-10 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16">
+                    {project.context ? (
+                      <AnimationReveal amount={0.3}>
+                        <Heading as="h3" variant="heading-3">
+                          Context
+                        </Heading>
+                        <Paragraph
+                          variant="muted"
+                          className="mt-4 max-w-md leading-loose text-foreground/62"
+                        >
+                          {project.context}
+                        </Paragraph>
+                      </AnimationReveal>
+                    ) : null}
+
+                    {project.wins?.length ? (
+                      <AnimationReveal amount={0.3} delay={0.08}>
+                        <Heading as="h3" variant="heading-3">
+                          Things I handled
+                        </Heading>
+                        <ul className="mt-6 border-t border-border">
+                          {project.wins.map((win, index) => (
+                            <li
+                              key={win}
+                              className="grid grid-cols-[2.5rem_minmax(0,1fr)] gap-4 border-b border-border py-4 text-sm leading-7 text-muted-foreground"
+                            >
+                              <span className="text-xs font-black text-primary/70">
+                                {String(index + 1).padStart(2, "0")}
+                              </span>
+                              <span>{win}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </AnimationReveal>
+                    ) : null}
+                  </div>
+                </SectionBlock>
+              </section>
+            ) : null}
+
             <section id="features">
               <SectionBlock title="Key Features" className="scroll-mt-28">
                 <div className="max-w-4xl">
                   <AnimationReveal amount={0.35}>
-                    <Heading as="p" variant="heading-2" className="max-w-2xl">
+                    <Heading
+                      as="p"
+                      variant="heading-2"
+                      className="max-w-4xl text-[clamp(2rem,4vw,4rem)] leading-[1.02]"
+                    >
                       {project.featureIntro}
                     </Heading>
                   </AnimationReveal>
@@ -202,40 +249,11 @@ export default function ProjectDetailScreen({
 
             {project.gallery?.length ? (
               <SectionBlock title="Gallery" className="scroll-mt-28">
-                <div
-                  className={
-                    isMobileGallery
-                      ? "grid justify-center gap-5 sm:grid-cols-2 xl:grid-cols-3"
-                      : "grid gap-5 md:grid-cols-2"
-                  }
-                >
-                  {project.gallery.map((image, index) => (
-                    <AnimationReveal
-                      key={image.src}
-                      amount={0.22}
-                      delay={index * 0.08}
-                      className={
-                        isMobileGallery ? "mx-auto w-full max-w-[22rem]" : ""
-                      }
-                    >
-                      <ZoomableImage
-                        src={image}
-                        alt={`${project.title} gallery image ${index + 1}`}
-                        wrapperClassName={
-                          isMobileGallery
-                            ? "mx-auto aspect-[9/19.5] max-w-[22rem] rounded-4xl bg-background p-2 shadow-2xl"
-                            : undefined
-                        }
-                        className={
-                          isMobileGallery
-                            ? "h-full w-full rounded-4xl object-cover"
-                            : "rounded-2xl"
-                        }
-                        unoptimized={true}
-                      />
-                    </AnimationReveal>
-                  ))}
-                </div>
+                <ProjectGallery
+                  title={project.title}
+                  images={project.gallery}
+                  isMobileGallery={isMobileGallery}
+                />
               </SectionBlock>
             ) : null}
           </PageWrapper>

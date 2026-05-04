@@ -1,7 +1,7 @@
 "use client";
 
 import type { KeyboardEvent, RefObject } from "react";
-import { Sheet, SheetContent, SheetTitle } from "@/components/ui/sheet";
+import { Drawer, DrawerContent, DrawerTitle } from "@/components/ui/drawer";
 import { ChatPanel, type PortfolioChatMessage } from "@/components/chat/chat-shared";
 
 type PortfolioChatMobileProps = {
@@ -36,30 +36,25 @@ export function PortfolioChatMobile({
   onReset,
 }: PortfolioChatMobileProps) {
   return (
-    <>
-      <Sheet open={isOpen} onOpenChange={onOpenChange}>
-        <SheetContent side="bottom" className="rounded-4xl h-[80dvh]">
-          <div className="pointer-events-none absolute inset-x-0 top-0 z-10 flex justify-center pt-3">
-            <div className="h-1.5 w-12 rounded-full bg-border" />
-          </div>
-          <SheetTitle className="sr-only">Ivan Assistant</SheetTitle>
-          <ChatPanel
-            messages={messages}
-            input={input}
-            hasConversation={messages.length > 1}
-            isPending={isPending}
-            cooldownRemainingSeconds={cooldownRemainingSeconds}
-            isSendDisabled={isSendDisabled}
-            scrollRef={scrollRef}
-            textareaRef={panelTextareaRef}
-            onInputChange={onInputChange}
-            onKeyDown={onPanelKeyDown}
-            onSubmit={onSubmit}
-            onReset={onReset}
-            onClose={() => onOpenChange?.(false)}
-          />
-        </SheetContent>
-      </Sheet>
-    </>
+    <Drawer open={isOpen} onOpenChange={onOpenChange} direction="bottom">
+      <DrawerContent className="h-[80svh] max-h-[80svh] rounded-t-4xl border-border bg-sidebar p-0 text-sidebar-foreground outline-none">
+        <DrawerTitle className="sr-only">Ivan Assistant</DrawerTitle>
+        <ChatPanel
+          messages={messages}
+          input={input}
+          hasConversation={messages.length > 1}
+          isPending={isPending}
+          cooldownRemainingSeconds={cooldownRemainingSeconds}
+          isSendDisabled={isSendDisabled}
+          scrollRef={scrollRef}
+          textareaRef={panelTextareaRef}
+          onInputChange={onInputChange}
+          onKeyDown={onPanelKeyDown}
+          onSubmit={onSubmit}
+          onReset={onReset}
+          onClose={() => onOpenChange?.(false)}
+        />
+      </DrawerContent>
+    </Drawer>
   );
 }

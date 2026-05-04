@@ -42,6 +42,7 @@ export function AnimationReveal({
 
   return (
     <motion.div
+      data-scroll-reveal={trigger}
       initial={initial}
       transition={{ ...revealTransition, delay, duration }}
       {...(trigger === "mount"

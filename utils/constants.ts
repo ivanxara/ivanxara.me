@@ -18,21 +18,45 @@ export const MY_EXPERIENCE: IExperienceItem[] = [
   {
     organization: "loba",
     role: "zoho developer",
-    period: "2023 — present",
+    period: "2023 to present",
     description:
-      "architecting zoho crm and creator solutions, internal tooling, and integrations for scalable business operations.",
+      "At Loba, I work across different client setups, mostly around Zoho CRM and Creator, but often touching the wider Zoho ecosystem when the process needs it.",
+    highlights: [
+      "Adapt modules, layouts, automations, Deluge logic, Creator apps, and workflows around each client process.",
+      "Build integrations, custom widgets, internal tools, and connections between Zoho apps and external systems.",
+      "Dedicated full time employee for NIW inside Grupo Salvador Caetano since 2024.",
+    ],
+  },
+  {
+    organization: "client work",
+    role: "full stack development",
+    period: "2023 to present",
+    description:
+      "A mix of client websites, public platforms, admin areas, paid flows, and product features.",
+    highlights: [
+      "Built with React, Next.js, TypeScript, Supabase, and Stripe.",
+      "Handled product decisions, database structure, integrations, and delivery.",
+    ],
   },
   {
     organization: "univ. of aveiro",
-    role: "student, software development",
-    period: "2021 — 2023",
+    role: "software development",
+    period: "2021 to 2023",
     description:
-      "ctesp in software development with solid foundations in python, php, mysql, react, and hands-on product work.",
+      "CTeSP in Software Development, focused on practical programming, databases, and web development.",
+    highlights: [
+      "Python, PHP, MySQL, React, backend logic, and frontend interfaces.",
+      "Practical assignments that helped build the base for my current work.",
+    ],
   },
 ];
 
+export const EARLY_EXPERIENCE_NOTE =
+  "Earlier technical work started through school, including a remote internship at Inovar+ and an Erasmus+ project, both around Unity, C#, and small frontend work.";
+
 export const NAVBAR_ITEMS: INavbarItem[] = [
+  { label: "Skills", href: "#capabilities" },
   { label: "Work", href: "#work" },
-  { label: "Journey", href: "#experience" },
+  { label: "Experience", href: "#experience" },
   { label: "Contact", href: "#contact" },
 ];

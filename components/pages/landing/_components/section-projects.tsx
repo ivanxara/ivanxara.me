@@ -5,7 +5,7 @@ import Link from "next/link";
 import { motion, useMotionValue, useSpring } from "framer-motion";
 import { useRef, useState, type MouseEvent } from "react";
 import { AnimationReveal, motionEase } from "@/components/animations";
-import { Heading } from "@/components/typography";
+import { Heading, Paragraph } from "@/components/typography";
 import { SectionBlock } from "@/components/shared/section-block";
 import { PROJECT_LIST } from "@/utils/projects";
 import { TECHNOLOGY_META } from "@/utils/technologies";
@@ -85,7 +85,7 @@ export function SectionProjects() {
                     />
 
                     <div
-                      className={`relative z-10 flex flex-col gap-5 md:gap-6 lg:flex-row lg:items-center lg:gap-4 lg:transition-transform lg:duration-500 ${
+                      className={`relative z-10 flex min-w-0 flex-col gap-5 md:gap-6 lg:max-w-2xl lg:transition-transform lg:duration-500 ${
                         isActive ? "lg:translate-x-4" : "lg:translate-x-0"
                       }`}
                     >
@@ -113,9 +113,16 @@ export function SectionProjects() {
                       >
                         {project.title}
                       </Heading>
+                      {project.summary ? (
+                        <Paragraph
+                          variant="muted"
+                        >
+                          {project.summary}
+                        </Paragraph>
+                      ) : null}
                     </div>
 
-                    <div className="relative z-10 flex flex-col items-start gap-2 lg:flex-row lg:items-center lg:gap-6 lg:text-right">
+                    <div className="relative z-10 flex flex-col items-start gap-2 lg:items-end lg:text-right">
                       <div className="flex flex-col items-start gap-2 lg:items-end">
                         <span className="text-xs font-semibold text-muted-foreground uppercase tracking-wider transition-colors duration-500">
                           {project.role}

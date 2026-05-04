@@ -28,8 +28,8 @@ type ChatRequest = {
 type PortfolioChatProps = {
   variant?: "panel" | "mobile";
   onClose?: () => void;
-  mobileSheetOpen?: boolean;
-  onMobileSheetOpenChange?: (open: boolean) => void;
+  mobileDrawerOpen?: boolean;
+  onMobileDrawerOpenChange?: (open: boolean) => void;
 };
 
 export function PortfolioChat(props: PortfolioChatProps) {
@@ -43,7 +43,7 @@ export function PortfolioChat(props: PortfolioChatProps) {
   const scrollRef = useRef<HTMLDivElement>(null);
   const panelTextareaRef = useRef<HTMLTextAreaElement>(null);
   const isMobile = variant === "mobile";
-  const mobileSheetOpen = isMobile ? Boolean(props.mobileSheetOpen) : false;
+  const mobileDrawerOpen = isMobile ? Boolean(props.mobileDrawerOpen) : false;
 
   const chatMutation = useMutation<ChatResponse, Error, ChatRequest>({
     mutationFn: ({ messages: nextMessages, metadata }) =>
@@ -80,11 +80,11 @@ export function PortfolioChat(props: PortfolioChatProps) {
       top: scrollRef.current.scrollHeight,
       behavior: "smooth",
     });
-  }, [messages, chatMutation.isPending, mobileSheetOpen]);
+  }, [messages, chatMutation.isPending, mobileDrawerOpen]);
 
   useEffect(() => {
     resizeTextarea(panelTextareaRef, 120);
-  }, [input, mobileSheetOpen]);
+  }, [input, mobileDrawerOpen]);
 
   useEffect(() => {
     const focusInput = () => {
@@ -96,10 +96,10 @@ export function PortfolioChat(props: PortfolioChatProps) {
     return () => {
       window.removeEventListener(CHAT_FOCUS_EVENT, focusInput);
     };
-  }, [isMobile, mobileSheetOpen]);
+  }, [isMobile, mobileDrawerOpen]);
 
   useEffect(() => {
-    if (!isMobile || !mobileSheetOpen) {
+    if (!isMobile || !mobileDrawerOpen) {
       return;
     }
 
@@ -110,7 +110,7 @@ export function PortfolioChat(props: PortfolioChatProps) {
     return () => {
       window.cancelAnimationFrame(frameId);
     };
-  }, [isMobile, mobileSheetOpen]);
+  }, [isMobile, mobileDrawerOpen]);
 
   useEffect(() => {
     if (!cooldownUntil) {
@@ -202,9 +202,9 @@ export function PortfolioChat(props: PortfolioChatProps) {
   return (
     <PortfolioChatMobile
       {...sharedProps}
-      isOpen={mobileSheetOpen}
+      isOpen={mobileDrawerOpen}
       panelTextareaRef={panelTextareaRef}
-      onOpenChange={props.onMobileSheetOpenChange}
+      onOpenChange={props.onMobileDrawerOpenChange}
       onPanelKeyDown={handlePanelKeyDown}
     />
   );

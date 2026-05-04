@@ -58,6 +58,20 @@ export const PROJECTS: Record<ProjectName, IProject> = {
     role: "Design & Development",
     technologies: ["nextjs", "typescript", "supabase", "tailwind"],
     image: zoho2git1,
+    summary:
+      "Internal platform for syncing Zoho CRM, Creator, and Recruit code into Git with history, logs, and safer versioning.",
+    impact: [
+      "Made Zoho code easier to search, inspect, version, and debug across projects.",
+      "Added safer refresh logic so teams can update changed resources without losing previous versions.",
+      "Centralized operational logs and project state for faster production support.",
+    ],
+    context:
+      "Zoho development can get hard to follow when code lives across CRM, Creator, and Recruit. This project was built to give technical teams a clearer way to sync, inspect, version, and debug that work from one place.",
+    wins: [
+      "Brought different Zoho resources into a Git based workflow without forcing the team to manage each product separately.",
+      "Saved previous versions before refreshes, so changed resources could be updated with less risk.",
+      "Added searchable logs and project state visibility to make sync issues easier to understand.",
+    ],
     eyebrow: "project case study - internal devops platform",
     overviewTitle: "Internal platform for",
     overviewAccent: "Zoho-to-Git workflows",
@@ -96,6 +110,20 @@ export const PROJECTS: Record<ProjectName, IProject> = {
     role: "Design & Development",
     technologies: ["nextjs", "typescript", "supabase", "gemini", "stripe"],
     image: relevoAiLanding,
+    summary:
+      "AI trading SaaS with chart analysis, paid access, onboarding, and a full product flow around premium signals.",
+    impact: [
+      "Connected landing, onboarding, auth, premium access, and analysis history into one product flow.",
+      "Used strict AI response structure so trade plans return consistent levels, confidence, and setup data.",
+      "Implemented Stripe checkout and webhook driven subscription access.",
+    ],
+    context:
+      "The goal was to turn AI chart analysis into a product, not just a prompt. Users needed a flow that felt paid, structured, and repeatable, from landing page to analysis history.",
+    wins: [
+      "Connected onboarding, authentication, premium access, analysis generation, and history into one flow.",
+      "Constrained Gemini output with a schema so the product could rely on consistent signals and levels.",
+      "Handled Stripe checkout and subscription state so paid access worked beyond the checkout page.",
+    ],
     eyebrow: "project case study - ai trading platform",
     overviewTitle: "AI SaaS for",
     overviewAccent: "trader decision support",
@@ -136,6 +164,20 @@ export const PROJECTS: Record<ProjectName, IProject> = {
     technologies: ["nuxt", "vue", "typescript", "supabase", "stripe"],
     image: ath0,
     galleryLayout: "mobile",
+    summary:
+      "Sports profile platform for athletes, teams, and clubs, with public profiles, discovery, subscriptions, and mobile distribution.",
+    impact: [
+      "Took over a real client product and expanded it into broader athlete, team, and club workflows.",
+      "Built public profiles, dashboards, premium gates, team connections, and affiliate mechanics.",
+      "Adapted quickly to Nuxt and Vue in production while keeping delivery moving.",
+    ],
+    context:
+      "This started as a real client product with an existing base, then grew into a wider sports platform. The work was less about one page and more about connecting profiles, teams, premium access, and mobile distribution.",
+    wins: [
+      "Expanded the product into athlete, team, and club profile flows with public pages and dashboard areas.",
+      "Built premium, verification, team connection, and affiliate related flows around the core profile experience.",
+      "Worked in a stack I had to pick up quickly, while still shipping production features for a client.",
+    ],
     eyebrow: "project case study - athlete profile and recruiting platform",
     overviewTitle: "Platform for",
     overviewAccent: "athlete identity, sharing, and team connection",
@@ -180,6 +222,20 @@ export const PROJECTS: Record<ProjectName, IProject> = {
     role: "Design & Development",
     technologies: ["nextjs", "typescript", "supabase", "gemini", "tailwind"],
     image: rei1,
+    summary:
+      "Restaurant website and admin system for menus, reservations, campaign pages, local SEO, and daily publishing work.",
+    impact: [
+      "Built a public site tied to an internal backoffice so content and daily offers can be managed in one place.",
+      "Added local SEO structure, menus, booking flows, and event pages around real restaurant actions.",
+      "Created AI assisted admin tools for daily promo copy and story ready assets.",
+    ],
+    context:
+      "The restaurant needed more than a nice landing page. Menus, daily offers, reservations, events, and content updates had to be easy to manage without asking a developer for every small change.",
+    wins: [
+      "Connected the public website to an internal admin area for menus, offers, events, and content work.",
+      "Built the site around real customer actions: checking the menu, booking, finding offers, and browsing events.",
+      "Added AI assisted admin workflows to make daily promo copy and content creation faster.",
+    ],
     eyebrow: "project case study - restaurant platform and admin",
     overviewTitle: "Restaurant platform built for",
     overviewAccent: "operations and discoverability",
@@ -223,6 +279,20 @@ export const PROJECTS: Record<ProjectName, IProject> = {
     role: "Game Design & Development",
     technologies: ["unity", "csharp", "photoshop"],
     image: mygame1,
+    summary:
+      "Small Unity game from my final school project, kept here as a playable break from the usual portfolio scroll.",
+    impact: [
+      "Planned and shipped a complete playable experience with C# gameplay logic.",
+      "Handled visual direction and supporting assets with Photoshop.",
+      "Embedded the WebGL build so visitors can play it directly instead of only seeing screenshots.",
+    ],
+    context:
+      "This was my final school project, built as a complete playable game rather than just a static assignment. It stays in the portfolio because it shows an earlier side of how I learned by making things.",
+    wins: [
+      "Planned the game, built the mechanics, and shipped a playable Unity project with C#.",
+      "Created the visual direction and supporting assets instead of relying only on default presentation.",
+      "Kept it playable in the portfolio so the project feels more alive than a screenshot gallery.",
+    ],
     eyebrow: "project case study - final high school project",
     overviewTitle: "Game created as my",
     overviewAccent: "final 12th grade project",

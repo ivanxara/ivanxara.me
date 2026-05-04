@@ -11,7 +11,7 @@ export function Footer() {
   return (
     <section
       id="contact"
-      className="scroll-mt-28 border-t border-border pb-28 lg:pb-12 pt-4"
+      className="scroll-mt-28 border-t border-border pb-28 lg:pb-12 pt-4 mt-20"
     >
       <PageWrapper>
         <SectionBlock title="Get in touch" className="max-w-5xl pb-0">
