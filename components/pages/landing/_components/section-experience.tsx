@@ -31,17 +31,17 @@ export function SectionExperience() {
               }`}
             >
               <div>
-                <Heading as="h3" variant="heading-3">
+                <Paragraph variant="muted" className="text-primary">
+                  {item.period}
+                </Paragraph>
+                <Heading as="h3" variant="heading-3" className="mt-4">
                   {item.organization}
                 </Heading>
                 <Paragraph
                   variant="muted"
-                  className="mt-2 font-semibold lowercase tracking-tight"
+                  className="font-semibold lowercase tracking-tight"
                 >
                   {item.role}
-                </Paragraph>
-                <Paragraph variant="muted" className="mt-4 text-primary">
-                  {item.period}
                 </Paragraph>
               </div>
 
@@ -53,11 +53,11 @@ export function SectionExperience() {
                   {item.description}
                 </Paragraph>
                 {item.highlights?.length ? (
-                  <ul className="mt-7 max-w-xl border-t border-border">
+                  <ul className="mt-7 max-w-xl">
                     {item.highlights.map((highlight, highlightIndex) => (
                       <li
                         key={highlight}
-                        className="grid grid-cols-[2.5rem_minmax(0,1fr)] gap-4 border-b border-border py-4 text-sm leading-7 text-muted-foreground"
+                        className="grid grid-cols-[2.5rem_minmax(0,1fr)] gap-4 last:border-b-0 border-b border-border py-4 text-sm leading-7 text-muted-foreground"
                       >
                         <span className="text-xs font-black text-primary/70">
                           {String(highlightIndex + 1).padStart(2, "0")}

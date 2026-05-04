@@ -20,11 +20,9 @@ export function SectionCapabilities() {
     <section id="capabilities">
       <SectionBlock title="What I Build" className="scroll-mt-28">
         <div className="max-w-5xl">
-          <AnimationReveal amount={0.35}>
-            <Heading as="p" variant="heading-2" className="max-w-4xl">
-              business tools, product work, and the code between them.
-            </Heading>
-          </AnimationReveal>
+          <Heading as="p" variant="heading-2" className="max-w-4xl">
+            business tools, product work, and the code between them.
+          </Heading>
 
           <div className="mt-14 max-w-3xl border-t border-border">
             {CAPABILITIES.map((item, index) => (
@@ -37,10 +35,7 @@ export function SectionCapabilities() {
                 <Heading as="h3" variant="heading-3">
                   {item.title}
                 </Heading>
-                <Paragraph
-                  variant="muted"
-                  className="mt-4 max-w-2xl"
-                >
+                <Paragraph variant="muted" className="mt-4 max-w-2xl">
                   {item.copy}
                 </Paragraph>
               </AnimationReveal>

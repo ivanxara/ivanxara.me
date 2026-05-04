@@ -144,6 +144,36 @@
 
 }
 
+@layer utilities {
+  .min-h-app-screen {
+    min-height: 100vh;
+    min-height: 100svh;
+  }
+
+  .landing-hero-height {
+    min-height: calc(100vh - 15rem);
+    min-height: calc(100svh - 15rem);
+  }
+
+  @media (min-width: 64rem) {
+    .min-h-app-screen {
+      min-height: 100vh;
+      min-height: 100dvh;
+    }
+
+    .landing-hero-height {
+      min-height: calc(100vh - 6rem);
+      min-height: calc(100dvh - 6rem);
+    }
+  }
+
+  @media (hover: none), (pointer: coarse), (max-width: 767px) {
+    [data-scroll-reveal="view"] {
+      transform: none !important;
+    }
+  }
+}
+
 ::-webkit-scrollbar {
   width: 6px;
 }

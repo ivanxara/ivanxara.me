@@ -199,12 +199,12 @@ export function PortfolioLayout({ children }: { children: ReactNode }) {
 
   if (isStandaloneRoute) {
     return (
-      <main className="min-h-screen bg-background text-foreground">
+      <main className="min-h-app-screen bg-background text-foreground">
         <div
           className="pointer-events-none fixed inset-0"
           style={{ background: FRAME_GLOW_BACKGROUND }}
         />
-        <section className="relative min-h-screen w-full bg-sidebar">
+        <section className="min-h-app-screen relative w-full bg-sidebar">
           {children}
         </section>
       </main>
@@ -214,7 +214,7 @@ export function PortfolioLayout({ children }: { children: ReactNode }) {
   return (
     <PortfolioChatProvider onOpenChat={toggleChat}>
       <main
-        className={`min-h-screen bg-background text-foreground ${
+        className={`min-h-app-screen bg-background text-foreground ${
           isDesktopLayout ? "lg:h-screen lg:overflow-hidden" : ""
         }`}
       >
@@ -224,7 +224,7 @@ export function PortfolioLayout({ children }: { children: ReactNode }) {
         />
 
         <section
-          className={`relative min-h-screen w-full bg-sidebar ${
+          className={`min-h-app-screen relative w-full bg-sidebar ${
             isDesktopLayout ? "lg:h-screen lg:overflow-hidden" : ""
           }`}
         >
@@ -323,12 +323,12 @@ export function PortfolioLayout({ children }: { children: ReactNode }) {
               </ResizablePanel>
             </ResizablePanelGroup>
           ) : (
-            <div className="flex min-h-screen w-full flex-col">
+            <div className="min-h-app-screen flex w-full flex-col">
               {children}
               <PortfolioChat
                 variant="mobile"
-                mobileSheetOpen={isMobileChatOpen}
-                onMobileSheetOpenChange={setIsMobileChatOpen}
+                mobileDrawerOpen={isMobileChatOpen}
+                onMobileDrawerOpenChange={setIsMobileChatOpen}
               />
             </div>
           )}

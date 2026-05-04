@@ -6,7 +6,7 @@ export const headingVariants = cva("text-foreground", {
   variants: {
     variant: {
       "heading-1":
-        "text-[clamp(3.5rem,12vw,13rem)] font-black leading-none tracking-tighter",
+        "text-[clamp(6rem,12vw,13rem)] font-black leading-none tracking-tighter",
       "heading-2":
         "text-[clamp(1.8rem,5vw,5rem)] font-black leading-tight tracking-tighter leading-none",
       "heading-3":

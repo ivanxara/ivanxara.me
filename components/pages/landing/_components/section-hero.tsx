@@ -7,7 +7,7 @@ export function SectionHero() {
   return (
     <section
       id="top"
-      className="relative flex min-h-[calc(100dvh-10rem)] scroll-mt-28 flex-col justify-center overflow-hidden pb-16 pt-32 sm:justify-end sm:pb-20 lg:min-h-[calc(100dvh-6rem)]"
+      className="landing-hero-height relative flex scroll-mt-28 flex-col justify-center overflow-hidden pb-16 pt-32 sm:justify-end sm:pb-20"
     >
       <div className="relative z-10 flex flex-col">
         <div>
@@ -32,9 +32,8 @@ export function SectionHero() {
 
         <AnimationReveal
           trigger="mount"
-          delay={1.35}
+          delay={0.6}
           duration={0.9}
-          y={6}
           className="mt-10 max-w-sm sm:mt-14 sm:max-w-md"
         >
           <Paragraph className="text-sm leading-7 text-foreground/68 sm:text-base sm:leading-8">
